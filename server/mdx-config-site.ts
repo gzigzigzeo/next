@@ -20,6 +20,7 @@ const config: MdxConfig = {
         layouts: {
           default: "layouts/SitePage",
           content: "layouts/ContentPage",
+          howItWorks: "layouts/HowItWorksPage",
           events: "layouts/EventsPage",
         },
       },

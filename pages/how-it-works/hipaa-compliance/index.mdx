@@ -1,0 +1,242 @@
+---
+hideWave: true
+border: none
+title: Teleport helps organizations implement HIPAA
+description: How Teleport helps organizations implement HIPAA Technical Safeguards
+h1: HIPAA compliance with Teleport
+headerTitle: HIPAA compliance with Teleport
+headerDescription: Learn how Teleport keeps an audit log of access events for all SSH servers, Kubernetes clusters, and web applications.
+layout: howItWorks
+
+---
+
+HIPAA, the Health Insurance Portability and Accountability Act, sets the standard for protecting sensitive patient data. Any company that deals with protected health information (PHI) must ensure that all the required physical, network, and process security measures are in place and followed. A critical component of HIPAA compliance is the implementation of Technical Safeguards set forth in § 164.312.
+
+Teleport is a modern SSH access system that can help organizations comply with many of the Access and Audit requirements at the systems layer through its ability to integrate with existing identity management services and by providing role-based access controls (“RBAC”), access auditing, session recording and ephemeral certificates. Below is a summary of the Technical Safeguards outlined in HIPAA with information on how Teleport can help achieve compliance.
+
+&NewLine;  
+&NewLine;  
+&NewLine;  
+&NewLine;  
+
+<table >
+  <thead>
+    <tr >
+      <th style={{width: "50%"}}>HIPAA § 164.312 Technical Safeguards</th>
+      <th style={{width: "50%"}}>How Teleport Helps Compliance</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        ## (a) Standard: Access control.
+        <p>
+          Implement technical policies and procedures for electronic information systems that maintain electronic protected health information to allow
+          access only to those persons or software programs that have been granted access rights as
+          specified in § 164.308(a)(4).
+        </p>          
+      </td>
+      <td>
+        <p>
+          Teleport implements role based access control for remote terminals, which is the predominant way health care IT professionals 
+          access computing infrastructure. This RBAC can be mapped to the administrative safeguards set up pursuant to §164.308.
+        </p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        ##### (i) Unique user identification.
+        <p>
+          Assign a unique name and/or number for identifying and tracking user identity .
+        </p>          
+      </td>
+      <td>
+        <p>
+          Teleport integrates with existing identity providers and assigns access permissions based on enterprise single sign-on. Teleport’s  access auditing and tracking ties directly back to real user identity. 
+        </p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        ##### (ii) Emergency access procedure. 
+        <p>
+          Establish (and implement as needed) procedures for obtaining necessary electronic protected health information during an emergency.
+        </p>          
+      </td>
+      <td>
+        <p>
+          Remote terminals are often the last option available to access server infrastructure in an emergency (other than physically accessing servers). Teleport can make sure your permissions are enforced even during emergency SSH sessions. 
+        </p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        ##### (iii) Automatic logoff. 
+        <p>
+          Implement electronic procedures that terminate an electronic session after a predetermined time of inactivity.
+        </p>          
+      </td>
+      <td>
+        <p>
+          The Teleport Certificate Authority issues ephemeral certificates that expire after a pre-configured time period which eliminates the risk of unauthorized access through stale or compromised static access keys.
+        </p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        ##### (iv) Encryption and decryption
+        <p>
+          Implement a mechanism to encrypt and decrypt electronic protected health information. 
+        </p>          
+      </td>
+      <td>
+        <p>
+          Teleport is based on encryption technology created by Google. Any session carried through Teleport automatically inherits high grade end-to-end transport encryption.
+        </p>
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr >
+      <th style={{width: "50%"}}>HIPAA § 164.312 Technical Safeguards</th>
+      <th style={{width: "50%"}}>How Teleport Helps Compliance</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        ## (b) Standard: Audit controls.
+        <p>
+          Implement hardware, software, and/or procedural mechanisms that record and examine activity in information systems that contain or use electronic protected health information.
+        </p>          
+      </td>
+      <td>
+        <p>
+          Teleport’s SSH bastion automatically records all activity that passes through it, including a detailed audit log with session replay archive available to authorized administrators. 
+        </p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr >
+      <th style={{width: "50%"}}>HIPAA § 164.312 Technical Safeguards</th>
+      <th style={{width: "50%"}}>How Teleport Helps Compliance</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        ## (c) Standard: Integrity.
+        <p>
+          Implement policies and procedures to protect electronic protected health information from improper alteration or destruction. 
+        </p>          
+      </td>
+      <td>
+        <p>
+          Teleport’s SSH implementation ties in with traditional healthcare IT network and storage system’s remote access daemons, bringing audit and recording to an area not traditionally visible to auditors.
+        </p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        ##### (i) Mechanism to authenticate electronic protected health information. 
+        <p>
+          Implement electronic mechanisms to corroborate that electronic protected health information has not been altered or destroyed in an unauthorized manner.
+        </p>          
+      </td>
+      <td>
+        <p>
+          Off the shell remote file integrity and verification tools such as rsync and tripwire can utilize Teleport for remote access without modification. Your development teams can utilize off-the-shelf open source tooling and scripting techniques to solve complex data validity and integrity challenges.
+        </p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr >
+      <th style={{width: "50%"}}>HIPAA § 164.312 Technical Safeguards</th>
+      <th style={{width: "50%"}}>How Teleport Helps Compliance</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        ## (d) Standard: Person or entity authentication.
+        <p>
+          Implement procedures to verify that a person or entity seeking access to electronic protected health information is the one claimed. 
+        </p>          
+      </td>
+      <td>
+        <p>
+          Teleport’s role-based access control simplifies access procedures by tightly coupling identity with authorization. Access allowance decisions are removed from low-level technology and brought into realms where appropriate administrators have better visibility. 
+        </p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr >
+      <th style={{width: "50%"}}>HIPAA § 164.312 Technical Safeguards</th>
+      <th style={{width: "50%"}}>How Teleport Helps Compliance</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        ## (e) Standard: Transmission security. 
+        <p>
+          Implement technical security measures to guard against unauthorized access to electronic protected health information that is being transmitted over an electronic communications network.
+        </p>          
+      </td>
+      <td>
+        <p>
+          Teleport uses the secure shell protocol as implemented by Google’s security experts and is based on the industry standard for accessing servers via an encrypted connection.
+        </p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        ##### (i) Integrity controls.
+        <p>
+          Implement security measures to ensure that electronically transmitted electronic protected health information is not improperly modified without detection until disposed of. 
+        </p>          
+      </td>
+      <td>
+        <p>
+          End-to-end transport encryption as provided by Teleport is a fundamental building block for ensuring the integrity of files sent between locations.
+        </p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        ##### (ii) Encryption.
+        <p>
+          Implement a mechanism to encrypt electronic protected health information whenever deemed appropriate.
+        </p>          
+      </td>
+      <td>
+        <p>
+          Teleport always takes care of transport encryption, allowing you to focus on encryption of protected health data while at rest on endpoint storage. 
+        </p>
+      </td>
+    </tr>
+  </tbody>
+</table>

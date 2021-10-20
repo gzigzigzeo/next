@@ -9,7 +9,9 @@ import Icon, { IconName } from "components/Icon";
 import { Centrator } from "components/Layout";
 import terminalUrl from "./assets/terminal.png";
 import waveUrl from "./assets/wave.png";
+import wavelight from "sharedAssets/images/wave-light.png";
 
+const fourUpBg = `url(${wavelight}) 0px 0px no-repeat`;
 const waveBg = `url(${waveUrl}) -477px 73px no-repeat`;
 const terminalBg = `url(${terminalUrl}) right center no-repeat`;
 
@@ -18,7 +20,8 @@ type Size = "sm" | "md";
 
 export type Props = {
   children: Child | Array<Child>;
-  description: ReactNode;
+  description?: ReactNode;
+  fourUp?: boolean;
   grid?: boolean;
   hideImage?: boolean;
   title?: string;
@@ -34,13 +37,20 @@ function List({
   titleFontWeight,
   description,
   hideImage = false,
+  fourUp = false,
   grid = false,
   children,
   ...props
 }: Props) {
   const noImage = grid || hideImage;
   return (
-    <Box as="section" background={waveBg} pb={[6, 11]} width="100%" {...props}>
+    <Box
+      as="section"
+      background={fourUp ? fourUpBg : waveBg}
+      pb={[6, 11]}
+      width="100%"
+      {...props}
+    >
       <Centrator flexDirection="column">
         <Heading
           title={title}
@@ -204,6 +214,21 @@ const StyledUL = styled("ul")<ULProps>(
           "&:nth-child(n + 4)": {
             mt: 6,
           },
+          [`${StyledContentWrapper}`]: { ml: 0 },
+        },
+      },
+      fourUp: {
+        display: "flex",
+        flexWrap: "wrap",
+        justifyContent: "center",
+        maxWidth: ["100%", "100%", "100%"],
+        [StyledIconWrapper]: {
+          left: "40px",
+        },
+        [StyledItem]: {
+          width: "25%",
+          mt: 0,
+          pl: 6,
           [`${StyledContentWrapper}`]: { ml: 0 },
         },
       },

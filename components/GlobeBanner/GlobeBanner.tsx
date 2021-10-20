@@ -66,6 +66,7 @@ const StyledHeading = styled("div")(
     py: 4,
     zIndex: 2,
     h2: {
+      color: "white",
       fontSize: "header-1",
       lineHeight: "xxl",
       fontWeight: "black",
@@ -79,7 +80,7 @@ const StyledHeading = styled("div")(
       px: 3,
       fontSize: "text-lg",
       lineHeight: ["md", "lg"],
-      maxWidth: ["100%", "40%"],
+      maxWidth: ["100%", "70%"],
     },
   })
 );

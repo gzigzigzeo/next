@@ -3,7 +3,7 @@ import Registration from "components/Registration";
 const Newsletter = () => {
   return (
     <Registration
-      formID="1027"
+      formID="1185"
       headTitle="Newsletter"
       headDescription="Subscribe to our newsletter"
       title="Access Plane"

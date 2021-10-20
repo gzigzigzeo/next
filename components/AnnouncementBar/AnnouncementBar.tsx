@@ -3,24 +3,31 @@ import css from "@styled-system/css";
 import Flex from "components/Flex";
 import Box from "components/Box";
 import * as logos from "./logos";
+import { LogoRow, Gray1, Gray2, Gray3 } from "./data";
 
 export type LogoName = keyof typeof logos;
 
 export interface AnnouncementBarImageProps {
   logo: LogoName;
+  inLivingColor: boolean;
   trim?: string | string[];
 }
 
-const AnnouncementBarImage = ({ logo, trim }: AnnouncementBarImageProps) => {
+const AnnouncementBarImage = ({
+  logo,
+  inLivingColor,
+  trim,
+}: AnnouncementBarImageProps) => {
   const LogoSVG = logos[logo];
   return (
     <Box
-      maxWidth={["120px", "160px"]}
-      height="32px"
+      maxWidth={[120, 160]}
+      minWidth={[null, 140]}
+      height={inLivingColor ? 70 : 32}
       my={2}
       mx={4}
       color="gray"
-      opacity=".56"
+      opacity={inLivingColor ? "1" : ".56"}
       display={trim}
     >
       <LogoSVG width="100%" height="100%" display="block"></LogoSVG>
@@ -28,7 +35,15 @@ const AnnouncementBarImage = ({ logo, trim }: AnnouncementBarImageProps) => {
   );
 };
 
-export const AnnouncementBar = () => {
+export interface AnnouncementBarProps {
+  inLivingColor?: boolean;
+  rows: Array<LogoRow>;
+}
+
+export const AnnouncementBar = ({
+  inLivingColor = false,
+  rows = [Gray1, Gray2, Gray3],
+}: AnnouncementBarProps) => {
   return (
     <Flex
       flexDirection="row"
@@ -37,28 +52,27 @@ export const AnnouncementBar = () => {
       height="60px"
       py={[6, 8]}
     >
-      <StyledRow opacity="1" animationDelay="0">
-        <AnnouncementBarImage logo="google" />
-        <AnnouncementBarImage logo="nasdaq" />
-        <AnnouncementBarImage logo="crypto" />
-        <AnnouncementBarImage logo="samsung" trim={["none", "block"]} />
-        <AnnouncementBarImage logo="hp" trim={["none", "block"]} />
-        <AnnouncementBarImage logo="ibm" trim={["none", "block"]} />
-      </StyledRow>
-      <StyledRow opacity="0" animationDelay="5s">
-        <AnnouncementBarImage logo="carta" />
-        <AnnouncementBarImage logo="square" />
-        <AnnouncementBarImage logo="snowflake" />
-        <AnnouncementBarImage logo="sumologic" trim={["none", "block"]} />
-        <AnnouncementBarImage logo="doordash" trim={["none", "block"]} />
-      </StyledRow>
-      <StyledRow opacity="0" animationDelay="10s">
-        <AnnouncementBarImage logo="dk" />
-        <AnnouncementBarImage logo="accenture" />
-        <AnnouncementBarImage logo="gitlab" />
-        <AnnouncementBarImage logo="freshworks" trim={["none", "block"]} />
-        <AnnouncementBarImage logo="zynga" trim={["none", "block"]} />
-      </StyledRow>
+      {rows.map((e, i) => {
+        return (
+          <StyledRow
+            key={`row${i}`}
+            opacity={i === 0 ? "1" : "0"}
+            animationDelay={`${i * 5}s`}
+            animationDuration={`${rows.length * 5}s`}
+          >
+            {e.map((ex, ix) => {
+              return (
+                <AnnouncementBarImage
+                  key={ex}
+                  inLivingColor={inLivingColor}
+                  logo={ex as LogoName}
+                  trim={ix > 2 ? ["none", "block"] : "block"}
+                />
+              );
+            })}
+          </StyledRow>
+        );
+      })}
     </Flex>
   );
 };
@@ -76,7 +90,7 @@ const logoAnimation = keyframes`
         100% {
           opacity: 0;
         }
-      `;
+        `;
 
 const StyledRow = styled(Flex)(
   css({
@@ -87,7 +101,6 @@ const StyledRow = styled(Flex)(
     alignItems: "center",
     position: "absolute",
     animationIterationCount: "infinite",
-    animationDuration: "15s",
   }),
   styledCss`animation-name: ${logoAnimation};`
 );

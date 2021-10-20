@@ -63,7 +63,7 @@ export interface StyledSystemProps
   columns?: ResponsiveValue<Property.Columns, RequiredTheme>;
   columnGap?: ResponsiveValue<Property.ColumnGap, RequiredTheme>;
   cursor?: ResponsiveValue<Property.Cursor, RequiredTheme>;
-  float?: ResponsiveValue<Property.Float, RequiredTheme>;
+  float?: ResponsiveValue<Property.Float, RequiredTheme> | string;
   listStyle?: ResponsiveValue<Property.ListStyle, RequiredTheme>;
   listStyleType?: ResponsiveValue<Property.ListStyleType, RequiredTheme>;
   pointerEvents?: ResponsiveValue<Property.PointerEvents, RequiredTheme>;

@@ -47,6 +47,9 @@ const StyledTable = styled("table")(
         fontSize: "text-md",
         verticalAlign: "top",
       },
+      "ul > li": {
+        fontSize: "text-md",
+      },
     },
   })
 );

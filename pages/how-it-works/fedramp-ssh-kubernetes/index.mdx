@@ -1,0 +1,355 @@
+---
+hideWave: true
+title: FedRAMP compliance for SSH, Kubernetes, and web apps
+border: none
+description: Guide for how to implement FedRAMP compliance for SSH and Kubernetes access using Teleport
+h1: FedRAMP Compliance
+headerTitle: FedRAMP Compliance
+headerDescription: How Teleport Access Plane helps you to implement FedRAMP compliance for SSH, for Kubernetes and for internal web applications.
+layout: howItWorks
+---
+
+import NextImage from "next/image";
+import { Sidebar } from "components";
+
+## Introduction
+
+Modern cloud software is complex. It requires multiple computers or data
+centers and teams of engineers for building and maintenance. Securing complex
+systems and avoiding data breaches requires making solid engineering
+decisions, but also _having robust processes and procedures in place to
+address the unavoidable human factor_.
+
+Imagine a group of security professionals that compiled a list of
+common-sense recommendations that have been proven to work. A compliance
+standard is not an annoying and boring obstacle to productivity. Think about
+it as just one of those lists, that has a name and tied to a well-known group
+of authors.
+
+<Sidebar bg="transparent" image={true} width={360} height={94} >
+  <NextImage src="../assets/logo-fedramp.png" layout="fill" objectFit="contain" alt="soc2 certification badge" />
+</Sidebar>
+
+## What is FedRAMP?
+
+FedRAMP (Federal Risk and Authorization Management Program) originally  was proposed as a standardized approach for the federal government to adopt secure cloud services offered by the cloud providers. FedRAMP is a product of collaboration with multiple government agencies, such as NIST, GSA, DOD, and DHS.
+
+While the original focus of FedRAMP was on cloud infrastructure (i.e. things like virtual networks, servers, and firewalls), eventually it was applied to cloud applications as well.
+
+If your organization is currently or planning to offer cloud infrastructure or cloud software services to the federal government, you must have your software running on a FedRAMP-compliant cloud service provider (CSP) and your software must be able to pass FedRAMP audit by an independent auditor.
+
+Just like SOC 3, FedRAMP introduces its own vocabulary. The foundational document is called FedRAMP <a href="https://www.fedramp.gov/assets/resources/documents/FedRAMP_Security_Assessment_Framework.pdf">Security Assessment Framework</a> (SAF). This high-level document covers the process of becoming FedRAMP compliant, but the technical details of “getting everything right” are described in a publication called <em>Security and Privacy Controls for Federal Information Systems and Organizations</em> <a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-53r4.pdf">NIST 800-53</a>. It is maintained by the National Institute of Standard and Technology (NIST).
+
+FedRAMP requirements described in NIST publications are labeled with the severity of their impact: low, medium, or high. Each government agency is free to decide which level of compliance they desire. That is why terms are “FedRAMP medium” are frequently used.
+
+## FedRAMP compliance for SSH and Kubernetes Access
+
+Just like with <a href="../soc2-ssh-kubernetes/">SOC 2</a>, NIST 800-53 groups all requirements into “families” with unique identifiers (ID):
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Family</th>
+      <th>ID</th>
+      <th>Family</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>AC</th>
+      <td>Access Control</td>
+      <th>MP</th>
+      <td>Media Protection</td>
+    </tr>
+    <tr>
+      <th>AT</th>
+      <td>Awareness and Training</td>
+      <th>PE</th>
+      <td>Physical and Env. Protection</td>
+    </tr>
+    <tr>
+      <th>AU</th>
+      <td>Audit and Accountability</td>
+      <th>PL</th>
+      <td>Planning</td>
+    </tr>
+    <tr>
+      <th>CA</th>
+      <td>Security Assessment &amp; Authorization</td>
+      <th>PS</th>
+      <td>Personnel Security</td>
+    </tr>
+    <tr>
+      <th>CM</th>
+      <td>Configuration Management</td>
+      <th>RA</th>
+      <td>Risk Assessment</td>
+    </tr>
+    <tr>
+      <th>IA</th>
+      <td>Identification and Authentication</td>
+      <th>SA</th>
+      <td>System and Services Acquisition</td>
+    </tr>
+    <tr>
+      <th>IR</th>
+      <td>Incident Response</td>
+      <th>SI</th>
+      <td>System and Information Integrityt</td>
+    </tr>
+    <tr>
+      <th>MA</th>
+      <td>Maintenance</td>
+      <th>PM</th>
+      <td>Program Management</td>
+    </tr>
+  </tbody>
+  
+</table>
+&nbsp;  
+Obviously, families like personnel security or physical and environmental protection are outside the scope of Teleport, but Access control, Identification, Authentication, and Audit definitely fall within Teleport’s area of responsibilities.
+
+
+## FedRAMP Compliance for SSH and Kubernetes
+The table below connects Teleport features to FedRAMP and SOC 2 requirements. It previews how to tighten SSH and Kubernetes access when preparing for FedRAMP and SOC 2 audits.
+
+<table>
+  <thead>
+    <tr >
+      <th>Teleport Controls</th>
+      <th>FedRAMP Requirement <a style={{color: "white"}} href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-53r4.pdf">NIST 800-53</a></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <p>To comply, Teleport must be integrated with an SSO provider such as Github, Okta, Google, etc.</p>
+
+        <p>Role-based access control (RBAC) for SSH and Kubernetes must be enabled*.</p>
+
+        <p>Teleport certificate-based SSH and Kubernetes authentication and audit logging comply with these requirements without additional configuration.</p>
+      </td>
+      <td>
+        ##### AC-02 Account Management
+        <ul>
+          <li>The organization employs automated mechanisms to support the management of information system accounts.</li>
+          <li>The information system automatically removes or temporary and emergency accounts.</li>
+          <li>The information system automatically disables inactive accounts.</li>
+          <li>The information system automatically audits account creation and modification.</li>
+          <li>The organization requires that users log out after a defined time-period.</li>
+          <li>The organization establishes, administers, and audits privileged user accounts in accordance with a role-based access scheme.</li>
+          <li>The information system enforces organization-defined usage conditions for organization-defined system accounts.</li>
+          <li>The organization monitors information system accounts and reports atypical usage.</li>
+        </ul>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>Teleport supports robust Role-based Access Controls* (RBAC).</p>
+        <p>RBAC can be used to:</p>
+        <ul>
+          <li>Control which SSH nodes a user can or cannot access.          </li>
+          <li>Control cluster-level configuration (session recording, configuration, etc.).</li>
+          <li>Control which UNIX logins a user is allowed to use when logging into a server.</li>
+          <li>Control which user groups have access to Kubernetes resources.</li>
+        </ul>
+      </td>
+      <td>
+        ##### AC-03 Access Enforcement
+        <ul>
+          <li>The information system enforces approved authorizations for logical access to information and system resources in accordance with applicable access control policies.</li>
+          <li>Access control policies (e.g., identity-based policies, role-based policies, attribute-based policies) and access enforcement mechanisms (e.g., access control lists, access control matrices, cryptography) control access between active entities or subjects (i.e., users or processes acting on behalf of users) and passive entities or objects (e.g., devices, files, records, domains) in information systems</li>
+        </ul>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>Teleport supports two types of users: from a local database and SSO-based accounts (Github, Google Apps, Okta, etc).</p>
+        <p>For local accounts, by default Teleport locks accounts for 20 minutes after 5 failed login attempts.:</p>
+        <p>For SSO-based accounts, the number of invalid login attempts and lockout time period is controlled by the SSO provider.</p>
+      </td>
+      <td>
+        ##### AC-07 Unsuccessful Logon Attempts
+        <p>The information system:</p>
+        <ol>
+          <li>Enforces a limit of organization-defined number consecutive invalid logon attempts by a user during an organization-defined time period; and</li>
+          <li>Automatically locks the account/node until released by an administrator; delays next logon prompt according to organization-defined delay algorithm when the maximum number of unsuccessful attempts is exceeded.</li>
+        </ol>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>Teleport integrates with Linux Pluggable Authentication Modules (PAM). </p>
+        <p>PAM modules can be used to display a custom message on login using a message of the day (MOTD) module within the Session management primitive.</p>
+      </td>
+      <td>
+        ##### AC-08 System Use Notification
+        <p>The information system displays to users an organization-defined notification message before granting access to the system that provides privacy and security notices consistent with applicable federal laws, executive orders, and other directives.</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>Teleport supports both a maximum number of connections (`max_connections`) and the maximum number of simultaneously connected users (`max_users`) under the `connection_limits` configuration parameter.</p>
+      </td>
+      <td>
+        ##### AC-10 Concurrent Session Control
+        <p>The information system limits the number of concurrent sessions for each organization-defined account and/or account type to a defined number.</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>Teleport user sessions are automatically terminated when a certificate expires. </p>
+        <p>Users can exit a Teleport interactive session at any time by typing `exit` or sending an interrupt signal to the process for remote execution of a program. </p>
+        <p>Logout of all sessions (destroying credentials) indicates termination of all sessions and includes an explicit logout message.</p>
+      </td>
+      <td>
+        ##### AC-12 Session Termination
+        <p>The information system automatically terminates a user session after organization-defined conditions are met and provides a logout capability for user-initiated communications sessions whenever authentication is used to gain access to information resources.</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>Teleport administrators create users with configurable roles that can be used to allow or deny access to system resources.  </p>
+        <p>Teleport Proxy uses SSH or HTTP/TLS to authenticate and encrypt and transfer data between clients and servers. </p>
+        <p>Teleport encourages an architecture that requires all connections to go through the Teleport proxy.</p>
+      </td>
+      <td>
+        ##### AC-17 Remote Access
+        <p>The organization: establishes and documents usage restrictions, configuration/connection requirements, and implementation guidance for each type of remote access allowed. It authorizes remote access to the information system prior to allowing such connections.</p>
+        <ul>
+          <li>The information system monitors and controls remote access methods. </li>
+          <li>The information system implements cryptographic mechanisms to protect the confidentiality and integrity of remote access sessions. </li>
+          <li>The information system routes all remote accesses through managed remote access control points.</li>
+        </ul>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>Teleport supports connecting multiple independent clusters using a feature called Trusted Clusters. After the establishment of a Trusted Cluster relationship between two clusters, one cluster “trusts” SSH and TLS certificates signed by the other and allows SSH connections from the other. When allowing access from one cluster to another, roles are mapped according to a pre-defined relationships to based on the scope of access.</p>
+      </td>
+      <td>
+        ##### AC-20 Use of External Information Systems
+        <p>The organization establishes terms and conditions consistent with any trust relationships established with other organizations owning, operating, and/or maintaining external information systems. This allows authorized individuals to:</p>
+        <ol>
+          <li>Access the information system from external information systems; and </li>
+          <li>Process, store, or transmit organization-controlled information using external information systems.</li>
+        </ol>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>Teleport contains an Audit Log that records cluster-wide events such as:</p>
+        <ul>
+          <li>Failed login attempts </li>
+          <li>The command that was executed (SSH “exec” commands)</li>
+          <li>Ports that were forwarded</li>
+          <li>File transfers that were initiated</li>
+          <li>Filesystem changes</li>
+          <li>Network activity that happened during an interactive user session</li>
+          <li>Recorded interactive user sessions</li>
+          <p>Events typically include information such as the type, time of occurrence, user or node on which they occurred, and a human-readable audit message.</p>
+          <p>Teleport supports sending audit events to external managed services like DynamoDB where storage concerns are handled by the cloud provider.</p>
+        </ul>
+      </td>
+      <td>
+        ##### AU-03 Audit and Accountability
+        <p>The information system generates audit records containing information that establishes what type of event occurred, when the event occurred, where the event occurred, the source of the event, the outcome of the event, and the identity of any individuals or subjects associated with the event.</p>
+       
+        ##### AU-04 Audit Storage Capacity 
+        <p>The organization allocates audit record storage capacity in accordance with organization-defined audit record storage requirements.</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>Teleport requires valid x509 or SSH certificates issued by a Teleport Certificate Authority (CA) to establish a network connection for device-to-device network connection between Teleport components.</p>
+      </td>
+      <td>
+        ##### IA-03 Device Identification and Authentication
+        <p>The information system uniquely identifies and authenticates organization-defined specific types of devices before establishing a connection.</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>Teleport maintains several unique identifiers:</p>
+        <ul>
+          <li>The local users are required to be unique (unique username)</li>
+          <li>Teleport roles have unique names and tied to organization roles via SSO</li>
+          <li>Teleport identifiers for devices are unique randomly generated IDs (UUID)</li>
+        </ul>
+      </td>
+      <td>
+        ##### IA-04 Identifier Management
+        <p>The organization manages information system identifiers by:</p>
+        <ul>
+          <li>Receiving authorization from organization-defined personnel to assign an individual, group, role, or device identifier;</li>
+          <li>Selecting an identifier that identifies an individual, group, role, or device;</li>
+          <li>Assigning the identifier to the intended individual, group, role, or device;</li>
+          <li>Preventing reuse of identifiers for the organization-defined time period; and</li>
+          <li>Disabling the identifier after an organization-defined time period of inactivity.</li>
+        </ul>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>Teleport disconnects and releases all resources for non-active communications. In addition, session and idle timeouts and be specified to terminate and release resources for inactive connections.</p>
+      </td>
+      <td>
+        ##### SC-10 Network Disconnection
+        <p>The information system terminates the network connection associated with a communications session at the end of the session or after the organization-defined time period of inactivity.</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>Teleport initializes cryptographic keys that act as a Certificate Authority (CA) to further issue x509 and SSH certificates. SSH and x509 user certificates that are issued are signed by the CA and are (by default) short-lived. SSH host certificates are also signed by the CA and rotated automatically (a manual force rotation can also be performed).</p>
+        <p>Teleport Enterprise builds against a FIPS 140-2 compliant library (BoringCrypto). In addition, when Teleport Enterprise is in FedRAMP/FIPS 140-2 mode, Teleport will only start and use FIPS 140-2 compliant cryptography.        </p>
+      </td>
+      <td>
+        ##### SC-12 Cryptographic Key Establish and Management
+        <p>The organization establishes and manages cryptographic keys for required cryptography employed within the information system in accordance with organization-defined requirements for key generation, distribution, storage, access, and destruction.</p>
+        <p>The organization produces, controls, and distributes symmetric cryptographic keys using NIST FIPS-compliant or NSA-approved key management technology and processes.</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>Teleport initializes cryptographic keys that act as a Certificate Authority (CA) to further issue x509 and SSH certificates. SSH and x509 user certificates that are issued are signed by the CA and are (by default) short-lived. SSH host certificates are also signed by the CA and rotated automatically (a manual force rotation can also be performed).</p>
+      </td>
+      <td>
+        ##### SC-17 Public Key Infrastructure Certificates
+        <p>The organization issues public-key certificates under an organization-defined certificate policy or obtains public key certificates from an approved service provider.</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>Teleport SSH and TLS sessions are protected with SSH user and x509 client certificates. For access to the Web UI, Teleport uses bearer token auth stored in a browser token to authenticate a session. Upon user logout, SSH and TLS certificates are deleted from disk and cookies are removed from the browser.</p>
+      </td>
+      <td>
+        ##### SC-23 Session Authenticity
+        <p>The information system protects the authenticity of communications sessions.</p>
+        <p>The information system invalidates session identifiers upon user logout or other session termination.</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+&nbsp;  
+_* RBAC is available for users of Teleport Enterprise._
+
+## Conclusion  
+
+Note that not all relevant NIST requirements are listed above. For more detailed information please download our <a href="/resources/white-papers/fedramp/">FedRAMP compliance white paper</a>.  
+
+As Teleport’s design goal was to provide sensible choices by default, it enforces most of the best practices automatically without additional configuration.

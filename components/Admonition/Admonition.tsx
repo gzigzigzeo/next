@@ -7,12 +7,14 @@ const types = ["warning", "tip", "note", "danger"] as const;
 export interface AdmonitionProps {
   type: typeof types[number];
   title: string;
+  bg?: string;
   children: React.ReactNode;
 }
 
 const Admonition = ({
   type: baseType,
   title: baseTitle,
+  bg = "white",
   children,
 }: AdmonitionProps) => {
   const type = baseType && types.includes(baseType) ? baseType : "tip";
@@ -21,7 +23,7 @@ const Admonition = ({
   return (
     <Box
       border="1px solid"
-      bg="white"
+      bg={bg}
       borderColor={type}
       borderRadius="default"
       mb="3"

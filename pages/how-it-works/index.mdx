@@ -1,0 +1,178 @@
+---
+hideWave: true
+border: none
+h1: Basic Concepts
+title: "How Teleport Works: Basic Concepts"
+headerTitle: How Teleport Works
+headerDescription:
+  Teleport is a single binary which enables secure access to SSH
+  nodes, Kubernetes clusters, web apps, PostgreSQL and MySQL
+  databases behind NAT. Teleport is trivial to setup as a Linux
+  daemon or in a Kubernetes pod.
+description: How SSH access works? How Kubernetes access works? This guide to Teleport concepts and architecture for SSH access, Kubernetes access answers these questions.
+layout: howItWorks
+---
+
+import NextImage from "next/image";
+import { Box, Flex, StructureDiagram } from "components";
+
+## The Basics
+
+Teleport is an identity-aware, multi-protocol access proxy
+which understands SSH, HTTPS, Kubernetes API, MySQL and PostgreSQL wire
+protocols. It is completely transparent to client-side tools and designed to
+work with everything in today's DevOps ecosystem.
+
+Inside the [downloaded tarball](/teleport/download/), you will find three
+binaries: the `teleport` daemon, the `tsh` client, and the `tctl` administration tool.
+They are dependency-free, written in a compiled language, and run on any
+UNIX-compatible operating system, such as Linux, FreeBSD, or macOS. Teleport is
+open source under the Apache 2 license and the source code is available on <a href="https://github.com/gravitational/teleport/" target="_blank">Github</a>.
+
+## Teleport Architecture
+
+The key concept of Teleport architecture is a "cluster". A Teleport cluster is
+a collection of resources such as servers, remote devices, databases,
+Kubernetes clusters or internal web apps.
+
+Clients must authenticate with Teleport and receive a client certificate which
+automatically works for all resources in a cluster, i.e. after authentication
+`ssh`, `kubectl`, `psql`, `mysql` and other remote access commands will be
+configured with user's identity.
+
+Teleport offers a built-in database of users but for production use we
+recommend integrating it with enterprise SSO based on Okta, Github, Google
+Apps, Active Directory and other identity providers.
+
+To create a minimal Teleport cluster, you must launch three services:
+
+- **Teleport Auth Service**. The certificate authority of the cluster. It issues certificates to clients and maintains the audit log.
+- **Teleport Proxy Service**. The proxy allows access to cluster resources from the outside. Typically it is the only service available from the public network.
+- **Teleport Node**. A Teleport node is like "sshd on steroids". The node
+  service runs near a target resource and speaks its native protocol such as
+  SSH, Kubernetes API, HTTPS, PostgreSQL or MySQL wire protocols. Think a
+  "smart sidecar" which routes user requests from a proxy to its target
+  resource.
+
+<Flex display={["none", "flex"]} flexDirection="column">
+  The diagram below is interactive, try clicking on individual components:
+  <StructureDiagram />
+  <Box mt={3} ml={7}>
+    The `teleport` binary provides all three services. They can be enabled or
+    disabled via configuration or command line flags. To create a single-node
+    cluster, launch a single instance of the `teleport` daemon with all services
+    enabled.
+  </Box>
+</Flex>
+
+## How Teleport Cluster Works
+
+The concept of a cluster is the foundation of the Teleport security model.
+
+- Users and servers all must join the same cluster before access can be granted.
+- To join a cluster, both users and servers must authenticate and receive certificates.
+- The Teleport auth service is the CA of the cluster, which issues certificates
+  for all supported protocols.
+
+This model prevents honeypot attacks and eliminates the issue of trust on first
+use. This also allows users to enumerate all servers and other resources that
+are currently online.
+
+Teleport clusters can be configured to trust each other. This allows users
+from one organization to access designated servers inside of another
+organization’s cloud or on-premise environment.
+
+## User Experience
+
+Teleport users who need access, must authenticate first by executing the `tsh login` command. This command opens a web browser to authenticate and exits
+upon successful authentication. This configures user's CLI environment with
+short-lived certificates for access.
+
+After that, users will be able to access their SSH servers, Kubernetes clusters,
+web applications or databases. Teleport is backward compliant with existing
+client tools so users can continue to use `ssh`, `psql`, `mysql` or `kubectl`
+commands as usual:
+
+```bash
+# First, 'tsh' commands authenticates users and configures other
+# CLI tools with a client's certificate:
+$ tsh login --proxy=proxy.example.com
+
+# SSH access as usual:
+$ ssh user@host
+
+# Kubernetes access as usual:
+$ kubectl get pods
+
+# Database access as usual:
+$ psql
+```
+
+## How Authentication Works
+
+Teleport proxy serves the login screen on `https://proxy.example.com:3080`
+where users are asked for their username, password, and a 2nd factor. If a 3rd
+party identity such as Github is used, the proxy forwards the user to Github
+using OAuth2.
+
+The proxy sends the user’s identity to the Teleport auth service. In turn, the
+auth service issues certificates for SSH, Kubernetes, and other resources in a
+cluster, and sends them back to the client via the proxy.
+
+The client receives the certificates from the proxy, stores them in the user’s
+`~/.tsh` directory, and loads them into the ssh-agent if one is running.
+
+To learn more, check out the guide for the
+[certificate-based SSH authentication](/teleport/how-it-works/certificate-based-authentication-ssh-kubernetes/).
+
+## Audit Log
+
+The Teleport Auth service maintains the audit log of everything happening
+inside the environment. The audit log consists of two components:
+
+- _The event log_. It consists of well-documented JSON records of security
+  events. Examples of such events include login attempts, file transfers, code
+  execution, filesystem changes, or network activity.
+- _The recorded sessions_. All users’ interactive sessions to cluster nodes via
+  the ssh and kubectl commands are recorded for future replay.
+
+The Auth service stores both types of audit on a local file system by
+default, but can be configured to use S3, DynamoDB, and other suitable data
+stores.
+
+The recorded sessions are stored as flat ASCII files and can be easily analyzed
+by 3rd party software. For example, one can “replay” a session by dumping a
+session file to stdout using `cat` command.
+
+To learn more, check out the guide for the [audit logging](/teleport/how-it-works/audit-logging-for-ssh-and-kubernetes/)
+for the supported protocols.
+
+<NextImage
+  src="./assets/recorded-session.gif"
+  alt="Teleport: How It Works"
+  height={360}
+  width={600}
+/>
+
+## Access for Edge Networks
+
+Teleport allows users to access resources running on devices that are located
+anywhere in the world, for example devices on 3rd party networks or via a cellular
+connection. Examples of this include self-driving vehicles, network equipment,
+retail locations, medical devices, etc.
+
+To make this work, each remote device must be configured to point at a Teleport
+Proxy public address, like `proxy.example.com`. This allows each device to
+establish and maintain a permanent reverse tunnel to the cluster to which it
+belongs. This tunnel is used to proxy user connections into devices. The tunnel
+is automatically re-established if the network connectivity is intermittent.
+
+Reverse tunnels enable Teleport users to:
+
+- Manage IoT devices via SSH.
+- Access Kubernetes clusters located on edge or IoT platforms.
+- Access Web applications running on 3rd party private networks.
+- Access MySQL and PostgreSQL databases running in remote environments.
+
+To learn more, check out the guide for the <a href="/teleport/how-it-works/ssh-kubernetes-access-on-the-edge/">Edge Access</a>
+

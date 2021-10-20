@@ -1,0 +1,91 @@
+---
+hideWave: true
+border: none
+h1: Audit Logging
+title: Audit Logging for SSH and Kubernetes
+description: How to implement audit logging and session recording for SSH and Kubernetes access to improve visibility into your cloud infrastructure
+headerTitle: Audit Logging
+headerDescription: Learn how Teleport keeps an audit log of access events for all SSH servers, Kubernetes clusters, and web applications.
+layout: howItWorks
+---
+
+import NextImage from "next/image";
+import { SplitCode } from "components";
+
+## The Basics
+
+As the `teleport` daemon runs on every machine in a cluster, it detects security-related events and reports them to the cluster’s auth service. Generally, there are three types of information that can be collected for audit purposes:
+
+1. **Access events**.  These include security-related events that happen “on the wire,” such as login attempts, remote command execution, access denied events, session creation, termination, etc..
+
+2. **Session recordings**. When users create interactive sessions via `ssh` or via `kubectl exec -ti`, these sessions are recorded and can be replayed later via a Youtube-like web interface with features like pause, rewind, etc.
+
+3. **Host events**. This is also called _enhanced session recording_. When enabled, host events allow Teleport to capture and store detailed low-level events that happen on a host during a user session, such as filesystem changes, network activity, process execution, etc. [eBPF]("https://lwn.net/Articles/740157/) must be supported by the host kernel and <a href="https://github.com/iovisor/bcc">BCC</a> must be installed for this to work.
+
+The diagram below illustrates two options (A and B) for how audit data is collected and stored:
+
+<NextImage src="../assets/teleport-audit-log.png" alt="Audit Log" height={360} width={600} />
+
+
+**Option A** is called _recording node_. In this mode, each Teleport node sends the audit information to the auth service. This is the default and recommended method.
+
+
+**Option B** is called _recording proxy_. In this mode, the Teleport Proxy service is sending the audit information to the auth service regarding all client connections.
+
+
+You can read about additional considerations for picking the audit recording method in the documentation.
+
+
+## Audit Format
+
+Teleport uses two data formats for the audit information:
+
+1. **Security events** such as access events and host events are stored as structured JSON documents. <a href="/teleport/docs/admin-guide/#audit-log">Teleport documentation</a> better details their format. They are suitable for export and processing by external software.
+2. **Recorded sessions** contain the raw dump of stdout and stderr streams, including TAB characters (bash escape sequences). One can instantaneously replay a recorded session using cat command.
+
+<SplitCode>
+  <SplitCode.Item title="Event Data Example">
+    ```json
+    {
+    "event": "session.start",
+    "user": "john.doe@example.com",
+    "login": "dba",
+    "server_id": "f84f7386-5e22",
+    "sid": "8d3895b6-e9dd",
+    "addr.local": "10.5.l.15",
+    "addr.remote": "73.223.221.14",
+    "time": "2017-02-03T06:54:05Z"
+    }
+    ```
+  </SplitCode.Item>
+  <SplitCode.Item title="Recorded Session Data Example">
+    ```go
+    ^[[94;1msmb^[[0;33m ~^[[00m: cd /usr/bin^M
+    ^[[94;1msmb^[[0;33m /usr/bin^[[00m: ls^M
+    ^[[94;1msmb^[[0;33m /usr/bin^[[00m: exit^M
+    logout^M
+
+
+
+
+
+
+    ```
+  </SplitCode.Item>
+</SplitCode>
+
+## Recorded Sessions using
+
+Here's what the session replay looks like: 
+
+<NextImage src="../assets/recorded-session.gif" alt="How Teleport Works" height={360} width={600}/>
+
+## Audit Storage
+
+There are several options for storing audit information:
+
+- Both the security events and session recordings can be stored on a local file system of the auth service. This is the simplest option.
+- Security events can be stored in a cloud database such as DynamoDB, Google FireBase, and others.
+- Session recordings can be stored in cloud block storage such as AWS S3.
+
+Teleport audit information can easily be injected into external logging and monitoring facilities such as Splunk, AlertLogic, ElasticSearch, and others.

@@ -65,6 +65,8 @@ export interface ProductBannerProps {
   src: string;
   alt: string;
   imgPosition: "left" | "right";
+  logoBar?: boolean;
+  logoSrc?: string;
 }
 
 export const ProductBanner = ({
@@ -75,6 +77,8 @@ export const ProductBanner = ({
   children,
   src,
   alt,
+  logoBar = false,
+  logoSrc,
 }: ProductBannerProps) => {
   return (
     <Flex flexDirection="column" alignItems="center" py={[5, 11]}>
@@ -124,22 +128,34 @@ export const ProductBanner = ({
             </Box>
           </Flex>
           {/* Image Element */}
-          <Box
+          <Flex
+            flexDirection="column"
             minWidth={
               imgPosition === "right" ? ["auto", "60%"] : ["auto", "66.6%"]
             }
-            minHeight={["330px", "400px"]}
-            position="relative"
-            // border="1px solid red"
           >
-            <Image layout="fill" objectFit="contain" src={src} alt={alt} />
-          </Box>
+            <Box minHeight={["330px", "400px"]} position="relative">
+              <Image layout="fill" objectFit="contain" src={src} alt={alt} />
+            </Box>
+            {logoBar && (
+              <Box position="relative" height={72}>
+                <Image
+                  layout="fill"
+                  objectFit="contain"
+                  src={logoSrc}
+                  alt="company logos"
+                />
+              </Box>
+            )}
+          </Flex>
         </Flex>
+
+        {/* Container for the sub-elements */}
         <Flex
           flexDirection={["column", "row"]}
           justifyContent="space-between"
           alignItems="flex-start"
-          mt={[5, 9]}
+          mt={logoBar ? [3, 5] : [5, 9]}
           width="100%"
         >
           {children}

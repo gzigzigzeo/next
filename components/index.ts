@@ -37,6 +37,7 @@ export { default as ListAndImage } from "components/ListAndImage";
 export { default as LoginPage } from "components/LoginPage";
 export { default as Manifesto } from "components/Manifesto";
 export { default as MessageBanner } from "components/MessageBanner";
+export { default as NewsItem } from "components/NewsItem";
 export { default as Notice } from "components/Notice";
 export { default as OurOffices } from "components/OurOffices";
 export { default as PageIntro } from "components/PageIntro";

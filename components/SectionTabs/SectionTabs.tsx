@@ -72,10 +72,17 @@ const SectionTabsItem = ({
 
 export interface SectionTabsProps {
   children: React.ReactNode;
+  title?: string;
   subtitle?: string;
+  description?: string;
 }
 
-export const SectionTabs = ({ children, subtitle }: SectionTabsProps) => {
+export const SectionTabs = ({
+  children,
+  title,
+  subtitle,
+  description,
+}: SectionTabsProps) => {
   const [currentTab, setCurrentTab] = useState<number>(0);
   const onChange = (index: number) => setCurrentTab(index);
 
@@ -104,6 +111,28 @@ export const SectionTabs = ({ children, subtitle }: SectionTabsProps) => {
             color="light-purple"
           >
             {subtitle}
+          </Box>
+        )}
+        {title && (
+          <Box
+            mb={[1, 3]}
+            fontSize={["26px", "header-1"]}
+            fontWeight="black"
+            lineHeight="xl"
+            color="black"
+          >
+            {title}
+          </Box>
+        )}
+        {description && (
+          <Box
+            mb={[3, 5]}
+            fontSize="text-xl"
+            width={[null, "80%"]}
+            lineHeight="lg"
+            color="darkest"
+          >
+            {description}
           </Box>
         )}
         <Flex position="relative">

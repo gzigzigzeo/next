@@ -18,9 +18,10 @@ import { GridCard } from "./GridCard";
 
 export interface GridDisplayProps {
   children: React.ReactNode;
+  productCard?: boolean;
   bg?: BGColor;
   centralHeading?: boolean;
-  title: string;
+  title?: string;
   subtitle?: string;
   description?: string;
   titleFontSize?: string | string[];
@@ -33,6 +34,7 @@ export interface GridDisplayProps {
 
 function GridDisplay({
   children,
+  productCard = false,
   bg,
   centralHeading = false,
   title,
@@ -52,59 +54,71 @@ function GridDisplay({
         flexDirection="column"
         alignItems="center"
       >
-        <Flex
-          alignSelf={centralHeading ? "auto" : "flex-start"}
-          pb={centralHeading ? [0, 6] : "auto"}
-        >
-          {/** Icon and Title elements */}
-          {centralHeading ? (
-            <Flex flexDirection="column" pt={[4, 7, 11]}>
-              <Heading
-                title={title}
-                subtitle={subtitle}
-                titleFontSize={titleFontSize}
-                titleLineHeight={titleLineHeight}
-                titleFontWeight={titleFontWeight}
-                subtitleFontSize={subtitleFontSize}
-                align="center"
-              />
-              {description && (
-                <Box
-                  color="darkest"
-                  fontSize={["text-lg", "text-xl"]}
-                  lineHeight="lg"
-                  textAlign="center"
-                >
-                  {description}
+        {title && (
+          <Flex
+            alignSelf={centralHeading ? "auto" : "flex-start"}
+            pb={centralHeading ? [0, 6] : "auto"}
+          >
+            {/** Icon and Title elements */}
+            {centralHeading ? (
+              <Flex flexDirection="column" pt={[4, 7, 11]}>
+                <Heading
+                  title={title}
+                  subtitle={subtitle}
+                  titleFontSize={titleFontSize}
+                  titleLineHeight={titleLineHeight}
+                  titleFontWeight={titleFontWeight}
+                  subtitleFontSize={subtitleFontSize}
+                  align="center"
+                />
+                {description && (
+                  <Box
+                    color="darkest"
+                    fontSize={["text-lg", "text-xl"]}
+                    lineHeight="lg"
+                    textAlign="center"
+                  >
+                    {description}
+                  </Box>
+                )}
+              </Flex>
+            ) : (
+              <Flex id="titlediv" flexDirection="row" pt={[5, 7, 9]}>
+                {iconName && (
+                  <Icon
+                    color="dark-purple"
+                    name={iconName}
+                    size={iconSize}
+                  ></Icon>
+                )}
+                <Box fontSize="header-3" color="darkest" lineHeight="lg" pl={3}>
+                  {title}
                 </Box>
-              )}
-            </Flex>
-          ) : (
-            <Flex id="titlediv" flexDirection="row" pt={[5, 7, 9]}>
-              {iconName && (
-                <Icon
-                  color="dark-purple"
-                  name={iconName}
-                  size={iconSize}
-                ></Icon>
-              )}
-              <Box fontSize="header-3" color="darkest" lineHeight="lg" pl={3}>
-                {title}
-              </Box>
-            </Flex>
-          )}
-        </Flex>
+              </Flex>
+            )}
+          </Flex>
+        )}
 
         {/** Card display logic using Grid*/}
         <Grid
-          mt={centralHeading ? [3, 2] : 7}
+          mt={centralHeading ? [3, 2] : productCard ? 3 : 7}
           mb={6}
+          //the minimum width of the outer shell
           minWidth={["340px", "800px", "980px"]}
-          gridTemplateColumns={[
-            "minmax(140px, 270px)",
-            "repeat(3, minmax(140px, 270px))",
-            "repeat(4, minmax(140px, 270px))",
-          ]}
+          //the widths of individual columns
+          gridTemplateColumns={
+            productCard
+              ? [
+                  "minmax(340px, 560px)",
+                  "repeat(2, minmax(140px, 400px))",
+                  "repeat(4, minmax(140px, 270px))",
+                ]
+              : [
+                  "minmax(140px, 270px)",
+                  "repeat(3, minmax(140px, 270px))",
+                  "repeat(4, minmax(140px, 270px))",
+                ]
+          }
           gridGap={[3, 3]}
         >
           {children}

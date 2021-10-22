@@ -10,6 +10,7 @@ import {
   AnimationHeader,
   AnnouncementBar,
   EasyStart,
+  GridDisplay,
   MessageBanner,
   NewsItem,
   Section,
@@ -20,6 +21,7 @@ import {
   VideoBanner,
   WorksWith,
 } from "components";
+import { ProductCard } from "components/GridDisplay"
 
 <Section bg="grayWave">
   <AnimationHeader
@@ -38,66 +40,97 @@ import {
   </NewsItem>
   <AnnouncementBar />
 </Section>
-<Section bg="wavelight">
-  4 product cards go here
+<GridDisplay productCard bg="flatWhite">
+  <ProductCard 
+  title="Teleport Server Access" 
+  src="../sharedAssets/images/server.svg" 
+  href="/ssh-server-access" 
+  description="For SSH servers behind NAT in multiple environments."/>
+  <ProductCard 
+  title="Teleport Kubernetes Access" 
+  src="../sharedAssets/images/kubernetes.svg" 
+  href="/kubernetes-access" 
+  description="For Kubernetes clusters behind NAT in multiple environments."/>
+  <ProductCard 
+  title="Teleport Application Access" 
+  src="../sharedAssets/images/application.svg" 
+  href="/application-access" 
+  description="For web applications behind NAT in multiple environments."/>
+  <ProductCard 
+  title="Teleport Database Access" 
+  src="../sharedAssets/images/database.svg" 
+  href="/database-access" 
+  description="For databases behind NAT in multiple environments."/>
+</GridDisplay>
+<Section bg="grayWave">
+<SectionTabs 
+  title="Access that doesn't get in the way" 
+  description="A single sign-on allows discovery and instant access to all layers of your tech stack behind NAT across clouds, data centers, or on the edge. There is no more juggling of shared secrets, SSH keys, or hopping between VPNs and multiple access points.">
+  <SectionTabs.Item
+    src="../sharedAssets/images/dual-auth.svg"
+    title="Unified Resource Catalog"
+    description="There is no need to maintain inventories. Enjoy the live view of all servers, Kubernetes clusters, internal applications, databases, and live sessions across all environments."
+  >
+        <Terminal>
+      ```bash
+      $ tsh request create --roles=dba \
+        --reviewers=alice@example.com
+
+      # Alice
+      $ tsh request list
+
+      # Output
+      ID                                   User             Roles   Created (UTC)       Status
+      ------------------------------------ ---------------  ------- ------------------- -------
+      9c721e54-b049-4ef8-a7f6-c777aa066764 bob@example.com  dba 03 Apr 21 03:58 UTC PENDING
+
+      $ tsh request review --approve --reason="proceed with caution" 9c721e54-b049-4ef8-a7f6-c777aa066764
+      ```
+      </Terminal>
+  </SectionTabs.Item>
+  <SectionTabs.Item
+    src="../sharedAssets/images/dual-auth.svg"
+    title="Unified Resource Catalog"
+    description="There is no need to maintain inventories. Enjoy the live view of all servers, Kubernetes clusters, internal applications, databases, and live sessions across all environments."
+  >
+        <Terminal>
+      ```bash
+      $ tsh request create --roles=dba \
+        --reviewers=alice@example.com
+
+      # Alice
+      $ tsh request list
+
+      # Output
+      ID                                   User             Roles   Created (UTC)       Status
+      ------------------------------------ ---------------  ------- ------------------- -------
+      9c721e54-b049-4ef8-a7f6-c777aa066764 bob@example.com  dba 03 Apr 21 03:58 UTC PENDING
+
+      $ tsh request review --approve --reason="proceed with caution" 9c721e54-b049-4ef8-a7f6-c777aa066764
+      ```
+      </Terminal>
+  </SectionTabs.Item>
+  <SectionTabs.Item
+    src="../sharedAssets/images/dual-auth.svg"
+    title="Unified Resource Catalog"
+    description="There is no need to maintain inventories. Enjoy the live view of all servers, Kubernetes clusters, internal applications, databases, and live sessions across all environments."
+  >
+        <Terminal>
+      ```bash
+      $ tsh request create --roles=dba \
+        --reviewers=alice@example.com
+
+      # Alice
+      $ tsh request list
+
+      # Output
+      ID                                   User             Roles   Created (UTC)       Status
+      ------------------------------------ ---------------  ------- ------------------- -------
+      9c721e54-b049-4ef8-a7f6-c777aa066764 bob@example.com  dba 03 Apr 21 03:58 UTC PENDING
+
+      $ tsh request review --approve --reason="proceed with caution" 9c721e54-b049-4ef8-a7f6-c777aa066764
+      ```
+      </Terminal>
+  </SectionTabs.Item>
+</SectionTabs>
 </Section>
-<SectionTabs subtitle="Subtitle">
-  <SectionTabs.Item
-    src=""
-    title=""
-    description=""
-  >
-  </SectionTabs.Item>
-  <SectionTabs.Item
-    src=""
-    title=""
-    description=""
-  >
-  </SectionTabs.Item>
-  <SectionTabs.Item
-    src=""
-    title=""
-    description=""
-  >
-  </SectionTabs.Item>
-</SectionTabs>
-<SectionTabs>
-  <SectionTabs.Item
-    src=""
-    title=""
-    description=""
-  >
-  </SectionTabs.Item>
-  <SectionTabs.Item
-    src=""
-    title=""
-    description=""
-  >
-  </SectionTabs.Item>
-  <SectionTabs.Item
-    src=""
-    title=""
-    description=""
-  >
-  </SectionTabs.Item>
-</SectionTabs>
-<SectionTabs>
-  <SectionTabs.Item
-    src=""
-    title=""
-    description=""
-  >
-  </SectionTabs.Item>
-  <SectionTabs.Item
-    src=""
-    title=""
-    description=""
-  >
-  </SectionTabs.Item>
-  <SectionTabs.Item
-    src=""
-    title=""
-    description=""
-  >
-  </SectionTabs.Item>
-</SectionTabs>

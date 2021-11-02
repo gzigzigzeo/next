@@ -15,11 +15,13 @@ interface SectionTabsItemProps {
   selected?: boolean;
   src: string;
   title: string;
+  alignment?: "right" | "left";
   onChange?: (id: number) => void;
 }
 
 const SectionTabsItem = ({
   children,
+  alignment,
   description,
   id = 0,
   selected = false,
@@ -30,6 +32,7 @@ const SectionTabsItem = ({
   return (
     <>
       <StyledTab selected={selected} onClick={() => onChange(id)}>
+        {/* Icon */}
         <Image
           src={src}
           width="24px"
@@ -59,9 +62,9 @@ const SectionTabsItem = ({
         transition={transition([["opacity", "slow"]])}
         position={["static", "absolute"]}
         top="0"
-        right="0"
+        right={alignment === "right" ? "0" : 490}
         bottom="0"
-        left="490px"
+        left={alignment === "right" ? 490 : "0"}
         alignItems="stretch"
       >
         {children}
@@ -75,6 +78,7 @@ export interface SectionTabsProps {
   title?: string;
   subtitle?: string;
   description?: string;
+  alignment?: "right" | "left";
 }
 
 export const SectionTabs = ({
@@ -82,6 +86,7 @@ export const SectionTabs = ({
   title,
   subtitle,
   description,
+  alignment = "right",
 }: SectionTabsProps) => {
   const [currentTab, setCurrentTab] = useState<number>(0);
   const onChange = (index: number) => setCurrentTab(index);
@@ -139,6 +144,7 @@ export const SectionTabs = ({
           <Box maxWidth={["auto", "400px"]}>
             {childTabProps.map((props, id) => (
               <SectionTabsItem
+                alignment={alignment}
                 key={id}
                 {...props}
                 onChange={onChange}
@@ -159,8 +165,9 @@ const StyledTab = styled(HeadlessButton)<{ selected: boolean }>(
   css({
     border: ["none", "2px solid"],
     borderRadius: "default",
-    textAlign: "left",
+    // textAlign: "left",
     position: "relative",
+    textAlign: "right",
     px: [0, 3],
     pt: [0, 3],
     pb: 2,

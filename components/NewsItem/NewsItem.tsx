@@ -10,7 +10,7 @@ interface NewsItemProps {
 }
 export const NewsItem = ({ children }: NewsItemProps) => {
   return (
-    <Flex flexDirection="row" ml={11} mt={2}>
+    <Flex flexDirection="row" ml={[3, 11]} mt={2}>
       <StyledNewsImg>NEW</StyledNewsImg>
       <Flex ml={3} fontSize="14px">
         {children}
@@ -27,4 +27,5 @@ const StyledNewsImg = styled("div")({
   fontSize: "11px",
   fontWeight: "bold",
   width: "44px",
+  height: "26px",
 });

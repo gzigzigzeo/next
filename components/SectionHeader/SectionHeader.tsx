@@ -13,13 +13,14 @@ type LinkProps = {
   shape?: ButtonShape;
 };
 export interface SectionHeaderProps {
-  mode?: string;
-  subtitle?: string;
   title: string;
-  children?: React.ReactNode;
   description: React.ReactNode;
+  subtitle?: string;
+  children?: React.ReactNode;
+  mode?: string;
   bg?: BGColor;
   link?: LinkProps;
+  inColumn?: boolean;
 }
 
 const getBG = (color: BGColor) => {
@@ -65,18 +66,29 @@ export const SectionHeader = ({
   description,
   bg,
   link,
+  inColumn,
 }: SectionHeaderProps) => {
+  const titleInColumn = inColumn ? "column" : ["column", "row"];
+  const leftGap = inColumn ? 0 : [0, 11];
+  const titleBottomGap = inColumn ? [0, 5] : mode === "none" ? [4, 9] : [4, 11];
+  const headerBottomGap = inColumn ? [3, 5] : 0;
+  const sectionTopGap = inColumn ? [11, 9] : mode === "none" ? [4, 9] : [4, 11];
   return (
-    <Flex pt={mode === "none" ? [3, 5] : [7, 11]} {...getBG(bg)}>
+    <Flex
+      pt={mode === "none" ? [3, 5] : [7, 11]}
+      pb={headerBottomGap}
+      {...getBG(bg)}
+    >
       <Centrator
         justifyContent={["auto", "space-between"]}
         alignItems="stretch"
-        flexDirection={["column", "row"]}
+        flexDirection={titleInColumn}
       >
         <Box
           flex="1 1 auto"
-          py={mode === "none" ? [4, 9] : [4, 11]}
-          order={[1, 0]}
+          pt={sectionTopGap}
+          pb={titleBottomGap}
+          order={inColumn ? 0 : [1, 0]}
         >
           <Flex flexDirection="column" alignItems="flexStart">
             {subtitle && (
@@ -128,10 +140,10 @@ export const SectionHeader = ({
           flex="0 0 auto"
           justifyContent="center"
           alignItems="center"
-          ml={[0, 11]}
+          ml={leftGap}
           pt={[3, 2]}
           pb={[0, 2]}
-          px={[3, 0]}
+          px={inColumn ? 0 : [3, 0]}
           maxWidth="100%"
         >
           {children}

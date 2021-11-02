@@ -1,0 +1,202 @@
+---
+title: Teleport Case Studies
+description: See how Teleport is used by leading companies to enable engineers to quickly access any computing resource anywhere
+headerBehaviour: floating
+border: none
+hideWave: true
+reviews:
+  - roadie2
+  - nasdaq
+  - sumologic
+  - extrahop
+  - ecmwf
+images:
+  imgCity:
+    image: ./assets/city-tile.jpg
+  authLogo:
+    image: ./assets/auth0-logo.png
+  extrahopLogo:
+    image: ./assets/extrahop-black.png
+  imgRiver:
+    image: ./assets/city-uk-tile.jpg
+  imgSeattle:
+    image: ./assets/city-seattle-tile.jpg
+  ecmwfLogo:
+    image: ./assets/ecmwf.png
+clients:
+  - tenxgenomics
+  - aenetworks
+  - absolute
+  - accenture
+  - acquia
+  - anaconda
+  - airtable
+  - asapp
+  - ascend
+  - auction
+  - auth0
+  - axonius
+  - backmarket
+  - balbix
+  - bigcommerce
+  - bitvavo
+  - blablacar
+  - castor
+  - chargepoint
+  - checkr
+  - ciena
+  - cohesity
+  - coralogix
+  - crypto
+  - csc
+  - cybozu
+  - darktrace
+  - datastax
+  - decisiv1
+  - boomi
+  - dicecorp
+  - domino
+  - doordash
+  - draftkings
+  - ecmwf
+  - elastic
+  - everquote
+  - expel
+  - extrahop
+  - fieldbox
+  - finaccel
+  - fis
+  - folio
+  - gitlab
+  - gladly1
+  - glu
+  - govtechsingapore
+  - gree
+  - greenhouse
+  - greenlots
+  - gridspace
+  - gusto
+  - harmonic
+  - healthtap
+  - hpe
+  - homeaway
+  - ibm
+  - ilmcorp
+  - imanage
+  - imperva
+  - infoblox
+  - inmobi
+  - intenthq
+  - intility
+  - j2global
+  - japand2
+  - jumptrading
+  - lacework
+  - linxo
+  - lotto24
+  - lumin
+  - m2mobi
+  - materialize
+  - mattermost
+  - maystreet
+  - merit
+  - mulesoft
+  - mx
+  - nasdaq
+  - nash
+  - nydig
+  - openxchange
+  - paymentus
+  - pindrop
+  - pivotaltracker
+  - pubmatic
+  - roadie1
+  - rushstreet
+  - safeboda
+  - samsung
+  - shipt
+  - shockbyte
+  - smartthings
+  - snowflake
+  - softathome
+  - speach
+  - spoton
+  - sumologic
+  - swisscom
+  - telefonica
+  - shadestore
+  - threatstack
+  - thredup
+  - tokopedia
+  - touchsurgery
+  - transatel
+  - transferwise
+  - travelping
+  - trinetx
+  - trustedfamily
+  - tuenti
+  - twitch
+  - uptake
+  - homelandsecurity
+  - validere
+  - verticalchange
+  - virtualhealth
+  - vivint
+  - vmware
+  - volante
+  - wish
+  - xactly
+  - zapier
+---
+
+import {
+  SectionHeader,
+  StatsContainer,
+  BaitCard,
+  ClientsList,
+  Feedback,
+} from "components";
+
+<SectionHeader
+  subtitle="Trusted by leading companies"
+  title="Meet Our Customers"
+  description="See how Teleport is used by leading companies to enable engineers to quickly access any computing resource anywhere"
+  bg="wave-on-gray"
+  mode="none"
+  inColumn
+>
+  <StatsContainer>
+    <StatsContainer.Card title="3/5" description="top crypto exchanges" />
+    <StatsContainer.Card title="$5T" description="trillion in market cap" />
+    <StatsContainer.Card title="3" description="of 2020's largest IPOs" />
+    <StatsContainer.Card title="2" description="mobile gaming giants" />
+  </StatsContainer>
+</SectionHeader>
+<BaitCard
+  img={meta.images.imgCity.image}
+  imgBG="#7b8fc7"
+  logo={meta.images.authLogo.image}
+  link="/case-study/auth0/"
+  textLink="Read the Case Study"
+  description="Teleport provided a secure, transparent and easy way for Auth0 to access customer environments and achieve SSH Requirements and PCI Compliance"
+/>
+<BaitCard
+  img={meta.images.imgSeattle.image}
+  imgBG="#7da6d3"
+  logo={meta.images.ecmwfLogo.image}
+  link="/case-study/ecmwf/"
+  textLink="Read the Case Study"
+  description="How third parties securely access supercomputing clusters"
+  side="right"
+/>
+<BaitCard
+  img={meta.images.imgRiver.image}
+  imgBG="#a5d3ea"
+  logo={meta.images.extrahopLogo.image}
+  link="/case-study/extrahop/"
+  textLink="Read the Case Study"
+  description="How a Cybersecurity Company Does Cybersecurity"
+/>
+
+<Feedback reviews={meta.reviews} bg="page-bg" />
+<ClientsList clients={meta.clients} needLink allClients />

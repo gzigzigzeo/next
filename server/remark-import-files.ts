@@ -1,408 +1,201 @@
-import {
-  ExportNamedDeclaration,
-  VariableDeclaration,
-  ObjectExpression,
-  Property,
-  ModuleDeclaration,
-} from "estree-jsx";
-import { existsSync, readFileSync } from "fs";
-import probe from "probe-image-size";
-import { resolve, dirname } from "path";
-import { Image, Link } from "mdast";
 import { Transformer } from "unified";
 import visit from "unist-util-visit";
 import { VFile } from "vfile";
-import { isLocalAssetFile } from "../utils/url";
+import { isLocalAssetFile, relatify } from "../utils/url";
+import {
+  updateOrCreateAttribute,
+  filterByAttibuteName,
+  createMdxjsEsmImportNode,
+  createMdxJsxFlowElement,
+  createMdxJsxAttributeValueExpression,
+} from "./mdx-helpers";
+import {
+  createIdentifier,
+  createLiteral,
+  createObjectExpression,
+} from "./estree-helpers";
+import { getValidAssetPath, getDimensions } from "./image-helpers";
+import { visitImagePaths } from "./estree-images";
 
-export interface RemarkImportFilesOptions {
-  resolve?: boolean;
+interface RemarkImportFilesOptions {
+  propsList?: string[];
+  extWhiteList?: string[];
+  extBlackList?: string[];
 }
 
-const relativePathPattern = /\.\.?\//;
+const isMdxNode = ({ type }) =>
+  [
+    "mdxJsxTextElement",
+    "mdxJsxFlowElement",
+    "mdxBlockElement",
+    "mdxSpanElement",
+  ].includes(type);
 
-const urlish = ["src", "href", "poster"];
-const urlishMap: Record<string, 1> = urlish.reduce((acc, attr) => {
-  acc[attr] = 1;
-  return acc;
-}, {});
-
-const getAttr = (nodeAttributes: MdxJsxAttribute[], attrName: string) => {
-  const localPath = nodeAttributes.find((attr) => attr.name === attrName);
-
-  return (localPath?.value as string) ?? "";
-};
-
-const hasAttr = (nodeAttributes: MdxJsxAttribute[] = [], attrName: string) => {
-  return nodeAttributes.some((attr) => attr.name === attrName);
-};
-
-const isLink = (node: MdxastNode): boolean => {
-  const attrs = node.attributes as MdxJsxAttribute[];
-  if (
-    hasAttr(attrs, "download") &&
-    (node.name === "a" || node.name === "Link")
-  ) {
-    return isLocalAssetFile(getAttr(attrs, "href"));
-  }
-  return false;
-};
-
-const isMDXLink = (node): boolean => {
-  if (node.type === "link" && isLocalAssetFile(node.url)) {
-    return true;
-  }
-  return false;
-};
-
-const isImage = (node): boolean => node.type === "image";
-
-const findUrlish = (attrs: MdxJsxAttribute[] = []): string | null => {
-  const attr = attrs.find((attr) => urlishMap[attr.name as string]);
-  return (attr?.name as string) ?? null;
-};
-
-const isOk = (node: MdxJsxFlowElement) => {
-  return (
-    !!findUrlish(node.attributes) ||
-    isImage(node) ||
-    isLink(node) ||
-    isMDXLink(node)
+const isMDXNodeWithAttributes = (
+  node: MdxastNode,
+  { extWhiteList, extBlackList, propsList }: RemarkImportFilesOptions
+): boolean =>
+  isMdxNode(node) &&
+  !!filterByAttibuteName((node as MdxJsxFlowElement).attributes, propsList) &&
+  isLocalAssetFile(
+    filterByAttibuteName((node as MdxJsxFlowElement).attributes, propsList)
+      .value,
+    { extWhiteList, extBlackList }
   );
-};
 
-const validateSrc = (src) => {
-  const srcType = typeof src;
+const isLink = (
+  node: MdxastNode,
+  { extWhiteList, extBlackList }: RemarkImportFilesOptions
+): boolean =>
+  node.type === "link" &&
+  isLocalAssetFile(node.url, { extWhiteList, extBlackList });
 
-  return (
-    src &&
-    srcType === "string" &&
-    src[0] !== "#" &&
-    src[0] !== "/" &&
-    isLocalAssetFile(src)
-  );
-};
+const isImage = (
+  node: UnistNode,
+  { extWhiteList, extBlackList }: RemarkImportFilesOptions
+): boolean =>
+  node.type === "image" &&
+  isLocalAssetFile(node.url, { extWhiteList, extBlackList });
 
-const createImport = (
-  imports: MdxastNode[],
-  imported: Map<string, string>,
-  url: string,
-  _name: string
-) => {
-  if (_name) {
-    return _name;
-  }
+const isMetaNode = (node: MdxastNode) =>
+  node.type === "mdxjsEsm" && /export const meta = /.test(node.value);
 
-  const name = `__${imported.size}_${url.replace(/\W/g, "_")}__`;
+const importFactory = () => {
+  const imports: Record<string, string> = {};
 
-  imports.push({
-    type: "mdxjsEsm",
-    value: `import ${name} from \"${url}\";`,
-    data: {
-      estree: {
-        type: "Program",
-        sourceType: "module",
-        body: [
-          {
-            type: "ImportDeclaration",
-            source: {
-              type: "Literal",
-              value: url,
-              raw: JSON.stringify(url),
-            },
-            specifiers: [
-              {
-                type: "ImportDefaultSpecifier",
-                local: { type: "Identifier", name },
-              },
-            ],
-          },
-        ],
-      },
-    },
-  });
+  const createImport = (url: string) => {
+    let name = imports[url];
 
-  imported.set(url, name);
-  return name;
-};
+    if (!name) {
+      name = `__${url.replace(/\W/g, "_")}__`;
 
-const createImage = (
-  url: string,
-  alt = "",
-  title?: string
-): MdxJsxFlowElement => {
-  const img: MdxJsxFlowElement = {
-    type: "mdxJsxFlowElement",
-    name: "img",
-    children: [],
-    attributes: [
-      { type: "mdxJsxAttribute", name: "alt", value: alt },
-      { type: "mdxJsxAttribute", name: "src", value: url },
-    ],
+      imports[url] = name;
+    }
+
+    return name;
   };
 
-  if (title) {
-    img.attributes.push({
-      type: "mdxJsxAttribute",
-      name: "title",
-      value: title,
-    });
-  }
-
-  return img;
+  return { imports, createImport };
 };
 
-const createLink = (url: string, text: string): MdxJsxFlowElement => {
-  const link: MdxJsxFlowElement = {
-    type: "mdxJsxFlowElement",
-    name: "a",
-    attributes: [{ type: "mdxJsxAttribute", name: "href", value: url }],
-    children: [
-      {
-        type: "text",
-        value: text,
-      },
-    ],
-  };
-  return link;
-};
-
-const createAssignment = (
-  attrName: string,
-  value: string,
-  literal?: boolean
-): MdxJsxAttribute => ({
-  type: "mdxJsxAttribute",
-  name: attrName,
-  value: {
-    type: "mdxJsxAttributeValueExpression",
-    value: value,
-    data: {
-      estree: {
-        type: "Program",
-        sourceType: "module",
-        comments: [],
-        body: [
-          {
-            type: "ExpressionStatement",
-            expression: literal
-              ? { type: "Literal", raw: value, value }
-              : {
-                  type: "Identifier",
-                  name: value,
-                },
-          },
-        ],
-      },
-    },
-  },
-});
-
-const passVariable = (
-  node: MdxJsxFlowElement,
-  attrName: string,
-  value: string
-) => {
-  const newImportAttr = { ...node };
-  newImportAttr.attributes = newImportAttr.attributes.map((elem) => {
-    if (elem.name === attrName) {
-      return createAssignment(attrName, value);
-    }
-    return elem;
-  });
-  return newImportAttr;
-};
-
-const relatify = (link, resolve) => {
-  if (!relativePathPattern.test(link) && resolve) {
-    return `./${link}`;
-  }
-  return link;
-};
-
-const jsxify = (node: MdxJsxFlowElement | Image | Link): MdxJsxFlowElement => {
-  if (node.type === "image") {
-    const { url, alt = null, title } = node;
-    return createImage(url, alt, title);
-  }
-  if (node.type === "link") {
-    const text = node.children.find((elem) => elem.type === "text");
-    // TODO: handle if value is not a string
-    return createLink(node.url, (text?.value as string) ?? "");
-  }
-  return node;
-};
-
-const imgSizeRegExp = /@([0-9.]+)x/; // E.g. image@2x.png
-
-const getScaleRatio = (src: string) => {
-  if (imgSizeRegExp.test(src)) {
-    const match = src.match(imgSizeRegExp);
-
-    return parseFloat(match[1]);
-  } else {
-    return 1;
-  }
-};
-
-function forSureDeclar(_node): _node is ModuleDeclaration {
-  return true;
+interface UpdateFilePathOptions {
+  vfile: VFile;
+  node: MdxJsxFlowElement;
+  propsList: string[];
+  createImport: (path: string) => string;
 }
 
-function forSureExportNamedDeclaration(_node): _node is ExportNamedDeclaration {
-  return true;
-}
+const updateFilePath = ({
+  vfile,
+  node,
+  propsList,
+  createImport,
+}: UpdateFilePathOptions) => {
+  const attribute = filterByAttibuteName(node.attributes, propsList);
 
-interface Dims {
-  w: string;
-  h: string;
-}
+  if (!attribute || !attribute.value) {
+    return;
+  }
 
-const getDims = (source: string, path: string): null | Dims => {
-  const src = resolve(dirname(source), path);
+  const path = relatify(attribute.value as string);
+  const fullAssetPath = getValidAssetPath(vfile.path, path);
 
-  if (existsSync(src)) {
-    const file = readFileSync(src);
+  if (!fullAssetPath) {
+    return;
+  }
 
-    try {
-      const { width, height } = probe.sync(file);
-      const scaleRatio = getScaleRatio(src);
-      return { w: String(width / scaleRatio), h: String(height / scaleRatio) };
-    } catch (e) {
-      console.error(`Error while processing file ${path} at ${source}`);
-      return { w: "0", h: "0" };
-    }
+  const name = createImport(path);
+
+  updateOrCreateAttribute(
+    node,
+    attribute.name,
+    createMdxJsxAttributeValueExpression(name)
+  );
+
+  if (node.name === "img") {
+    const { width, height } = getDimensions(vfile.path, path);
+
+    updateOrCreateAttribute(node, "width", width);
+    updateOrCreateAttribute(node, "height", height);
   }
 };
 
-const createLiteralProp = (key, value): Property => ({
-  type: "Property",
-  kind: "init",
-  method: false,
-  shorthand: false,
-  computed: false,
-  key: {
-    type: "Identifier",
-    name: key,
-  },
-  value: {
-    type: "Literal",
-    raw: value,
-    value,
-  },
-});
-
-const createIdentifierProp = (key, value): Property => ({
-  type: "Property",
-  kind: "init",
-  method: false,
-  shorthand: false,
-  computed: false,
-  key: {
-    type: "Identifier",
-    name: key,
-  },
-  value: { type: "Identifier", name: value },
-});
+const defaultOptions = {
+  propsList: ["src", "href", "poster", "image"],
+  extWhiteList: [],
+  extBlackList: ["mdx", "md", "css", "ts", "tsx", "js", "jsx"],
+};
 
 export default function remarkImportFiles(
-  { resolve }: RemarkImportFilesOptions = { resolve: true }
+  options: RemarkImportFilesOptions
 ): Transformer {
   return (root: MdxastRootNode, vfile: VFile) => {
-    const imports: MdxastNode[] = [];
-    const imported = new Map<string, string>();
-    visit(
-      root,
-      [
-        (node) =>
-          node.type === "mdxjsEsm" && /export const meta = /.test(node.value),
-      ],
-      (node: ProgramEsmNode) => {
-        const exportDeclaration = node.data?.estree?.body?.find((i) => {
-          if (i.type === "ExportNamedDeclaration") {
-            const declar = i.declaration as VariableDeclaration;
-            const declarDeclarations = declar?.declarations[0];
-            if (
-              declarDeclarations.id.type === "Identifier" &&
-              declarDeclarations.id.name === "meta" &&
-              declarDeclarations.init.type === "ObjectExpression"
-            ) {
-              return true;
-            }
-          }
-          return false;
+    const { imports, createImport } = importFactory();
+
+    const pluginOptions = { ...defaultOptions, ...options };
+
+    const { propsList, extWhiteList, extBlackList } = pluginOptions;
+
+    visit(root, (node: MdxastNode, index, parent) => {
+      if (isMetaNode(node)) {
+        visitImagePaths({
+          tree: node.data.estree,
+          path: vfile.path,
+          propsList,
+          extWhiteList,
+          extBlackList,
+          callback: (node) => {
+            const name = createImport(node.value as string);
+
+            const { width, height } = getDimensions(
+              vfile.path,
+              node.value as string
+            );
+
+            return createObjectExpression([
+              createIdentifier("src", name),
+              createLiteral("width", width),
+              createLiteral("height", height),
+            ]);
+          },
+        });
+      } else if (isImage(node, pluginOptions)) {
+        const { url: src, alt = "", title } = node;
+
+        const props: Record<string, unknown> = { src, alt };
+
+        if (title) {
+          props.title = title;
+        }
+
+        const newNode = createMdxJsxFlowElement("img", props);
+
+        updateFilePath({ vfile, node: newNode, propsList, createImport });
+
+        parent.children.splice(index, 1, newNode);
+      } else if (isLink(node, pluginOptions)) {
+        const newNode = createMdxJsxFlowElement("a", {
+          href: node.url,
+          children: node.children,
         });
 
-        if (
-          !exportDeclaration ||
-          !forSureDeclar(exportDeclaration) ||
-          !forSureExportNamedDeclaration(exportDeclaration)
-        ) {
-          return;
-        }
+        updateFilePath({ vfile, node: newNode, propsList, createImport });
 
-        const declar = exportDeclaration.declaration as VariableDeclaration;
-        const properties = declar.declarations[0].init as ObjectExpression;
-        const imagesProp = properties.properties?.find(
-          (elem: Property) =>
-            elem.key.type === "Identifier" && elem.key.name === "$images"
-        ) as Property;
-
-        if (!imagesProp || imagesProp.value.type !== "ObjectExpression") {
-          return;
-        }
-
-        for (const property of imagesProp.value.properties) {
-          if (
-            property.type !== "Property" ||
-            property.value.type !== "Literal"
-          ) {
-            return;
-          }
-          let src = property.value.value as string;
-          if (!validateSrc(src)) {
-            continue;
-          }
-          src = relatify(src, resolve);
-          const name = createImport(imports, imported, src, imported.get(src));
-          const dims = getDims(vfile.path, src);
-
-          property.value = {
-            type: "ObjectExpression",
-            properties: [
-              createIdentifierProp("src", name),
-              createLiteralProp("width", dims.w),
-              createLiteralProp("height", dims.h),
-            ],
-          };
-        }
+        parent.children.splice(index, 1, newNode);
+      } else if (isMDXNodeWithAttributes(node, pluginOptions)) {
+        updateFilePath({
+          vfile,
+          node: node as MdxJsxFlowElement,
+          propsList,
+          createImport,
+        });
       }
-    );
-
-    visit<MdxJsxFlowElement>(root, [isOk], (_node, index, parent) => {
-      const node = jsxify(_node);
-      const attrs = node.attributes as MdxJsxAttribute[];
-      const attrName = findUrlish(attrs);
-      if (!attrName) {
-        return;
-      }
-      let src = getAttr(attrs, attrName);
-      if (!validateSrc(src)) {
-        return;
-      }
-      src = relatify(src, resolve);
-
-      const name = createImport(imports, imported, src, imported.get(src));
-      const newNode = passVariable(node, attrName, name);
-
-      if (node.name === "img") {
-        const dims = getDims(vfile.path, src);
-        newNode.attributes.push(createAssignment("width", dims.w, true));
-        newNode.attributes.push(createAssignment("height", dims.h, true));
-      }
-
-      parent.children.splice(index, 1, newNode);
     });
 
-    root.children.unshift(...imports);
+    root.children.unshift(
+      ...Object.entries(imports).map(([url, name]) =>
+        createMdxjsEsmImportNode(name, url)
+      )
+    );
   };
 }

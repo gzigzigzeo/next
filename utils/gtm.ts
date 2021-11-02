@@ -1,17 +1,32 @@
-interface PageEventProps {
+interface Event {
+  [key: string]: unknown;
   event: string;
-  page: string;
 }
 
 declare global {
-  var dataLayer: PageEventProps[]; // eslint-disable-line no-var
+  var dataLayer: Event[]; // eslint-disable-line no-var
 }
 
-export const GTMPageView = (url: string) => {
-  const pageEvent: PageEventProps = {
-    event: "pageview",
-    page: url,
-  };
+const isGTMEnabled = () => typeof window !== "undefined" && !!window.dataLayer;
 
-  window && window.dataLayer && window.dataLayer.push(pageEvent);
+export const GTMEvent = (
+  event: string,
+  payload: Record<string, unknown>
+): Promise<void> => {
+  return new Promise<void>((resolve) => {
+    if (isGTMEnabled()) {
+      dataLayer.push({
+        event,
+        ...payload,
+        eventCallback: () => resolve(),
+        eventTimeout: 1000, // Automatically resolves callback if it is not fired before timeout
+      });
+    } else {
+      console.log("GTM Event", payload);
+
+      resolve();
+    }
+  });
 };
+
+export const GTMPageView = (page: string) => GTMEvent("pageview", { page });

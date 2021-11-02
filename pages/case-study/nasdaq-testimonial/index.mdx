@@ -7,9 +7,9 @@ hideWave: true
 layout: content
 reviews:
   - nasdaq
-$images:
-  logo: ./assets/nasdaq.svg
-logoAlt: logo Nasdaq
+logo:
+  image: ./assets/nasdaq.svg
+  alt: logo Nasdaq
 h1: Nasdaq uses Teleport to securely access their internal infrastructure
 subtitle: Customer Testimonial
 articleDescription: false
@@ -22,7 +22,10 @@ accessPlane: true
 import { Feedback, Quote } from "components";
 
 <Quote title="Nasdaq Overview">
-  Nasdaq is a holding company, which engages in trading, clearing, exchange technology, regulatory, securities listing, information and public & private company services. It operates through the following segments: Market Services, Corporate Services, Information Services and Market Technology.
+  Nasdaq is a holding company, which engages in trading, clearing, exchange
+  technology, regulatory, securities listing, information and public & private
+  company services. It operates through the following segments: Market Services,
+  Corporate Services, Information Services and Market Technology.
 </Quote>
 
 <Feedback reviews={meta.reviews} />

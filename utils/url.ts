@@ -1,5 +1,13 @@
 import getConfig from "../server/config-site";
 
+export const relatify = (href: unknown) => {
+  if (typeof href !== "string") {
+    return;
+  }
+
+  return !/\.\.?\//.test(href) ? `./${href}` : href;
+};
+
 export const host = process.env.NEXT_PUBLIC_HOST;
 interface URLParts {
   anchor?: string;
@@ -41,6 +49,16 @@ export const buildAsPath = (parts: URLParts): string => {
   return result;
 };
 
+export const getExtension = (href: string): string | undefined => {
+  const parts = href.split("/");
+  const filename = parts[parts.length - 1];
+
+  if (filename.indexOf(".") !== -1) {
+    // should catch double extensions like `.tag.gz` and `.gitignore`
+    return /[^.]*\.(.+)/.exec(filename)[1];
+  }
+};
+
 export const isExternalLink = (href: string): boolean =>
   href.startsWith("//") || href.startsWith("mailto:") || href.includes("://");
 
@@ -48,15 +66,8 @@ export const isHash = (href: string): boolean => href.startsWith("#");
 
 export const isMdxLink = (href: string): boolean => /\.md(x)?(#|$)/.test(href);
 
-export const isExtensionLess = (href: string): boolean => {
-  const parts = href.split("/");
-  const lastPart = parts[parts.length - 1];
-
-  return !lastPart.includes(".");
-};
-
 export const isPage = (href: string): boolean =>
-  isMdxLink(href) || isExtensionLess(href);
+  isMdxLink(href) || !getExtension(href);
 
 export const getVersionAsPath = (href: string) => {
   const { latest } = getConfig();
@@ -77,28 +88,29 @@ export const buildCanonicalUrl = (asPath: string) => {
   return `${host}${path}`;
 };
 
-export const hasExt = () => /\..+$/;
-export const urlPattern = () => /^(https?:)/;
-export const emailPattern = () => /^(mailto:)/;
-export const blackList = () => /\.(mdx?|css|tsx?|jsx?)$/;
+interface IsLocalAssetFileProps {
+  extWhiteList?: string[];
+  extBlackList?: string[];
+}
 
-export const isLocalAssetFile = (_href?: string) => {
-  if (typeof _href !== "string") return false;
-  const href = _href.split("#")[0].split("?")[0];
-  let dots = href.split(".").length - 1;
-  if (href[0] === ".") {
-    dots--;
-    if (href[1] === ".") {
-      dots--;
-    }
+export const isLocalAssetFile = (
+  href: unknown,
+  options: IsLocalAssetFileProps = {}
+) => {
+  if (typeof href !== "string") {
+    return false;
   }
 
+  const { extWhiteList = [], extBlackList = [] } = options;
+
+  const { path } = splitAsPath(href);
+  const ext = getExtension(path);
+
   return (
-    dots > 0 &&
-    href[href.length - 1] !== "/" &&
-    hasExt().test(href) &&
-    !blackList().test(href) &&
-    !urlPattern().test(href) &&
-    !emailPattern().test(href)
+    !isExternalLink(path) &&
+    !path.startsWith("/") &&
+    !!ext &&
+    (extBlackList.length ? !extBlackList.includes(ext) : false) &&
+    (extWhiteList.length ? extWhiteList.includes(ext) : true)
   );
 };

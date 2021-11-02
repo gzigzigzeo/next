@@ -1,25 +1,26 @@
-type RehypeRoot = import("hast").Root;
-type RehypeElement = import("hast").Element;
-type RehypeDocType = import("hast").DocType;
-type RehypeComment = import("hast").Comment;
-type RehypeText = import("hast").Text;
-type UnistParent = import("unist").Parent;
-type UnistNode = import("unist").Node;
-type UnistLiteral = import("unist").Literal;
-type MdastContent = import("mdast").Content;
-type EstreeJstProgram = import("estree-jsx");
+declare type RehypeRoot = import("hast").Root;
+declare type RehypeElement = import("hast").Element;
+declare type RehypeDocType = import("hast").DocType;
+declare type RehypeComment = import("hast").Comment;
+declare type RehypeText = import("hast").Text;
+declare type UnistParent = import("unist").Parent;
+declare type UnistNode = import("unist").Node;
+declare type UnistLiteral = import("unist").Literal;
+declare type MdastContent = import("mdast").Content;
+declare type EstreeJstProgram = import("estree-jsx");
 
+declare type MdxJsxAttributeValue =
+  | boolean
+  | number
+  | string
+  | null
+  | undefined
+  | Array<string | number>
+  | ProgramEsmNode;
 declare interface MdxJsxAttribute {
   type: "mdxJsxAttribute";
   name: string;
-  value:
-    | boolean
-    | number
-    | string
-    | null
-    | undefined
-    | Array<string | number>
-    | ProgramEsmNode;
+  value: MdxJsxAttributeValue;
 }
 
 declare interface MdxElement extends UnistParent {
@@ -45,8 +46,8 @@ declare interface ProgramEsmNode extends UnistNode {
   type: "mdxjsEsm" | "mdxJsxAttributeValueExpression";
   value?: string;
   data: {
-    estree?: Program;
-  } & Literal["data"];
+    estree?: EstreeJstProgram;
+  } & UnistLiteral["data"];
 }
 
 declare interface PlainEsmNode extends UnistNode {

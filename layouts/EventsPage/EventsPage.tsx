@@ -13,12 +13,18 @@ import teleportBlueBg from "./assets/virtual_events_blue_logo@2x.png";
 import teleportGreenBg from "./assets/virtual_events_green_logo@2x.png";
 import webinarIcon from "./assets/webinar.svg";
 
-const sortEvetns = (events: EventProps[]) => {
+const sortEvents = (events: EventProps[]) => {
   const now = Date.now();
   const monthFromNow = add(now, { days: 30 });
   const sortedEvents = events
+    //sorts events in ascending order
     .sort(({ start: startA }, { start: startB }) => compareAsc(startA, startB))
-    .filter(({ start }) => isAfter(sub(start, { days: 2 }), now));
+    //preserves events that are are in the future, ongoing, or have ended within the last three days
+    .filter(({ start, end }) => {
+      return end
+        ? isAfter(sub(end, { days: 2 }), now)
+        : isAfter(sub(start, { days: 2 }), now);
+    });
 
   return {
     current: sortedEvents.filter(({ start }) => isBefore(start, monthFromNow)),
@@ -54,7 +60,7 @@ export const EventsPage = ({
     webinars,
   },
 }: ContentPageProps) => {
-  const { current, upcoming } = sortEvetns(events);
+  const { current, upcoming } = sortEvents(events);
 
   return (
     <>

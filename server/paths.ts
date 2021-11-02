@@ -2,14 +2,18 @@ import glob from "glob";
 import { resolve, join } from "path";
 import { loadSiteConfig, loadDocsConfig } from "./config";
 import { generateSitemap as sitemapGenerator } from "./sitemap";
-import { getFrontMatter } from "./frontmatter";
+import {
+  getPageInfo,
+  PageData,
+  extensions,
+  getURIFromPath,
+  pagesRoot,
+} from "./pages-helpers";
 
 const { latest, versions, redirects } = loadSiteConfig();
 
 const NEXT_PUBLIC_DOCS_DIR = process.env.NEXT_PUBLIC_DOCS_DIR as string;
 
-const extensions = ["md", "mdx", "ts", "tsx", "js", "jsx"];
-const pagesRoot = resolve("pages");
 const nextPages = [
   new RegExp(`^${pagesRoot}/api/.*$`),
   new RegExp(`^${pagesRoot}/_app.(${extensions.join("|")})$`),
@@ -24,9 +28,11 @@ const filterNoIndexPage = (path: string) => {
     return true;
   }
 
-  const data = getFrontMatter(path);
+  const { data } = getPageInfo(path);
 
-  return !data["noindex"];
+  const { frontmatter } = data as PageData;
+
+  return !frontmatter["noindex"];
 };
 
 const getNonDocsPaths = () => {
@@ -34,10 +40,7 @@ const getNonDocsPaths = () => {
     .sync(join(pagesRoot, `**/*.{${extensions.join()}}`))
     .filter((path) => !nextPages.some((regexp) => regexp.test(path)))
     .filter(filterNoIndexPage)
-    .map((path) => path.replace(pagesRoot, ""))
-    .map((path) =>
-      path.replace(new RegExp(`(/index)?.(${extensions.join("|")})$`), "/")
-    );
+    .map((path) => getURIFromPath(path));
 };
 
 type Identity = (path: string) => boolean;

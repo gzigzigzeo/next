@@ -6,41 +6,105 @@
 import { Transformer } from "unified";
 import yaml from "js-yaml";
 import stringifyObject from "stringify-object";
-import { createMdxjsEsmNode } from "./acorn";
+import find from "unist-util-find";
+import { createMdxjsEsmNode } from "./mdx-helpers";
+import { Node } from "unist";
 
 type Meta = Record<string, unknown>;
+type ImportTemplate = (layoutPath: string) => string;
+type ExportTemplate = (metaKey: string) => string;
 
-interface RemarkLayoutOptions {
-  layouts: Record<string, string>;
+interface LayoutOptions {
+  path: string;
+  importTemplate?: ImportTemplate;
+  exportTemplate?: ExportTemplate;
 }
 
-const getLayoutCode = (layout: string, meta: Meta) => `
-import Layout from "${layout}";
+interface RemarkLayoutOptions {
+  layouts?: Record<string, string | LayoutOptions>;
+  defaultLayout?: string | LayoutOptions;
+  defaultImportTemplate?: ImportTemplate;
+  defaultExportTemplate?: ExportTemplate;
+  skipMeta?: boolean;
+  skipLayout?: boolean;
+  metaKey?: string;
+  metaProcessor?: (meta: Meta) => Promise<Meta>;
+}
 
-export const meta = ${stringifyObject(meta)};
+const importTemplatePlaceholder: ImportTemplate = (layoutPath: string) =>
+  `import Layout from "${layoutPath}";`;
 
-const Wrapper = (props) => <Layout {...props} meta={meta} />;
+const exportTemplateWithoutMetaPlacehoder: ExportTemplate = () => `
+export default function Wrapper (props) {
+  return <Layout {...props} />;
+};
+`;
 
-export default Wrapper;
+const exportTemplateWithMetaPlacehoder: ExportTemplate = (metaKey: string) => `
+export default function Wrapper (props) {
+  return <Layout {...props} ${metaKey}={meta} />;
+};
 `;
 
 export default function remarkLayout({
-  layouts,
+  layouts = {},
+  defaultLayout,
+  defaultImportTemplate = importTemplatePlaceholder,
+  defaultExportTemplate,
+  skipMeta = false,
+  skipLayout = false,
+  metaKey = "meta",
+  metaProcessor = (meta) => Promise.resolve(meta),
 }: RemarkLayoutOptions): Transformer {
-  return (root: MdxastRootNode) => {
-    const children = root.children as MdxastNode[];
+  return async (root: MdxastRootNode) => {
+    const node = find(root, (node: Node) => node.type === "yaml");
 
-    const firstChild = children[0];
-    let frontmatter: Meta = {};
-
-    if (firstChild && firstChild.type === "yaml") {
-      frontmatter = yaml.load(firstChild.value as string) as Meta;
+    if (!node) {
+      return;
     }
 
-    const { layout = "default", ...meta } = frontmatter;
+    const meta = yaml.load(node.value as string) as Meta;
 
-    const layoutCode = getLayoutCode(layouts[layout as string], meta);
+    const layout =
+      (meta.layout && layouts[meta.layout as string]) || defaultLayout;
 
-    root.children.unshift(createMdxjsEsmNode(layoutCode));
+    if (!skipMeta) {
+      root.children.push(
+        createMdxjsEsmNode(
+          `export const ${metaKey} = ${stringifyObject(
+            await metaProcessor(meta)
+          )};`
+        )
+      );
+    }
+
+    if (!skipLayout) {
+      if (!layout) {
+        console.error(
+          'Neither named layout, nor "defaultLayout" found in config.'
+        );
+
+        return;
+      }
+
+      let path: string;
+      let importTemplate: ImportTemplate = defaultImportTemplate;
+      let exportTemplate: ExportTemplate =
+        defaultExportTemplate ||
+        (skipMeta
+          ? exportTemplateWithoutMetaPlacehoder
+          : exportTemplateWithMetaPlacehoder);
+
+      if (typeof layout === "string") {
+        path = layout;
+      } else {
+        path = layout.path;
+        importTemplate = layout.importTemplate || importTemplate;
+        exportTemplate = layout.exportTemplate || exportTemplate;
+      }
+
+      root.children.unshift(createMdxjsEsmNode(importTemplate(path)));
+      root.children.push(createMdxjsEsmNode(exportTemplate(metaKey)));
+    }
   };
 }

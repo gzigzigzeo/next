@@ -1,5 +1,5 @@
 import { Transformer } from "unified";
-import { createMdxjsEsmExportNode } from "./acorn";
+import { createMdxjsEsmExportNode } from "./mdx-helpers";
 import { loadDocsConfig, loadSiteConfig } from "./config";
 import { getVersion, getGithubURL } from "./docs-helpers";
 

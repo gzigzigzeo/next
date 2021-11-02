@@ -7,9 +7,9 @@ hideWave: true
 layout: content
 reviews:
   - lacework
-$images:
-  logo: ./assets/lacework.svg
-logoAlt: logo Lacework
+logo:
+  image: ./assets/lacework.svg
+  alt: logo Lacework
 h1: Lacework uses Teleport to provide secure access to Kubernetes clusters
 subtitle: Customer Testimonial
 articleDescription: false
@@ -22,7 +22,13 @@ accessPlane: true
 import { Feedback, Quote } from "components";
 
 <Quote title="Lacework Overview">
-  Lacework delivers security and compliance for the cloud generation. The Lacework Cloud Security Platform is cloud-native and offered as-a-Service, delivering build-time to run-time threat detection, behavioral anomaly detection, and cloud compliance across multi-cloud environments, workloads, containers, and Kubernetes. Trusted by enterprise customers worldwide, Lacework significantly drives down costs and risk, and removes the burden of unnecessary toil, rule writing, and inaccurate alerts.
+  Lacework delivers security and compliance for the cloud generation. The
+  Lacework Cloud Security Platform is cloud-native and offered as-a-Service,
+  delivering build-time to run-time threat detection, behavioral anomaly
+  detection, and cloud compliance across multi-cloud environments, workloads,
+  containers, and Kubernetes. Trusted by enterprise customers worldwide,
+  Lacework significantly drives down costs and risk, and removes the burden of
+  unnecessary toil, rule writing, and inaccurate alerts.
 </Quote>
 
 <Feedback reviews={meta.reviews} />

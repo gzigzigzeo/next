@@ -1,8 +1,8 @@
 import Box, { BoxProps } from "components/Box";
 import squaresBG from "./assets/squares.svg";
-import waveGrayBG from "./assets/waveGray.svg";
-import waveWhiteBG from "./assets/waveWhite.svg";
-import wavePurpleBG from "./assets/wavePurple.svg";
+import waveGrayBG from "./assets/waveGray.png";
+import waveWhiteBG from "./assets/waveWhite.png";
+import wavePurpleBG from "./assets/wavePurple.png";
 import doubleWave from "./assets/wave-double.png";
 import wavelight from "./assets/wave-light.png";
 

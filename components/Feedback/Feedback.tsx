@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import Box from "components/Box";
+import Box, { BoxProps } from "components/Box";
 import { CompanyId } from "components/Company";
 import Flex from "components/Flex";
 import { css, transition } from "components/system";
@@ -8,12 +8,12 @@ import Pagination from "./Pagination";
 import Review from "./Review";
 
 const SWITCH_TIMEOUT = 5000;
-export interface Props {
+export type Props = {
   dark: boolean;
   reviews: CompanyId[];
-}
+} & BoxProps;
 
-export default function Feedback({ reviews, dark }: Props) {
+export default function Feedback({ reviews, dark, ...props }: Props) {
   const [focused, setFocused] = useState(false);
   const [hovered, setHovered] = useState(false);
   const [active, setActive] = useState(0);
@@ -43,6 +43,7 @@ export default function Feedback({ reviews, dark }: Props) {
       pb={reviews.length === 1 ? [2, 8] : [2, 3]}
       width="100%"
       overflow="hidden"
+      {...props}
     >
       <div
         role="button"

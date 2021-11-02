@@ -6,47 +6,53 @@ import rehypeImages from "./rehype-images";
 import rehypeSlug from "rehype-slug";
 import remarkFrontmatter from "remark-frontmatter";
 import remarkGFM from "remark-gfm";
-import remarkImportFrontmatter from "./remark-import-frontmatter";
 import remarkImportVariables from "./remark-import-variables";
 import remarkIncludes from "./remark-includes";
+import remarkLayout from "./remark-layout";
 import remarkLinks from "./remark-links";
 import remarkVariables from "./remark-variables";
 import remarkCodeSnippet from "./remark-code-snippet";
 import remarkImportFiles from "./remark-import-files";
+import { fetchVideoMeta } from "./youtube-meta";
 
-const DEFAULT_RENDERER = `
-/** @jsxRuntime classic */
-
-import { mdx } from "@mdx-js/react";
-import DocsPage from "layouts/DocsPage";
-const Wrapper = () => (
-  <DocsPage
+const defaultExportTemplate = () => `
+export default function Wrapper (props) {
+  return (<Layout
+    {...props}
     meta={meta}
     navigation={navigation}
     versions={versions}
     tableOfConents={tableOfConents}
     githubUrl={githubUrl}
-  >
-    <MDXContent />
-  </DocsPage>
-);
-
-export default Wrapper;
+  />);
+};
 `;
-
 interface MdxConfig {
   rehypePlugins: PluggableList;
   remarkPlugins: PluggableList;
-  renderer: string;
-  skipExport?: boolean;
 }
 
 const config: MdxConfig = {
   remarkPlugins: [
     remarkFrontmatter,
-    remarkImportFrontmatter,
-    remarkCodeSnippet,
     remarkImportVariables,
+    [
+      remarkLayout,
+      {
+        defaultLayout: "layouts/DocsPage",
+        defaultExportTemplate,
+        metaProcessor: async (config: Record<string, unknown>) => {
+          const { videoBanner } = config;
+
+          if (typeof videoBanner === "string") {
+            config.videoBanner = await fetchVideoMeta(videoBanner);
+          }
+
+          return config;
+        },
+      },
+    ],
+    remarkCodeSnippet,
     remarkIncludes,
     remarkVariables,
     remarkGFM,
@@ -65,8 +71,6 @@ const config: MdxConfig = {
     ],
     [rehypeHeaders, { maxLevel: 2 }],
   ],
-  skipExport: true,
-  renderer: DEFAULT_RENDERER,
 };
 
 export default config;

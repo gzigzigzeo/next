@@ -7,9 +7,9 @@ hideWave: true
 layout: content
 reviews:
   - glu
-$images:
-  logo: ./assets/glu.svg
-logoAlt: logo Glu Mobile
+logo:
+  image: ./assets/glu.svg
+  alt: logo Glu Mobile
 h1: Glu Mobile uses Teleport to implement SAML authentication into AWS cloud instances
 subtitle: Customer Testimonial
 articleDescription: false
@@ -19,19 +19,27 @@ tryTeleport: true
 accessPlane: true
 ---
 
-import {
-  Feedback,
-  Quote
-} from "components";
+import { Feedback, Quote } from "components";
 
 <Quote title="Glu Mobile Overview">
-  Glu Mobile (NASDAQ: GLUU) is a leading developer and publisher of mobile games. Founded in 2001, Glu is headquartered in San Francisco with additional locations in Foster City, Toronto and Hyderabad. With a history spanning over a decade, Glu’s culture is rooted in taking smart risks and fostering creativity to deliver world-class interactive experiences for our players. Glu’s diverse portfolio features top-grossing and award-winning original and licensed IP titles including Covet Fashion, Deer Hunter, Design Home, Diner DASH Adventures, Disney Sorcerer’s Arena, Kim Kardashian: Hollywood and MLB Tap Sports Baseball available worldwide on various platforms including the App Store and Google Play.
+  Glu Mobile (NASDAQ: GLUU) is a leading developer and publisher of mobile
+  games. Founded in 2001, Glu is headquartered in San Francisco with additional
+  locations in Foster City, Toronto and Hyderabad. With a history spanning over
+  a decade, Glu’s culture is rooted in taking smart risks and fostering
+  creativity to deliver world-class interactive experiences for our players.
+  Glu’s diverse portfolio features top-grossing and award-winning original and
+  licensed IP titles including Covet Fashion, Deer Hunter, Design Home, Diner
+  DASH Adventures, Disney Sorcerer’s Arena, Kim Kardashian: Hollywood and MLB
+  Tap Sports Baseball available worldwide on various platforms including the App
+  Store and Google Play.
 </Quote>
 
 ## Glu Mobile Challenges
+
 Managing developer SSH access key and permissions on the AWS cloud environment was a big challenge due to the dynamic IP addresses assigned to the remote instances. To allow specific developers or a development group to SSH to instances, we maintained a list of permitted developer’s SSH keys and added the keys to a new instance during the bootstrap process. This workaround was functioning well when we didn’t have a lot of SSH requests. However, our team size has dramatically increased and SSH requests are growing. The SSH access-list became out of control and it was very time-consuming to maintain the keys on the running instances.
 
 ## Glu Mobile Solution
+
 Fortunately, we overcame this specific challenge after we deployed Teleport. The presale support team is excellent. They worked with us to go over our use case and challenge and implement our Teleport solution.
 
 We integrated the Teleport authentication node to our SAML authentication system. Also, we installed the Teleport SSH node process in our instances. The SAML authentication system determines the developer’s permissions and limits them to SSH into those instances. The developers see all of the instances available for SSH on the Teleport Web UI. One of the great features that we love is session sharing and recording. We can play back any previous active session and review the entire session history. Also, we can join any currently active session to do a show and tell.

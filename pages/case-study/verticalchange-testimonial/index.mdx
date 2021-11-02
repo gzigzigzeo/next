@@ -7,9 +7,9 @@ hideWave: true
 layout: content
 reviews:
   - verticalchange
-$images:
-  logo: ./assets/verticalchange.png
-logoAlt: logo VerticalChange
+logo:
+  image: ./assets/verticalchange.png
+  alt: logo VerticalChange
 h1: VerticalChange uses Teleport with Auth0 to easily manage access to infrastructure
 subtitle: Customer Testimonial
 articleDescription: false
@@ -22,7 +22,12 @@ accessPlane: true
 import { Feedback, Quote } from "components";
 
 <Quote title="VerticalChange Overview">
-  VerticalChange support organizations to improve education delivery, connect health care providers to bridge gaps in care, end homelessness, and empower social service agencies to help the most vulnerable community members. We value human relationships and social justice. Our team is passionate about solving the problems faced by the social sector by leveraging cutting-edge technology to build user-friendly software
+  VerticalChange support organizations to improve education delivery, connect
+  health care providers to bridge gaps in care, end homelessness, and empower
+  social service agencies to help the most vulnerable community members. We
+  value human relationships and social justice. Our team is passionate about
+  solving the problems faced by the social sector by leveraging cutting-edge
+  technology to build user-friendly software
 </Quote>
 
 <Feedback reviews={meta.reviews} />

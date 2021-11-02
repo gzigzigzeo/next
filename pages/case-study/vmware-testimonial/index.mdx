@@ -7,9 +7,9 @@ hideWave: true
 layout: content
 reviews:
   - vmware
-$images:
-  logo: ./assets/vmware.svg
-logoAlt: logo VMware
+logo:
+  image: ./assets/vmware.svg
+  alt: logo VMware
 h1: VMware uses Teleport to securely access their customers' platforms without VPNs or expensive hardware
 subtitle: Customer Testimonial
 articleDescription: false
@@ -22,12 +22,21 @@ accessPlane: true
 import { Feedback, Quote } from "components";
 
 <Quote title="VMware Overview">
-  VMware software powers the world’s complex digital infrastructure. The company’s cloud, app modernization, networking, security, and digital workspace offerings help customers deliver any application on any cloud across any device.
+  VMware software powers the world’s complex digital infrastructure. The
+  company’s cloud, app modernization, networking, security, and digital
+  workspace offerings help customers deliver any application on any cloud across
+  any device.
 </Quote>
 
 ## Key Benefits of Teleport for VMware
-- <b>Cost Savings.</b> VMware had no special hardware to procure and no specialized knowledge. Teleport just fit into their existing infrastructure and existing processes.
-- <b>Reduction in Security Overhead.</b> VMware simply deployed a node in their infrastructure when they onboarded a customer and had it talk back to a proxy in Teleport’s infrastructure.
-- <b>Peace of Mind.</b> Teleport allows VMware to securely reach the customer’s infrastructure without being on site and has the necessary auditability and compliance features that address the requirements of both, the customers’ security team and VMware’s security team.
+
+- <b>Cost Savings.</b> VMware had no special hardware to procure and no specialized
+  knowledge. Teleport just fit into their existing infrastructure and existing processes.
+- <b>Reduction in Security Overhead.</b> VMware simply deployed a node in their infrastructure
+  when they onboarded a customer and had it talk back to a proxy in Teleport’s infrastructure.
+- <b>Peace of Mind.</b> Teleport allows VMware to securely reach the customer’s infrastructure
+  without being on site and has the necessary auditability and compliance features
+  that address the requirements of both, the customers’ security team and VMware’s
+  security team.
 
 <Feedback reviews={meta.reviews} />

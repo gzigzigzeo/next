@@ -11,7 +11,7 @@ import {
 import "@reach/listbox/styles.css";
 import Box, { BoxProps } from "components/Box";
 import Icon from "components/Icon";
-import { all, transition } from "components/system";
+import { all, transition, StyledSystemProps } from "components/system";
 
 export type DropdownProps<T> = {
   options: T[];
@@ -21,6 +21,8 @@ export type DropdownProps<T> = {
   renderOption?: (option: T) => ReactNode;
   onChange: (selected: string) => void;
   icon?: ReactNode;
+  color?: string;
+  needBg?: boolean;
 } & BoxProps;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -39,12 +41,20 @@ export function Dropdown<T>({
   pickId = echo,
   pickOption = echoOption,
   disabled,
+  color,
+  needBg,
   ...props
 }: DropdownProps<T>) {
   return (
     <Box {...props}>
-      <StyledListboxInput value={value} onChange={onChange} disabled={disabled}>
-        <StyledListboxButton arrow={icon}>
+      <StyledListboxInput
+        color={color ? color : "white"}
+        bg={needBg ? "white" : "transparent"}
+        value={value}
+        onChange={onChange}
+        disabled={disabled}
+      >
+        <StyledListboxButton arrow={icon} borderColor={color ? color : "white"}>
           {renderOption(value ? pickOption(options, value) : options[0])}
         </StyledListboxButton>
         <StyledListboxPopover>
@@ -65,18 +75,16 @@ export function Dropdown<T>({
   );
 }
 
-const StyledListboxInput = styled(ListboxInput)(
+const StyledListboxInput = styled(ListboxInput)<StyledSystemProps>(
   css({
     display: "inline-flex",
     width: "100%",
-    color: "white",
-    bg: "transparent",
     whiteSpace: "nowrap",
   }),
   all
 );
 
-const StyledListboxButton = styled(ListboxButton)(
+const StyledListboxButton = styled(ListboxButton)<StyledSystemProps>(
   css({
     display: "flex",
     alignItems: "center",
@@ -85,7 +93,6 @@ const StyledListboxButton = styled(ListboxButton)(
     lineHeight: "30px",
     cursor: "pointer",
     border: "1px solid",
-    borderColor: "white",
     borderRadius: "default",
     px: 2,
     py: 0,
@@ -112,7 +119,7 @@ const StyledListboxButton = styled(ListboxButton)(
   all
 );
 
-const StyledListboxPopover = styled(ListboxPopover)(
+const StyledListboxPopover = styled(ListboxPopover)<StyledSystemProps>(
   css({
     border: "none",
     borderRadius: "sm",

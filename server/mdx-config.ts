@@ -2,8 +2,8 @@ import { PluggableList } from "unified";
 import rehypeFixTags from "./rehype-fix-tags";
 import rehypeHighlight from "rehype-highlight";
 import remarkFrontmatter from "remark-frontmatter";
-import remarkImportFrontmatter from "./remark-import-frontmatter";
 import remarkImportFiles from "./remark-import-files";
+import remarkLayout from "./remark-layout";
 
 interface MdxConfig {
   rehypePlugins: PluggableList;
@@ -15,8 +15,12 @@ interface MdxConfig {
 const config: MdxConfig = {
   remarkPlugins: [
     remarkFrontmatter,
-    remarkImportFrontmatter,
-    remarkImportFiles,
+    [
+      remarkLayout,
+      {
+        skipLayout: true,
+      },
+    ],
   ],
   rehypePlugins: [rehypeFixTags, rehypeHighlight],
 };

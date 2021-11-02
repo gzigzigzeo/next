@@ -20,7 +20,7 @@ As the `teleport` daemon runs on every machine in a cluster, it detects security
 
 2. **Session recordings**. When users create interactive sessions via `ssh` or via `kubectl exec -ti`, these sessions are recorded and can be replayed later via a Youtube-like web interface with features like pause, rewind, etc.
 
-3. **Host events**. This is also called _enhanced session recording_. When enabled, host events allow Teleport to capture and store detailed low-level events that happen on a host during a user session, such as filesystem changes, network activity, process execution, etc. [eBPF]("https://lwn.net/Articles/740157/) must be supported by the host kernel and <a href="https://github.com/iovisor/bcc">BCC</a> must be installed for this to work.
+3. **Host events**. This is also called _enhanced session recording_. When enabled, host events allow Teleport to capture and store detailed low-level events that happen on a host during a user session, such as filesystem changes, network activity, process execution, etc. [eBPF](https://lwn.net/Articles/740157/) must be supported by the host kernel and <a href="https://github.com/iovisor/bcc">BCC</a> must be installed for this to work.
 
 The diagram below illustrates two options (A and B) for how audit data is collected and stored:
 

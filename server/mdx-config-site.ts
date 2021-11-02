@@ -18,11 +18,11 @@ const config: MdxConfig = {
       remarkLayout,
       {
         layouts: {
-          default: "layouts/SitePage",
           content: "layouts/ContentPage",
           howItWorks: "layouts/HowItWorksPage",
           events: "layouts/EventsPage",
         },
+        defaultLayout: "layouts/SitePage",
       },
     ],
     remarkGFM,

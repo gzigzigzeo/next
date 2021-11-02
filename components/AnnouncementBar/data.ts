@@ -1,6 +1,12 @@
 import type { LogoName } from "./AnnouncementBar";
 
+interface RenderableCompany {
+  imageName: LogoName;
+  url?: string;
+}
+
 export type LogoRow = Array<LogoName>;
+export type CaseStudyRow = Array<RenderableCompany>;
 
 //STANDARD GRAY SET
 export const Gray1: LogoRow = [
@@ -79,4 +85,40 @@ export const Internet3: LogoRow = [
   "colorBigCommerce",
   "colorThredUp",
   "colorShadeStore",
+];
+
+// CompactClientsList
+// When determining order, make sure logos with case-study urls always appear in the first 3 positions
+// otherwise they are not displayed on mobile
+
+export const CompactClients1: Array<RenderableCompany> = [
+  { imageName: "colorAuth0", url: "/case-study/auth0/" },
+  { imageName: "colorAirtable" },
+  {
+    imageName: "colorElastic",
+    url: "/case-study/elastic-testimonial/",
+  },
+  { imageName: "colorCrypto" },
+  { imageName: "colorDoorDash" },
+];
+export const CompactClients2: Array<RenderableCompany> = [
+  { imageName: "colorGitlab" },
+  { imageName: "colorGusto" },
+  {
+    imageName: "colorNasdaq",
+    url: "/case-study/nasdaq-testimonial/",
+  },
+  { imageName: "hpe" },
+  { imageName: "ibm" },
+];
+
+export const CompactClients3: Array<RenderableCompany> = [
+  { imageName: "samsung" },
+  {
+    imageName: "colorSumologic",
+    url: "/case-study/sumologic-testimonial/",
+  },
+  { imageName: "swisscom" },
+  { imageName: "threatstack" },
+  { imageName: "colorTwitch" },
 ];

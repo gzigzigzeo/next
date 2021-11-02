@@ -9,9 +9,9 @@ reviews1:
   - gladly1
 reviews2:
   - gladly2
-$images:
-  logo: ./assets/gladly@0.7x.svg
-logoAlt: logo Gladly
+logo:
+  image: ./assets/gladly@0.7x.svg
+  alt: logo Gladly
 h1: Gladly Case Study
 subtitle: Customer Case Study
 articleDescription: false
@@ -24,18 +24,24 @@ accessPlane: true
 import { Feedback, Quote, VideoBanner } from "components";
 
 Gladly was looking for a solution that could provide security for their SaaS application while also allowing their team to be agile. In addition, for storing personal information that complies with US and EU privacy laws, they needed a way to provide auditors and customers with evidence that their data was secure.
+
 <Quote title="About Gladly">
-  Based in San Francisco, [Gladly](https://gladly.com) offers a SaaS-based platform to help brands personalize customer experiences. The Gladly SaaS application manages customer data across channels such as email, telephony, social media, SMS, etc.
+  Based in San Francisco, [Gladly](https://gladly.com) offers a SaaS-based
+  platform to help brands personalize customer experiences. The Gladly SaaS
+  application manages customer data across channels such as email, telephony,
+  social media, SMS, etc.
 </Quote>
 <Feedback reviews={meta.reviews1} />
 
 ## Challenges
+
 - Provide security for cloud-native infrastructure without impeding developer productivity.
 - Gather evidence-based data of user access to systems to provide auditors and customers.
 - Eliminate the complexity and security risk of managing SSH keys
-<VideoBanner videoId={"_mIeYEoH3m0"} bg="flatWhite" />
+  <VideoBanner videoId={"_mIeYEoH3m0"} bg="flatWhite" />
 
 ## Gladly Selects Teleport
+
 Gladly selected [Teleport](/) to secure the cloud-native infrastructure for their SaaS platform and internal systems. Teleport works with their single sign-on provider to offer role-based access controls (RBAC), which ensures that only the right users can access systems.
 
 Rather than using static credentials or managing SSH keys to gate access, Teleport acts as a [certificate authority](/teleport/how-it-works/certificate-based-authentication-ssh-kubernetes/) to automatically provide [privileged access](/teleport/how-it-works/fedramp-ssh-kubernetes/) to infrastructure based on user identity. It also records each session and gathers complete audit logs to provide managers with full visibility into every user session.
@@ -43,6 +49,7 @@ Rather than using static credentials or managing SSH keys to gate access, Telepo
 “With auditors or some of our customers, when they ask about the efficacy of our security process, they ask for evidence. Teleport gives us this ability to see things in real-time. So, when I show this to the auditors or show it to customers, they [say], ‘Wow. you’re capturing all of this. This is awesome,’ said Soesanto.”
 
 ## ROI on Teleport
+
 With traditional [SSH key management solutions](/blog/ssh-key-management/), keys can be lost and securing systems based on user identity unenforceable. Bringing new systems or people online requires new keys to be issued and managed, and the problem grows exponentially with elastic, cloud-native solutions that can scale quickly.
 
 Teleport eliminated the difficulty of managing roles and access, which meant their engineers could focus on building a great product rather than accessing systems. The ROI for Teleport was the time saved from having to write and maintain custom systems for managing privileged access.
@@ -50,8 +57,11 @@ Teleport eliminated the difficulty of managing roles and access, which meant the
 Every time a user loses their SSH credentials or a company loses track of which keys are on which servers, a company would need to spend time issuing new keys or rebuilding machines. With Teleport, that’s no longer necessary.
 
 ## How we Helped Gladly
-- <b>Compliance.</b> Teleport helps Gladly provide evidence-based data for auditors and customers.
-- <b>Secure Access.</b> Provides secure access to cloud-native infrastructure for engineering teams.
-- <b>Flexible Authentication.</b> Eliminated the difficulty of managing roles and access even when new systems are brought online.
-<Feedback reviews={meta.reviews2} />
 
+- <b>Compliance.</b> Teleport helps Gladly provide evidence-based data for auditors
+  and customers.
+- <b>Secure Access.</b> Provides secure access to cloud-native infrastructure for
+  engineering teams.
+- <b>Flexible Authentication.</b> Eliminated the difficulty of managing roles and
+  access even when new systems are brought online.
+  <Feedback reviews={meta.reviews2} />

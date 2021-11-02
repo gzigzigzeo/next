@@ -45,8 +45,10 @@ interface ContentPageProps {
     noindex?: boolean;
     h1?: string;
     articleDescription?: boolean;
-    $images?: { logo: Exclude<ImageProps["src"], string> };
-    logoAlt: string;
+    logo?: {
+      image: Exclude<ImageProps["src"], string>;
+      alt: string;
+    };
     bgWave?: BGColor;
     tryTeleport?: boolean;
     accessPlane?: boolean;
@@ -64,8 +66,7 @@ export const ContentPage = ({
     noindex,
     h1,
     articleDescription = true,
-    $images,
-    logoAlt,
+    logo,
     needWrapper,
     bgWave,
     tryTeleport,
@@ -78,6 +79,7 @@ export const ContentPage = ({
     () => (needWrapper ? baseWrapperOptions : {}),
     [needWrapper]
   );
+
   return (
     <>
       <Head title={title} description={description} noIndex={noindex} />
@@ -88,7 +90,7 @@ export const ContentPage = ({
           description={articleDescription ? description : undefined}
           {...bg}
         >
-          {logoAlt && <NextImage src={$images.logo} alt={logoAlt} />}
+          {logo && <NextImage src={logo.image} alt={logo.alt} />}
         </SectionHeader>
         <Wrapper {...wrapperOptions}>
           <Centrator

@@ -8,6 +8,7 @@ import useSWRImmutable from "swr/immutable";
 import { parseCookies } from "nookies";
 import { fetcher } from "utils/fetcher";
 import { useRecaptcha } from "utils/recaptcha";
+import { GTMEvent } from "utils/gtm";
 
 const getDefaultFieldValue = (autoFill: MarketoFieldAutoFill) => {
   if (!autoFill) {
@@ -141,6 +142,8 @@ export const useMarketoForm = (
         await submitForm(id, formData, token);
 
         setSubmitted(true);
+
+        await GTMEvent("mktoFormSubmit", { formMeta: { formid: id } });
 
         if (thankYou?.followupType === "url") {
           window.location.href = thankYou.followupValue;

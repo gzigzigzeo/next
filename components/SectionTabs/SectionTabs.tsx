@@ -15,7 +15,7 @@ interface SectionTabsItemProps {
   selected?: boolean;
   src: string;
   title: string;
-  alignment?: "right" | "left";
+  alignment?: "tabsLeft" | "tabsRight";
   onChange?: (id: number) => void;
 }
 
@@ -62,9 +62,9 @@ const SectionTabsItem = ({
         transition={transition([["opacity", "slow"]])}
         position={["static", "absolute"]}
         top="0"
-        right={alignment === "right" ? "0" : 490}
+        right={alignment === "tabsLeft" ? "0" : 490}
         bottom="0"
-        left={alignment === "right" ? 490 : "0"}
+        left={alignment === "tabsLeft" ? 490 : "0"}
         alignItems="stretch"
       >
         {children}
@@ -78,7 +78,7 @@ export interface SectionTabsProps {
   title?: string;
   subtitle?: string;
   description?: string;
-  alignment?: "right" | "left";
+  alignment?: "tabsLeft" | "tabsRight";
 }
 
 export const SectionTabs = ({
@@ -86,7 +86,7 @@ export const SectionTabs = ({
   title,
   subtitle,
   description,
-  alignment = "right",
+  alignment = "tabsLeft",
 }: SectionTabsProps) => {
   const [currentTab, setCurrentTab] = useState<number>(0);
   const onChange = (index: number) => setCurrentTab(index);
@@ -140,7 +140,11 @@ export const SectionTabs = ({
             {description}
           </Box>
         )}
-        <Flex position="relative">
+        <Flex
+          position="relative"
+          flexDirection="column"
+          alignItems={alignment === "tabsRight" ? "flex-end" : "flex-start"}
+        >
           <Box maxWidth={["auto", "400px"]}>
             {childTabProps.map((props, id) => (
               <SectionTabsItem
@@ -163,9 +167,9 @@ SectionTabs.Item = SectionTabsItem;
 
 const StyledTab = styled(HeadlessButton)<{ selected: boolean }>(
   css({
+    display: "block",
     border: ["none", "2px solid"],
     borderRadius: "default",
-    // textAlign: "left",
     position: "relative",
     textAlign: "right",
     px: [0, 3],

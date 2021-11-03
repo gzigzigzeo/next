@@ -1,16 +1,17 @@
 ---
 title: Teleport - Access Computing Resources Anywhere
-description: TODO
+description: Teleport allows engineers and security professionals to unify access for SSH servers, Kubernetes clusters, web applications, and databases across all environments.
 h1: TODO
-hidewave: true
+hideWave: true
 border: none
 ---
-
+import NextImage from "next/image"
 import {
   AnimationHeader,
   AnnouncementBar,
   EasyStart,
   GridDisplay,
+  Link,
   MessageBanner,
   NewsItem,
   Section,
@@ -63,75 +64,128 @@ import { ProductCard } from "components/GridDisplay"
   description="For databases behind NAT in multiple environments."/>
 </GridDisplay>
 <Section bg="grayWave">
-<SectionTabs 
-  alignment="left"
-  title="Access that doesn't get in the way" 
-  description="A single sign-on allows discovery and instant access to all layers of your tech stack behind NAT across clouds, data centers, or on the edge. There is no more juggling of shared secrets, SSH keys, or hopping between VPNs and multiple access points.">
-  <SectionTabs.Item
-    src="../sharedAssets/images/dual-auth.svg"
-    title="Unified Resource Catalog"
-    description="There is no need to maintain inventories. Enjoy the live view of all servers, Kubernetes clusters, internal applications, databases, and live sessions across all environments."
-  >
-        <Terminal>
-      ```bash
-      $ tsh request create --roles=dba \
-        --reviewers=alice@example.com
+  <SectionTabs 
+    alignment="tabsLeft"
+    title="Access that doesn't get in the way" 
+    description="A single sign-on allows discovery and instant access to all layers of your tech stack behind NAT across clouds, data centers, or on the edge. There is no more juggling of shared secrets, SSH keys, or hopping between VPNs and multiple access points.">
+    <SectionTabs.Item
+      src="./assets/catalog.svg"
+      title="Unified Resource Catalog"
+      description="There is no need to maintain inventories. Enjoy the live view of all servers, Kubernetes clusters, internal applications, databases, and live sessions across all environments."
+    >
+      <NextImage src="./assets/resource-catalog3.png" alt="resource catalog" height={524} width={750}/>
+    </SectionTabs.Item>
+    <SectionTabs.Item
+      src="./assets/recording.svg"
+      title="Session Recording"
+      description="Invite colleagues to collaborate in a shared session. Work together to troubleshoot a problem on a remote server or on each others’ laptops. Record sessions for knowledge-sharing purposes."
+    >
+        <NextImage src="./assets/session-replay.gif" alt="resource catalog" height={524} width={750}/>
 
-      # Alice
-      $ tsh request list
+    </SectionTabs.Item>
+    <SectionTabs.Item
+      src="./assets/plugins.svg"
+      title="Plugins and API"
+      description="Teleport provides ready to use auth for your internal web applications. Customize access workflows and react to security events using favorite programming languages."
+    >
+          <Terminal>
+  ```python
+  # use your favorite programming language to customize access:
+  def access_request_callback(req):
+    is_admin    = 'admin' in req.roles
+    jira_ticket = jira.get_ticket(req.id)
+    team_name   = req.attributes['team']
 
-      # Output
-      ID                                   User             Roles   Created (UTC)       Status
-      ------------------------------------ ---------------  ------- ------------------- -------
-      9c721e54-b049-4ef8-a7f6-c777aa066764 bob@example.com  dba 03 Apr 21 03:58 UTC PENDING
+  # Only allow users with an 'admin' role
+  if not is_admin:
+      raise AccessDenied("Not a member of 'admin' role.")
 
-      $ tsh request review --approve --reason="proceed with caution" 9c721e54-b049-4ef8-a7f6-c777aa066764
-      ```
-      </Terminal>
-  </SectionTabs.Item>
-  <SectionTabs.Item
-    src="../sharedAssets/images/dual-auth.svg"
-    title="Unified Resource Catalog"
-    description="There is no need to maintain inventories. Enjoy the live view of all servers, Kubernetes clusters, internal applications, databases, and live sessions across all environments."
-  >
-        <Terminal>
-      ```bash
-      $ tsh request create --roles=dba \
-        --reviewers=alice@example.com
-
-      # Alice
-      $ tsh request list
-
-      # Output
-      ID                                   User             Roles   Created (UTC)       Status
-      ------------------------------------ ---------------  ------- ------------------- -------
-      9c721e54-b049-4ef8-a7f6-c777aa066764 bob@example.com  dba 03 Apr 21 03:58 UTC PENDING
-
-      $ tsh request review --approve --reason="proceed with caution" 9c721e54-b049-4ef8-a7f6-c777aa066764
-      ```
-      </Terminal>
-  </SectionTabs.Item>
-  <SectionTabs.Item
-    src="../sharedAssets/images/dual-auth.svg"
-    title="Unified Resource Catalog"
-    description="There is no need to maintain inventories. Enjoy the live view of all servers, Kubernetes clusters, internal applications, databases, and live sessions across all environments."
-  >
-        <Terminal>
-      ```bash
-      $ tsh request create --roles=dba \
-        --reviewers=alice@example.com
-
-      # Alice
-      $ tsh request list
-
-      # Output
-      ID                                   User             Roles   Created (UTC)       Status
-      ------------------------------------ ---------------  ------- ------------------- -------
-      9c721e54-b049-4ef8-a7f6-c777aa066764 bob@example.com  dba 03 Apr 21 03:58 UTC PENDING
-
-      $ tsh request review --approve --reason="proceed with caution" 9c721e54-b049-4ef8-a7f6-c777aa066764
-      ```
-      </Terminal>
-  </SectionTabs.Item>
-</SectionTabs>
+  # Contractors must provide a valid Jira ticket
+  if team_name == "contractor" and not jira_ticket:
+    raise AccessDenied("Please provide an active JIRA ticket.")
+  ```
+        </Terminal>
+    </SectionTabs.Item>
+  </SectionTabs>
 </Section>
+<Section bg="grayWave">
+  <SectionTabs 
+    alignment="tabsRight"
+    title="Easily implement security and compliance" 
+    description="Use Teleport to adopt industry best practices for access across all protocols and all environments with minimal configuration. Easily enforce MFA, RBAC, and SSO using identity-based short-lived certificates.">
+    <SectionTabs.Item
+      src="./assets/grant-access.svg"
+      title="Access Requests"
+      description={
+        <>
+        Approve or deny privilege escalation requests using flexible access workflows. Access can be approved or denied via ChatOps, Slack, PagerDuty, or customized via the programmable API. <Link scheme="site" href="/features/access-requests/">Learn more</Link>.
+        </>
+        }
+    >
+      <NextImage src="./assets/access-request.png" alt="resource catalog" height={524} width={750}/>
+    </SectionTabs.Item>
+    <SectionTabs.Item
+      src="./assets/sso.png"
+      title="Access Controls"
+      description="Use flexible access controls to implement compliance standards such as SOC2, PCI, and FedRAMP. Teleport can bring new and legacy resources into compliance."
+    >
+        <NextImage src="./assets/compliance@2x.png" alt="resource catalog" height={524} width={750}/>
+
+    </SectionTabs.Item>
+    <SectionTabs.Item
+      src="./assets/federation.svg"
+      title="Session Controls"
+      description="Define and enforce policy to handle idle sessions, concurrent sessions, and to share and record interactive sessions across all protocols and environments."
+    >
+      <NextImage src="./assets/instant-access@2x.png" alt="resource catalog" height={524} width={750}/>
+    </SectionTabs.Item>
+  </SectionTabs>
+</Section>
+<Section bg="grayWave">
+  <SectionTabs 
+    alignment="tabsLeft"
+    title="Complete visibility into access and behavior" 
+    description="Teleport records interactive sessions, filesystem changes, data transfers, command executions and other security events across all environments into a structured audit log, making it easy to see what’s happening and who is responsible.">
+    <SectionTabs.Item
+      src="./assets/catalog.svg"
+      title="Unified Resource Catalog"
+      description="There is no need to maintain inventories. Enjoy the live view of all servers, Kubernetes clusters, internal applications, databases, and live sessions across all environments."
+    >
+      <NextImage src="./assets/resource-catalog3.png" alt="resource catalog" height={524} width={750}/>
+    </SectionTabs.Item>
+    <SectionTabs.Item
+      src="./assets/live-view.svg"
+      title="Live Session View"
+      description="Teleport maintains a list of live sessions across all protocols and environments, providing a picture of what’s happening. Each session is recorded and tied to identities of humans and machines involved."
+    >
+        <NextImage src="./assets/active-sessions.png" alt="resource catalog" height={524} width={750}/>
+    </SectionTabs.Item>
+    <SectionTabs.Item
+      src="./assets/events.svg"
+      title="Audit Log"
+      description="Teleport streams recorded sessions and security events to a centralized destination of choice such as SIEM solutions to help integrate access events into a single source of truth."
+    >
+      <NextImage src="./assets/audit-log.png" alt="resource catalog" height={524} width={750}/>
+    </SectionTabs.Item>
+  </SectionTabs>
+</Section>
+<VideoBanner title="Demo Video" videoId="8dDRW37fsy4" />
+<WorksWith title="Works with everything you have">
+  Teleport Application Access is open source and it relies on open standards such as SSH, HTTPS, SAML, OpenID connect and others. Deployed as a single-binary drop-in replacement for OpenSSH, it seamlessly integrates with the rest of your stack.
+</WorksWith>
+<EasyStart>
+  <Terminal>
+```
+# on a client
+$ tsh login --proxy=example.com
+
+# on a server
+$ apt install teleport
+
+# in a Kubernetes cluster
+$ helm install
+```
+  </Terminal>
+</EasyStart>
+<TryTeleport/>
+

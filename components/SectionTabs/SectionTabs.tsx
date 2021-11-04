@@ -16,6 +16,7 @@ interface SectionTabsItemProps {
   src: string;
   title: string;
   alignment?: "tabsLeft" | "tabsRight";
+  narrowTabs?: boolean;
   onChange?: (id: number) => void;
 }
 
@@ -27,6 +28,7 @@ const SectionTabsItem = ({
   selected = false,
   src,
   title,
+  narrowTabs,
   onChange = () => undefined,
 }: SectionTabsItemProps) => {
   return (
@@ -62,9 +64,9 @@ const SectionTabsItem = ({
         transition={transition([["opacity", "slow"]])}
         position={["static", "absolute"]}
         top="0"
-        right={alignment === "tabsLeft" ? "0" : 490}
+        right={alignment === "tabsLeft" ? 0 : narrowTabs ? 400 : 490}
         bottom="0"
-        left={alignment === "tabsLeft" ? 490 : "0"}
+        left={alignment === "tabsRight" ? 0 : narrowTabs ? 400 : 490}
         alignItems="stretch"
       >
         {children}
@@ -79,6 +81,7 @@ export interface SectionTabsProps {
   subtitle?: string;
   description?: string;
   alignment?: "tabsLeft" | "tabsRight";
+  narrowTabs?: boolean;
 }
 
 export const SectionTabs = ({
@@ -86,6 +89,7 @@ export const SectionTabs = ({
   title,
   subtitle,
   description,
+  narrowTabs = false,
   alignment = "tabsLeft",
 }: SectionTabsProps) => {
   const [currentTab, setCurrentTab] = useState<number>(0);
@@ -133,7 +137,7 @@ export const SectionTabs = ({
           <Box
             mb={[3, 5]}
             fontSize="text-xl"
-            width={[null, "80%"]}
+            width={[null, "90%"]}
             lineHeight="lg"
             color="darkest"
           >
@@ -145,10 +149,11 @@ export const SectionTabs = ({
           flexDirection="column"
           alignItems={alignment === "tabsRight" ? "flex-end" : "flex-start"}
         >
-          <Box maxWidth={["auto", "400px"]}>
+          <Box maxWidth={narrowTabs ? ["100%", "340px"] : ["auto", "400px"]}>
             {childTabProps.map((props, id) => (
               <SectionTabsItem
                 alignment={alignment}
+                narrowTabs={narrowTabs}
                 key={id}
                 {...props}
                 onChange={onChange}
@@ -171,7 +176,7 @@ const StyledTab = styled(HeadlessButton)<{ selected: boolean }>(
     border: ["none", "2px solid"],
     borderRadius: "default",
     position: "relative",
-    textAlign: "right",
+    textAlign: "left",
     px: [0, 3],
     pt: [0, 3],
     pb: 2,

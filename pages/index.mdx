@@ -22,6 +22,11 @@ import {
   VideoBanner,
   WorksWith,
 } from "components";
+import {
+  CompactClients1,
+  CompactClients2,
+  CompactClients3,
+} from "components/AnnouncementBar/data";
 import { ProductCard } from "components/GridDisplay"
 
 <Section bg="grayWave">
@@ -41,7 +46,7 @@ import { ProductCard } from "components/GridDisplay"
   </NewsItem>
   <AnnouncementBar />
 </Section>
-<GridDisplay productCard bg="flatWhite">
+<GridDisplay productCard bg="wavelight">
   <ProductCard 
   title="Teleport Server Access" 
   src="../sharedAssets/images/server.svg" 
@@ -65,6 +70,7 @@ import { ProductCard } from "components/GridDisplay"
 </GridDisplay>
 <Section bg="grayWave">
   <SectionTabs 
+    narrowTabs
     alignment="tabsLeft"
     title="Access that doesn't get in the way" 
     description="A single sign-on allows discovery and instant access to all layers of your tech stack behind NAT across clouds, data centers, or on the edge. There is no more juggling of shared secrets, SSH keys, or hopping between VPNs and multiple access points.">
@@ -73,7 +79,7 @@ import { ProductCard } from "components/GridDisplay"
       title="Unified Resource Catalog"
       description="There is no need to maintain inventories. Enjoy the live view of all servers, Kubernetes clusters, internal applications, databases, and live sessions across all environments."
     >
-      <NextImage src="./assets/resource-catalog3.png" alt="resource catalog" height={524} width={750}/>
+      <NextImage src="./assets/resource-catalog4.png" alt="resource catalog" height={524} width={832}/>
     </SectionTabs.Item>
     <SectionTabs.Item
       src="./assets/recording.svg"
@@ -110,6 +116,7 @@ import { ProductCard } from "components/GridDisplay"
 </Section>
 <Section bg="grayWave">
   <SectionTabs 
+  narrowTabs
     alignment="tabsRight"
     title="Easily implement security and compliance" 
     description="Use Teleport to adopt industry best practices for access across all protocols and all environments with minimal configuration. Easily enforce MFA, RBAC, and SSO using identity-based short-lived certificates.">
@@ -122,7 +129,7 @@ import { ProductCard } from "components/GridDisplay"
         </>
         }
     >
-      <NextImage src="./assets/access-request.png" alt="resource catalog" height={524} width={750}/>
+      <NextImage src="./assets/access-request.png" alt="resource catalog" height={524} width={832}/>
     </SectionTabs.Item>
     <SectionTabs.Item
       src="./assets/sso.png"
@@ -187,5 +194,12 @@ $ helm install
 ```
   </Terminal>
 </EasyStart>
+<Section bg="flatWhite" px={10} py={10}>
+  <AnnouncementBar
+    caseStudy
+    title
+    rows={[CompactClients1, CompactClients2, CompactClients3]}
+  />
+</Section>
 <TryTeleport/>
 

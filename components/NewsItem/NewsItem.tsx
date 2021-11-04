@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Flex from "components/Flex";
+import { Centrator } from "components/Layout";
 
 /**
  * This is the News component on the homepage underneath Get Started button in the header
@@ -10,12 +11,12 @@ interface NewsItemProps {
 }
 export const NewsItem = ({ children }: NewsItemProps) => {
   return (
-    <Flex flexDirection="row" ml={[3, 11]} mt={2}>
+    <Centrator flexDirection="row" mt={2} justifyContent="flex-start">
       <StyledNewsImg>NEW</StyledNewsImg>
       <Flex ml={3} fontSize="14px">
         {children}
       </Flex>
-    </Flex>
+    </Centrator>
   );
 };
 

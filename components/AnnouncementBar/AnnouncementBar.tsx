@@ -7,6 +7,11 @@ import Link from "components/Link";
 import { LogoRow, CaseStudyRow, Gray1, Gray2, Gray3 } from "./data";
 import * as logos from "./logos";
 
+/**
+ * The current version of this component works with implementations of 2 or 3 rows
+ * Adding rows will require additional keyframes (ask Cole for help if you need it)
+ */
+
 export type LogoName = keyof typeof logos;
 
 export interface AnnouncementBarLogoProps {
@@ -36,7 +41,7 @@ const AnnouncementBarLogo = ({
   return (
     <Box
       maxWidth={[120, 160]}
-      minWidth={[null, 100]}
+      minWidth={[null, 80]}
       height={inLivingColor ? 70 : 32}
       my={2}
       color="gray"
@@ -104,6 +109,7 @@ export const AnnouncementBar = ({
           return (
             <StyledRow
               key={`row${i}`}
+              data-count={rows.length}
               opacity={i === 0 ? "1" : "0"}
               animationDelay={`${i * 5}s`}
               animationDuration={`${rows.length * 5}s`}
@@ -134,7 +140,25 @@ export const AnnouncementBar = ({
   );
 };
 
-const logoAnimation = keyframes`
+const twoRowAnimation = keyframes`
+        0% {
+          opacity: 0;
+          visibility: visible;
+        }
+        50% {
+          opacity: 1;
+        }
+        51% {
+          opacity: 0;
+          visibility: hidden;
+        }
+        100% {
+          opacity: 0;
+          visibility: hidden;
+        }
+        `;
+
+const threeRowAnimation = keyframes`
         0% {
           opacity: 0;
           visibility: visible;
@@ -176,7 +200,7 @@ const StyledWrapper = styled(Flex)(
   })
 );
 
-const StyledRow = styled(Flex)(
+const StyledRow = styled(Flex)((props) => [
   css({
     px: 3,
     minHeight: ["48px", "60px"],
@@ -189,8 +213,10 @@ const StyledRow = styled(Flex)(
     position: "absolute",
     animationIterationCount: "infinite",
   }),
-  styledCss`animation-name: ${logoAnimation};`
-);
+  styledCss`animation-name: ${
+    props["data-count"] === 2 ? twoRowAnimation : threeRowAnimation
+  };`,
+]);
 
 const StyledH3 = styled("h3")(
   css({

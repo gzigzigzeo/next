@@ -1,0 +1,224 @@
+---
+title: Powering the world's leaders in finance
+subtitle: Teleport Access Plane
+hideWave: true
+description: Teleport’s Access Plane empowers leading financial institutions to innovate, without sacrificing speed for security.
+tryTeleport: true
+bgWave: wave-on-gray
+headerMode: small
+hideHeader: true
+isFullWidthLayout: true
+clients:
+  - airtable
+  - auth0
+  - crypto
+  - doordash
+  - elastic
+  - gitlab
+  - gusto
+  - hpe
+  - ibm
+  - nasdaq
+  - samsung
+  - sumologic
+  - swisscom
+  - threatstack
+  - twitch
+---
+
+import {
+  AnimationHeader,
+  AnnouncementBar,
+  EasyStart,
+  List,
+  MessageBanner,
+  ProductBanner,
+  Section,
+  SectionHeader,
+  Terminal,
+  TryTeleport,
+  WorksWith,
+} from "components";
+import NextImage from "next/image";
+
+<Section bg="grayWave">
+  <SectionHeader
+    title={meta.title}
+    subtitle={meta.subtitle}
+    description={meta.description}
+    width="100%"
+  >
+    <NextImage
+      src="./assets/powering-the-world@2x.png"
+      alt="teleport powering the world"
+      height={418.37}
+      width={600}
+    />
+  </SectionHeader>
+  <AnnouncementBar backgroundColor="#f0f2f4" />
+</Section>
+
+<Section bg="grayWave">
+  <List subtitle="Benefits" grid="fourUp" fourUp>
+    <List.Item title="Comprehensive access controls" src="./assets/access.svg">
+      Leverage Teleport's protocol-aware proxy for granular control at the
+      infrastructure layer. Implement least privilege access through
+      identity-based certificates with configurable TTL.
+    </List.Item>
+    <List.Item
+      title="Visibility into changes and behaviour"
+      src="./assets/visibility.svg"
+    >
+      Log interactive sessions, filesystem changes, data transfers, CLI
+      activity, and other audit events. Export logs directly into your preferred
+      SIEM.
+    </List.Item>
+    <List.Item
+      title="Scalable support for global teams"
+      src="./assets/scalability.svg"
+    >
+      Automate user provisioning through your SSO by mapping claims to roles.
+      Label compute resources and federate trust across your entire
+      infrastructure.
+    </List.Item>
+    <List.Item title="Flexible admin workflows" src="./assets/flexibility.svg">
+      Configure dynamic workflows around everyday access, privilege escalation,
+      and break glass procedures. Approve or deny short-lived credentials
+      directly in our native API or from 3rd-party applications like Jira,
+      Slack, or PagerDuty.
+    </List.Item>
+  </List>
+</Section>
+
+<Section width="100%" bg="flatWhite">
+  <ProductBanner
+    subtitle="For Financial Services"
+    title="Meet stringent compliance standards"
+    width="100%"
+    src="./assets/meet-stringent-compliance-stand@2x.png"
+    imgPosition="right"
+    description={
+      <>
+        Teleport helps teams meet regulatory hurdles by centralizing access,
+        removing the burden of juggling shared secrets and SSH keys, and by
+        providing session recordings & an in-depth audit log.
+      </>
+    }
+  >
+    <ProductBanner.Item title="Access Controls">
+      With RBAC, teams can easily implement compliance standards like SOC2, PCI,
+      and FedRAMP.
+    </ProductBanner.Item>
+    <ProductBanner.Item title="Session Recordings">
+      Use Session Recordings for knowledge sharing & incident resolution.
+    </ProductBanner.Item>
+    <ProductBanner.Item title="Session Controls">
+      Session controls let you define policies to handle idle and concurrent
+      sessions, and record interactive sessions across all protocols and
+      environments.
+    </ProductBanner.Item>
+  </ProductBanner>
+</Section>
+
+<Section width="100%" bg="flatGray">
+  <ProductBanner
+    subtitle="For FinTech"
+    title="Security built for agile teams"
+    width="100%"
+    src="./assets/session-replay.gif"
+    imgPosition="left"
+    description={
+      <>
+        Get new team members up and running on day one while meeting strict
+        compliance requirements. Frictionless access across your infrastructure
+        means engineers can focus on what they do best.
+      </>
+    }
+  >
+    <ProductBanner.Item title="Simplified Onboarding">
+      Unified access connected to your SSO provider means fast, simple
+      onboarding and offboarding.
+    </ProductBanner.Item>
+    <ProductBanner.Item title="Live Session View">
+      The Live Session View gives a window into all active sessions across
+      protocols and environments.
+    </ProductBanner.Item>
+    <ProductBanner.Item title="Identity-based Recording">
+      Each session is recorded and tied to identities of both people and
+      machines for fast incident resolution, knowledge sharing, and audits.
+    </ProductBanner.Item>
+  </ProductBanner>
+</Section>
+
+<Section width="100%" bg="flatWhite">
+  <ProductBanner
+    subtitle="For Blockchain"
+    title="Designed for the future of finance"
+    width="100%"
+    src="./assets/designed-for-the-future-of-finance@2x.png"
+    imgPosition="right"
+    description={
+      <>
+        Quickly grow & innovate, knowing that your resources and team are
+        secure. Our open-source focus means our access control solution is built
+        to thrive in a decentralized world.
+      </>
+    }
+  >
+    <ProductBanner.Item title="Blockchain Support">
+      Support for blockchain companies looking to meet strict compliance
+      standards.
+    </ProductBanner.Item>
+    <ProductBanner.Item title="Seamless Integration">
+      Ready to use auth for internal web apps and customizable access workflows
+      let you seamlessly integrate Teleport into your existing security stack.
+    </ProductBanner.Item>
+    <ProductBanner.Item title="High Security Standard">
+      Regular external audits of Teleport help ensure maximum security.
+    </ProductBanner.Item>
+  </ProductBanner>
+</Section>
+
+<Section bg="flatWhite">
+  <WorksWith title="Works with everything you have">
+    Teleport Server Access is open source and it relies on open standards such
+    as X.509 certificates, HTTPS, SAML, OpenID connect and others. Deployed as a
+    single-binary, it seamlessly integrates with the rest of your stack.
+  </WorksWith>
+</Section>
+
+<Section>
+  <EasyStart>
+      <Terminal>
+```
+# on a client
+$ tsh login --proxy=example.com
+
+# on a server
+
+$ apt install teleport
+
+# in a Kubernetes cluster
+
+$ helm install
+
+```
+  </Terminal>
+    </EasyStart>
+</Section>
+
+<Section>
+  <MessageBanner
+    title="Our vision for the future"
+    href="https://goteleport.com/resources/white-papers/environment-free-computing/"
+    linkText="Learn more"
+  >
+    We are trying to solve the problem every company has - how to run and access
+    software running anywhere in a secure and compliant manner. We call this
+    environment-free computing.
+  </MessageBanner>
+</Section>
+
+
+<TryTeleport />
+```

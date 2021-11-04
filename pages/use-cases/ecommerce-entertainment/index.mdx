@@ -1,0 +1,200 @@
+---
+title: A modern access solution for e-commerce & entertainment
+subtitle: E-commerce & Entertainment
+hideWave: true
+description: Teleport’s access solution empowers teams to grow & innovate, without worrying about security or getting slowed down by complex security systems.
+reviews:
+  - glu
+---
+
+import {
+  AnnouncementBar,
+  CenterCard,
+  EasyStart,
+  Feedback,
+  List,
+  ProductBanner,
+  Section,
+  SectionHeader,
+  Terminal,
+  TryTeleport,
+  WorksWith,
+} from "components";
+import {
+  Internet1,
+  Internet2,
+} from "components/AnnouncementBar/data";
+import ecomm from "./assets/for-ecomm.svg"
+import appdev from "./assets/for-appdev.svg"
+import gaming from "./assets/for-gaming.svg"
+
+<Section bg="flatGray">
+  <SectionHeader
+    bg="transparent"
+    title={meta.title}
+    subtitle={meta.subtitle}
+    description={meta.description}
+    width="100%"
+    mode="none"
+  >
+    ![modern access solution](./assets/a-modern-access-solution@2x.png)
+  </SectionHeader>
+  <AnnouncementBar
+    backgroundColor="lightest-gray"
+    inLivingColor
+    rows={[Internet1, Internet2]}
+  />
+</Section>
+
+<Section width="100%" bg="flatWhite">
+  <ProductBanner
+    title="Unique challenges faced by e-commerce & entertainment providers"
+    width="100%"
+    src="./assets/internet@2x-min.png"
+    imgPosition="right"
+    description={
+      <>
+       Building a platform to support millions of users is a challenge. You have to move faster than your competitors & introduce new features, all while protecting consumer data. Even without compliance requirements like GDPR and CCPA, the reputation risk that comes with a major breach is reason enough to focus on security from the get-go. The tension between fast growth and security that protects your customers and reputation is real.   
+      </>
+    }
+>
+    <ProductBanner.Item iconWrapper title="Growth" src="./assets/spreading-icon.svg">
+      You need to maximize agility to drive growth. Access controls & compliance can’t get in the way.
+    </ProductBanner.Item>
+    <ProductBanner.Item iconWrapper title="Security & Compliance" src="./assets/layers-icon.svg">
+      You need to stay secure because one major breach could end your company, but slowing down productivity just to be overtaken by a competitor isn’t the answer.
+    </ProductBanner.Item>
+    <ProductBanner.Item iconWrapper title="Complexity" src="./assets/protocol-icon.svg">
+     More users.  More data centers. More layers of the stack. More employees. As complexity grows, so do security challenges.
+    </ProductBanner.Item>
+  </ProductBanner>
+</Section>
+
+<CenterCard 
+  src="./assets/trust-icon.svg" 
+  title="Why e-commerce and entertainment providers big and small trust Teleport" 
+  text="Our unique approach is not only more secure, it actually improves developer productivity.  By providing an identity-aware infrastructure access solution that developers love to use, you can easily implement security and compliance without worrying about backdoors that outmoded solutions encourage."
+/>
+
+<Section>
+  <Feedback reviews={meta.reviews} />
+</Section>
+
+<Section width="100%" bg="flatWhite">
+  <ProductBanner
+    subtitle="For Gaming"
+    title="Built for dynamic infrastructure"
+    width="100%"
+    src="./assets/built-for-dynamic-infrastructure@2x.png"
+    imgPosition="right"
+    logoSrc={gaming}
+    description={
+      <>
+        Global, dynamic infrastructure requires unique solutions. Teleport makes
+        securely accessing your Kubernetes clusters, databases, applications,
+        and servers a breeze.
+      </>
+    }
+  >
+    <ProductBanner.Item title="Unified Resource Catalog">
+      Teleport provides a live view of all connected resources and live sessions
+      across all environments &mdash; all from one centralized catalog.
+    </ProductBanner.Item>
+    <ProductBanner.Item title="Plugins and API">
+      Easily customize your access workflows and react to security events using
+      your favorite programming languages.
+    </ProductBanner.Item>
+    <ProductBanner.Item title="Access Requests">
+      Access Requests give teams the power to approve or deny privilege
+      escalation requests using flexible workflows.
+    </ProductBanner.Item>
+  </ProductBanner>
+</Section>
+
+<Section width="100%" bg="flatGray">
+  <ProductBanner
+    subtitle="For E-Commerce"
+    title="Designed for digital-native commerce"
+    width="100%"
+    src="./assets/session-replay.gif"
+    imgPosition="left"
+    logoSrc={ecomm}
+    description={
+      <>
+        Processing transactions and handling sensitive customer data demands
+        strong security. Global e-commerce teams rely on Teleport to make this
+        possible, without slowing down their engineers.
+      </>
+    }
+  >
+    <ProductBanner.Item title="Session Recordings">
+      Use Session Recordings for knowledge sharing & incident resolution.
+    </ProductBanner.Item>
+    <ProductBanner.Item title="Session Controls">
+      Session controls let you define and enforce policies for handling idle and
+      concurrent sessions, and let you record interactive sessions across all
+      protocols and environments.
+    </ProductBanner.Item>
+    <ProductBanner.Item title="Audit Log">
+      Recorded sessions and security events are stored in an in-depth audit log,
+      simplifying incident resolution & providing essential information for
+      meeting compliance standards.
+    </ProductBanner.Item>
+  </ProductBanner>
+</Section>
+
+<Section width="100%" bg="flatWhite">
+  <ProductBanner
+    subtitle="For Application Developers"
+    title="Securing user-focused companies"
+    width="100%"
+    src="./assets/securing-user-focused-comp@2x.png"
+    imgPosition="right"
+    logoSrc={appdev}
+    description={
+      <>
+        With millions of users daily, maintaining a secure and compliant
+        infrastructure can be difficult. Teleport helps teams achieve tough
+        compliance standards, like PCI, without adding increasingly burdensome
+        hurdles for developers.
+      </>
+    }
+  >
+    <ProductBanner.Item title="Access Controls">
+      Access Controls help teams implement compliance standards like SOC2, PCI,
+      and FedRAMP.
+    </ProductBanner.Item>
+    <ProductBanner.Item title="Seamless Integration">
+      Ready to use auth for internal web apps and customizable access workflows
+      let you seamlessly integrate Teleport into your existing security stack.
+    </ProductBanner.Item>
+    <ProductBanner.Item title="Single Source of Truth">
+      Teleport streams recorded sessions & security events to a centralized
+      destination of choice to help create a single source of truth.
+    </ProductBanner.Item>
+  </ProductBanner>
+</Section>
+
+
+<WorksWith title="Works with everything you have">
+  Teleport Server Access is open source and it relies on open standards such
+  as X.509 certificates, HTTPS, SAML, OpenID connect and others. Deployed as a
+  single-binary, it seamlessly integrates with the rest of your stack.
+</WorksWith>
+
+<EasyStart>
+      <Terminal>
+```
+# on a client
+$ tsh login --proxy=example.com
+
+# on a server
+$ apt install teleport
+
+# in a Kubernetes cluster
+$ helm install
+```
+  </Terminal>
+</EasyStart>
+
+<TryTeleport />

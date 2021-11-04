@@ -10,30 +10,42 @@ type Theme = "light" | "dark";
 export type Props = {
   title: string;
   description: string;
-  subject?: string;
+  subtitle?: string;
   theme?: Theme;
   verticalResponsive?: boolean;
   children?: ReactNode;
+  isZeroTrustPage?: boolean;
 } & BoxProps;
 
 export default function PageIntro({
   title,
-  subject,
+  subtitle,
   description,
   theme = "dark",
   verticalResponsive: vr = true,
   children,
+  isZeroTrustPage = false,
   ...props
 }: Props) {
   return (
     <StyledWrapper vr={vr} {...props}>
       <StyledLeft vr={vr}>
-        {subject && (
-          <StyledSubject variant={theme} vr={vr}>
-            {subject}
+        {subtitle && (
+          <StyledSubject
+            variant={theme}
+            vr={vr}
+            pb={isZeroTrustPage ? 2 : null}
+          >
+            {subtitle}
           </StyledSubject>
         )}
-        <StyledHeading variant={theme} vr={vr}>
+        <StyledHeading
+          variant={theme}
+          vr={vr}
+          fontSize={isZeroTrustPage ? 32 : null}
+          lineHeight={isZeroTrustPage ? "48px" : null}
+          pb={isZeroTrustPage ? 2 : null}
+        >
           {title}
         </StyledHeading>
       </StyledLeft>
@@ -80,7 +92,8 @@ const StyledSubject = styled("p")<ThemedProps>(
         color: "white",
       },
     },
-  })
+  }),
+  all
 );
 
 const StyledHeading = styled("h1")<ThemedProps>(
@@ -117,7 +130,8 @@ const StyledHeading = styled("h1")<ThemedProps>(
         color: "white",
       },
     },
-  })
+  }),
+  all
 );
 
 const StyledDescription = styled("p")<ThemedProps>(

@@ -9,9 +9,8 @@ import Icon, { IconName } from "components/Icon";
 import { Centrator } from "components/Layout";
 import terminalUrl from "./assets/terminal.png";
 import waveUrl from "./assets/wave.png";
-import wavelight from "sharedAssets/images/wave-light.png";
 
-const fourUpBg = `url(${wavelight}) 0px 0px no-repeat`;
+const fourUpBg = "transparent";
 const waveBg = `url(${waveUrl}) -477px 73px no-repeat`;
 const terminalBg = `url(${terminalUrl}) right center no-repeat`;
 

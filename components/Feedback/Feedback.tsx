@@ -7,7 +7,7 @@ import { css, transition } from "components/system";
 import Pagination from "./Pagination";
 import Review from "./Review";
 
-const SWITCH_TIMEOUT = 5000;
+const SWITCH_TIMEOUT = 7000;
 export type Props = {
   dark: boolean;
   reviews: CompanyId[];

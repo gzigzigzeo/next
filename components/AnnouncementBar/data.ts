@@ -39,31 +39,39 @@ export const SaaS1: LogoRow = [
   "colorAirtable",
   "colorElastic",
   "colorAuth0",
+  "colorCastor",
+  "colorKaltura",
 ];
 
 export const SaaS2: LogoRow = [
-  "colorCastor",
-  "colorKaltura",
   "colorSumologic",
   "colorGladly",
+  "colorGusto",
+  "colorOrbit",
+  "colorFlywheel",
 ];
 
-export const SaaS3: LogoRow = ["colorGusto", "colorOrbit", "colorFlywheel"];
+export const SaaS3: LogoRow = [];
 
 //Finance Page
 export const Finance1: LogoRow = [
   "colorNasdaq",
-  "colorCarta",
-  "colorCrypto",
   "colorSquare",
+  "colorGoldman",
+  "colorMoodys",
+  "colorCrypto",
+  "colorWise",
 ];
 export const Finance2: LogoRow = [
-  "colorSpotOn",
-  "colorMX",
-  "colorGSR",
   "colorMayStreet",
+  "colorMX",
+  "colorFolio",
+  "colorGSR",
+  "colorCarta",
+  "colorSpotOn",
 ];
-export const Finance3: LogoRow = ["colorWise", "colorMoodys", "colorFolio"];
+
+export const Finance3: LogoRow = [];
 
 //Internet & Entertainment Page
 export const Internet1: LogoRow = [
@@ -71,16 +79,13 @@ export const Internet1: LogoRow = [
   "colorDraftKings",
   "colorDoorDash",
   "colorTwitch",
+  "colorRushStreet",
+  "colorEpicGames",
 ];
 
 export const Internet2: LogoRow = [
-  "colorRushStreet",
-  "colorEpicGames",
   "colorWish",
   "colorCoupang",
-];
-
-export const Internet3: LogoRow = [
   "colorTokopedia",
   "colorBigCommerce",
   "colorThredUp",

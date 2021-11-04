@@ -16,6 +16,7 @@ export { default as bigcommerce } from "./logos/logo-bigcommerce.svg";
 export { default as bitvavo } from "./logos/logo-bitvavo.svg";
 export { default as blablacar } from "./logos/logo-blablacar.svg";
 export { default as boomi } from "./logos/logo-boomi.svg";
+export { default as carta } from "./logos/logo-carta.svg";
 export { default as castor } from "./logos/logo-castor.svg";
 export { default as chargepoint } from "./logos/logo-chargepoint.svg";
 export { default as checkr } from "./logos/logo-checkr.svg";

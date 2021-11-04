@@ -5,7 +5,14 @@ import wave from "./fixtures/wave.svg";
 import wavelight from "./fixtures/wave-light.png";
 import Button, { ButtonVariant, ButtonShape } from "components/Button";
 
-export type BGColor = "wave" | "white" | "gray" | "wavelight" | "wave-on-gray";
+export type BGColor =
+  | "wave"
+  | "white"
+  | "gray"
+  | "wavelight"
+  | "wave-on-gray"
+  | "transparent";
+
 type LinkProps = {
   href: string;
   text: string;
@@ -14,7 +21,7 @@ type LinkProps = {
 };
 export interface SectionHeaderProps {
   title: string;
-  description: React.ReactNode;
+  description?: React.ReactNode;
   subtitle?: string;
   children?: React.ReactNode;
   mode?: string;
@@ -51,6 +58,10 @@ const getBG = (color: BGColor) => {
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
         backgroundSize: "100%",
+      };
+    case "transparent":
+      return {
+        background: "inherit",
       };
     default:
       return {
@@ -115,15 +126,17 @@ export const SectionHeader = ({
               </Box>
             )}
           </Flex>
-          <Box
-            mt={[3, 2]}
-            fontSize="text-xl"
-            lineHeight="lg"
-            color="darkest"
-            maxWidth="600px"
-          >
-            {description}
-          </Box>
+          {description && (
+            <Box
+              mt={[3, 2]}
+              fontSize="text-xl"
+              lineHeight="lg"
+              color="darkest"
+              maxWidth="600px"
+            >
+              {description}
+            </Box>
+          )}
           {link && (
             <Button
               mt={6}

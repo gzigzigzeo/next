@@ -1,4 +1,6 @@
-import Image from "next/image";
+import styled from "styled-components";
+import css from "@styled-system/css";
+import NextImage from "next/image";
 import { Centrator } from "components/Layout";
 import Flex from "components/Flex";
 import Box from "components/Box";
@@ -6,12 +8,14 @@ import Box from "components/Box";
 interface ProductBannerItemProps {
   title: string;
   src?: string;
+  iconWrapper?: boolean;
   children: React.ReactNode;
 }
 
 const ProductBannerItem = ({
   title,
   src,
+  iconWrapper = false,
   children,
 }: ProductBannerItemProps) => {
   return (
@@ -23,17 +27,28 @@ const ProductBannerItem = ({
       pb={2}
       pl={3}
     >
-      {src && (
-        <Flex alignItems="center" flexGrow={1} mb={1}>
-          <Image
-            src={src}
-            width={32}
-            height={32}
-            layout="intrinsic"
-            alt="miniature diagram"
-          />
-        </Flex>
-      )}
+      {src &&
+        (!iconWrapper ? (
+          <Flex alignItems="center" flexGrow={1} mb={1}>
+            <NextImage
+              src={src}
+              width={32}
+              height={32}
+              layout="intrinsic"
+              alt="miniature diagram"
+            />
+          </Flex>
+        ) : (
+          <StyledIconWrapper>
+            <NextImage
+              src={src}
+              width={24}
+              height={24}
+              layout="intrinsic"
+              alt="miniature diagram"
+            />
+          </StyledIconWrapper>
+        ))}
       <Box
         fontSize={src ? "text-md" : "text-lg"}
         fontWeight="bold"
@@ -65,7 +80,6 @@ export interface ProductBannerProps {
   src: string;
   alt: string;
   imgPosition: "left" | "right";
-  logoBar?: boolean;
   logoSrc?: string;
 }
 
@@ -77,7 +91,6 @@ export const ProductBanner = ({
   children,
   src,
   alt,
-  logoBar = false,
   logoSrc,
 }: ProductBannerProps) => {
   return (
@@ -135,11 +148,16 @@ export const ProductBanner = ({
             }
           >
             <Box minHeight={["330px", "400px"]} position="relative">
-              <Image layout="fill" objectFit="contain" src={src} alt={alt} />
+              <NextImage
+                layout="fill"
+                objectFit="contain"
+                src={src}
+                alt={alt}
+              />
             </Box>
-            {logoBar && (
+            {logoSrc && (
               <Box position="relative" height={72}>
-                <Image
+                <NextImage
                   layout="fill"
                   objectFit="contain"
                   src={logoSrc}
@@ -155,7 +173,7 @@ export const ProductBanner = ({
           flexDirection={["column", "row"]}
           justifyContent="space-between"
           alignItems="flex-start"
-          mt={logoBar ? [3, 5] : [5, 9]}
+          mt={[3, 5]}
           width="100%"
         >
           {children}
@@ -164,5 +182,19 @@ export const ProductBanner = ({
     </Flex>
   );
 };
+
+const StyledIconWrapper = styled(Flex)(
+  css({
+    justifyContent: "center",
+    alignItems: "center",
+    bg: "dark-purple",
+    border: "1px solid white",
+    borderRadius: "circle",
+    height: 48,
+    width: 48,
+    boxShadow: "0px 8px 16px rgba(12, 12, 14, 0.24)",
+    mb: 2,
+  })
+);
 
 ProductBanner.Item = ProductBannerItem;

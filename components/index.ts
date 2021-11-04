@@ -10,6 +10,7 @@ export { default as Box } from "components/Box";
 export { default as Button } from "components/Button";
 export { default as GridDisplay } from "components/GridDisplay";
 export { default as Careers } from "components/Careers";
+export { default as CenterCard } from "components/CenterCard";
 export { default as ClientsList } from "components/ClientsList";
 export { default as CloudSignup } from "components/CloudSignup";
 export { default as Cover } from "components/Cover";

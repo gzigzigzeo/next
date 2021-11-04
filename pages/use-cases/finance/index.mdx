@@ -1,0 +1,205 @@
+---
+title: Stop sacrificing speed for security
+subtitle: Financial Services
+headerDescription: Our unique approach to identity-aware access is not only more secure; it improves developer productivity.
+description: Teleport is the easiest, most secure way to access all your infrastructure. That's why we're trusted by the world's leading financial services companies. 
+hideWave: true
+reviews:
+  - nasdaq
+  - carta
+---
+
+import {
+  AnnouncementBar,
+  CenterCard,
+  EasyStart,
+  Feedback,
+  Flex,
+  ProductBanner,
+  Section,
+  SectionHeader,
+  Terminal,
+  TryTeleport,
+  WorksWith,
+} from "components";
+import Centrator from "components/Layout";
+import { Finance1, Finance2 } from "components/AnnouncementBar/data";
+import blockchain from "./assets/for-blockchain.svg";
+import fintech from "./assets/for-fintech.svg";
+import finserv from "./assets/for-finserv.svg";
+
+<Section bg="flatGray">
+  <SectionHeader
+    bg="transparent"
+    mode="none"
+    title={meta.title}
+    subtitle={meta.subtitle}
+    description={meta.headerDescription}
+    width="100%"
+  >
+    ![teleport powering the world](./assets/powering-the-world@2x.png)
+  </SectionHeader>
+  <AnnouncementBar
+    backgroundColor="transparent"
+    inLivingColor
+    rows={[Finance1, Finance2]}
+  />
+</Section>
+
+<Section width="100%" bg="flatWhite">
+  <ProductBanner
+    title="Unique challenges faced by financial institutions"
+    width="100%"
+    src="./assets/risk@2x-min.png"
+    imgPosition="right"
+    description={
+      <>
+        Your customers trust you with their financial assets and health — that’s a big responsibility. As your infrastructure becomes spread across on-prem and cloud, you need to find new ways to meet strict compliance requirements &  protect your infrastructure from unauthorized access. VPNs and shared secrets alone won’t cut it. 
+      </>
+    }
+
+>
+    <ProductBanner.Item iconWrapper title="Security &amp; Compliance" src="./assets/spreading-icon.svg">
+      Your security and compliance obligations are non-negotiable. And protecting your infrastructure keeps getting harder as attackers get more sophisticated.
+    </ProductBanner.Item>
+    <ProductBanner.Item iconWrapper title="Complexity" src="./assets/layers-icon.svg">
+      More data centers. More layers of the stack. More employees. More end-users. As complexity grows, so do security challenges.
+    </ProductBanner.Item>
+    <ProductBanner.Item iconWrapper title="Productivity" src="./assets/protocol-icon.svg">
+     You need to stay secure, but slowing down productivity just to be overtaken by a competitor isn’t the answer.
+    </ProductBanner.Item>
+
+  </ProductBanner>
+</Section>
+
+<CenterCard 
+  src="./assets/trust-icon.svg" 
+  title="Why financial service providers big and small trust Teleport" 
+  text="Our unique approach is not only more secure &mdash; it actually improves developer productivity. By providing an identity-aware infrastructure access solution that developers love to use, you can easily implement security and compliance without worrying about backdoors that outmoded solutions encourage."
+/>
+
+<Section>
+  <Feedback reviews={meta.reviews} />
+</Section>
+
+<Section width="100%" bg="flatWhite">
+  <ProductBanner
+    subtitle="For Financial Services"
+    title="Meet stringent compliance standards"
+    width="100%"
+    src="./assets/meet-stringent-compliance-stand@2x.png"
+    imgPosition="right"
+    logoSrc={finserv}
+    description={
+      <>
+        Use Teleport to adopt industry best practices for access across all protocols 
+        and all environments with minimal configuration. Easily enforce MFA, RBAC, 
+        and SSO using identity-based, short-lived certificates.
+      </>
+    }
+  >
+    <ProductBanner.Item title="Access Controls">
+      Use flexible access controls to implement compliance standards such as SOC2, 
+      PCI, and FedRAMP. Teleport can bring new and legacy resources into compliance.
+    </ProductBanner.Item>
+    <ProductBanner.Item title="Access Requests">
+      Approve or deny privilege escalation requests using flexible access requests. 
+      Access can be approved or denied via ChatOps, Slack, PagerDuty, or access 
+      approval can be customized via the programmable API.
+    </ProductBanner.Item>
+    <ProductBanner.Item title="Session Controls">
+      Define and enforce policy to handle idle sessions, concurrent sessions, and 
+      to share and record interactive sessions across all protocols and environments.
+    </ProductBanner.Item>
+  </ProductBanner>
+</Section>
+
+<Section width="100%" bg="flatGray">
+  <ProductBanner
+    subtitle="For FinTech"
+    title="Security built for agile teams"
+    width="100%"
+    src="./assets/session-replay.gif"
+    imgPosition="left"
+    logoSrc={fintech}
+    description={
+      <>
+        A single sign-on allows discovery and instant access to all layers of 
+        the tech stack across clouds, data centers, or on the edge. There is 
+        no more juggling of shared secrets, SSH keys, or hopping between VPNs 
+        and multiple access points.
+      </>
+    }
+  >
+    <ProductBanner.Item title="Unified Resource Catalog">
+      There is no need to maintain inventories. Enjoy the live view of all servers, 
+      Kubernetes clusters, internal applications, databases, and live sessions 
+      across all environments.
+    </ProductBanner.Item>
+    <ProductBanner.Item title="Session Sharing and Recording">
+      Invite colleagues to collaborate in a shared session. Work together to 
+      troubleshoot a problem on a remote server or on each others’ laptops. Record 
+      sessions for knowledge-sharing purposes.
+    </ProductBanner.Item>
+    <ProductBanner.Item title="Plugins and API">
+      Teleport provides ready to use auth for your internal web applications. 
+      Customize access requests and react to security events using favorite 
+      programming languages.
+    </ProductBanner.Item>
+  </ProductBanner>
+</Section>
+
+<Section width="100%" bg="flatWhite">
+  <ProductBanner
+    subtitle="For Blockchain"
+    title="Crypto. Blockchain. DeFi. Yes."
+    width="100%"
+    src="./assets/designed-for-the-future-of-finance@2x.png"
+    imgPosition="right"
+    logoSrc={blockchain}
+    description={
+      <>
+        The future of finance needs the same security & compliance as 
+        traditional finance, but you can’t slow down to get it.  With 
+        Teleport, you don’t have to make that tradeoff.
+      </>
+    }
+  >
+    <ProductBanner.Item title="Industry Adoption">
+      3 of the Top 5 Crypto exchanges by trading volume leverage 
+      Teleport to keep their critical resources secure.
+    </ProductBanner.Item>
+    <ProductBanner.Item title="Open-source">
+      Teleport is open-source which means it benefits from the 
+      wisdom of crowds, just like crypto. No fiat security software here.
+    </ProductBanner.Item>
+    <ProductBanner.Item title="High Security Standard">
+      Regular external audits of Teleport help ensure maximum security.
+    </ProductBanner.Item>
+  </ProductBanner>
+</Section>
+
+<Section bg="flatWhite">
+  <WorksWith title="Works with everything you have">
+    Teleport Server Access is open source and it relies on open standards such
+    as X.509 certificates, HTTPS, SAML, OpenID connect and others. Deployed as a
+    single-binary, it seamlessly integrates with the rest of your stack.
+  </WorksWith>
+</Section>
+
+<EasyStart>
+      <Terminal>
+```
+# on a client
+$ tsh login --proxy=example.com
+
+# on a server
+$ apt install teleport
+
+# in a Kubernetes cluster
+$ helm install
+```
+  </Terminal>
+</EasyStart>
+
+<TryTeleport />

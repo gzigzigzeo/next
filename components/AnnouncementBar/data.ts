@@ -113,8 +113,8 @@ export const CompactClients2: Array<RenderableCompany> = [
     imageName: "colorNasdaq",
     url: "/case-study/nasdaq-testimonial/",
   },
-  { imageName: "hpe" },
-  { imageName: "ibm" },
+  { imageName: "colorHPE" },
+  { imageName: "colorIBM" },
 ];
 
 export const CompactClients3: Array<RenderableCompany> = [
@@ -123,7 +123,7 @@ export const CompactClients3: Array<RenderableCompany> = [
     imageName: "colorSumologic",
     url: "/case-study/sumologic-testimonial/",
   },
-  { imageName: "swisscom" },
-  { imageName: "threatstack" },
+  { imageName: "colorSwisscom" },
+  { imageName: "colorThreatstack" },
   { imageName: "colorTwitch" },
 ];

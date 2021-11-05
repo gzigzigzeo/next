@@ -179,7 +179,7 @@ const threeRowAnimation = keyframes`
 const StyledBox = styled(Flex)(
   css({
     p: 2,
-    width: "100%",
+    maxWidth: ["100%", 160],
     height: "100%",
     justifyContent: "center",
     alignItems: "center",
@@ -197,6 +197,7 @@ const StyledWrapper = styled(Flex)(
     boxShadow: "0 1px 4px rgb(0 0 0 / 24%)",
     boxSizing: "border-box",
     justifyContent: "center",
+    alignItems: "center",
   })
 );
 

@@ -59,21 +59,53 @@ export const browserFall = keyframes`
   }
 `;
 
-export const terminalRise = keyframes`
+export const homepageRise = keyframes`
   0% {
     transform: translateY(0px);
   }
   100% {
-    transform: translateY(-73%);
+    transform: translateY(-210px);
   }
 `;
+export const serverRise = keyframes`
+  0% {
+    transform: translateY(0px);
+  }
+  100% {
+    transform: translateY(-265px);
+  }
+`;
+export const kubernetesRise = keyframes`
+  0% {
+    transform: translateY(0px);
+  }
+  100% {
+    transform: translateY(-235px);
+  }
+`;
+export const databaseRise = keyframes`
+  0% {
+    transform: translateY(0px);
+  }
+  100% {
+    transform: translateY(-265px);
+  }
+`;
+
 //DO NOT REMOVE
 //at container height of 406:
 //210 for homepage
 //290 for database
 //235 for kubernetes
 //265 for server
-//tbd for application
+
+//sorting object for correct rise height for each animation, referenced in AnimatedTerminal
+const riseAdjuster = {
+  homepage: homepageRise,
+  database: databaseRise,
+  kubernetes: kubernetesRise,
+  server: serverRise,
+};
 
 export const buttonRipple = keyframes`
   0% {
@@ -147,14 +179,16 @@ export const AnimatedResetButton = styled(Button)(
   styledCss`animation: 1s linear 12s 1 normal forwards running ${fadeIn};'`
 );
 
-export const AnimatedTerminal = styled(Terminal)(
+export const AnimatedTerminal = styled(Terminal)((props) => [
   css({
     position: "absolute",
     top: "314px",
     zIndex: 5,
   }),
-  styledCss`animation: 500ms linear 11s normal forwards running ${terminalRise};`
-);
+  styledCss`animation: 500ms linear 11s normal forwards running ${
+    riseAdjuster[props["rise"]]
+  };`,
+]);
 
 //input field and verify button for simulated sign-in screen
 export const StyledInput = styled("input")(

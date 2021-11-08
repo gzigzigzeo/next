@@ -100,7 +100,7 @@ export const TerminalAnimation = ({
         maxWidth="588px"
         borderRadius="0 0 8px 8px"
       >
-        <AnimatedTerminal>{termText}</AnimatedTerminal>
+        <AnimatedTerminal rise={text}>{termText}</AnimatedTerminal>
         <TerminalBrowser />
       </Flex>
     </Flex>

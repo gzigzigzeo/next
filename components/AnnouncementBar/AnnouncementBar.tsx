@@ -190,7 +190,7 @@ const StyledBox = styled(Flex)(
 const StyledWrapper = styled(Flex)(
   css({
     width: 206,
-    height: 100,
+    height: 120,
     flexShrink: 1,
     backgroundColor: "white",
     borderRadius: "16px",
@@ -222,9 +222,10 @@ const StyledRow = styled(Flex)((props) => [
 const StyledH3 = styled("h3")(
   css({
     color: "dark-purple",
-    fontSize: "text-md",
+    fontSize: "text-xl",
     textAlign: "center",
     marginBottom: 3,
-    lineHeight: "lg",
+    lineHeight: "xxl",
+    fontWeight: "bold",
   })
 );

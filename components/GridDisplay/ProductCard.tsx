@@ -46,7 +46,12 @@ export const ProductCard = ({
       </Flex>
 
       {/* bottom half */}
-      <Flex flexDirection="column" flexGrow={1} alignItems="stretch" pt={3}>
+      <Flex
+        flexDirection="column"
+        flexGrow={1}
+        alignItems="stretch"
+        pt={[3, 2]}
+      >
         <Box
           fontSize="text-lg"
           lineHeight="lg"

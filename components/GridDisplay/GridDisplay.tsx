@@ -115,7 +115,7 @@ function GridDisplay({
               ? [
                   "minmax(340px, 560px)",
                   "repeat(2, minmax(140px, 400px))",
-                  "repeat(4, minmax(140px, 270px))",
+                  "repeat(4, minmax(140px, 294px))",
                 ]
               : [
                   "minmax(140px, 270px)",

@@ -222,9 +222,9 @@ const StyledRow = styled(Flex)((props) => [
 const StyledH3 = styled("h3")(
   css({
     color: "dark-purple",
-    fontSize: "text-xl",
+    fontSize: ["text-lg", "text-xl"],
     textAlign: "center",
-    marginBottom: 3,
+    marginBottom: [5, 3],
     lineHeight: "xxl",
     fontWeight: "bold",
   })

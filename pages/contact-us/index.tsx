@@ -23,8 +23,8 @@ const ContactCard = () => {
   return (
     <>
       <Head
-        title="Get in touch with teleport"
-        description="Teleport description"
+        title="Contact Us | Contact Sales"
+        description="Contact Teleport, get pricing and sales questions answered, or schedule a demo"
       />
       <Flex
         flexDirection="column"

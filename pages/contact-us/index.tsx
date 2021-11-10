@@ -68,7 +68,7 @@ const ContactCard = () => {
           </StyledPamCard>
 
           {/* Side with email form */}
-          <StyledForm width={["100%", 488]} maxWidth={[420, null]}>
+          <StyledForm width={["100%", 488]} maxWidth={[420, 488]}>
             <Flex
               justifyContent="center"
               flexDirection="column"
@@ -102,7 +102,7 @@ const ContactCard = () => {
               alignItems="center"
               maxWidth={["420px", "initial"]}
               px={[3, 5]}
-              pt={[6, 4]}
+              pt={[6, 0]}
               pb={[0, 4]}
             >
               <Flex
@@ -110,7 +110,6 @@ const ContactCard = () => {
                 alignItems="stretch"
                 flexDirection="column"
                 mb={[5, 0]}
-                px={[0, 3]}
                 width="100%"
                 minHeight="44px"
                 minWidth={["auto", "400px"]}

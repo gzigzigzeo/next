@@ -11,6 +11,7 @@ import { transition } from "components/system";
 import pam from "./assets/get-in-touch@2x.png";
 import webBackground from "./assets/newsletter_web.png";
 import mobBackground from "./assets/newsletter_mob.png";
+import wavelight from "sharedAssets/images/wave-light.png";
 
 /**
  *
@@ -109,6 +110,7 @@ const ContactCard = () => {
                 alignItems="stretch"
                 flexDirection="column"
                 mb={[5, 0]}
+                px={[0, 3]}
                 width="100%"
                 minHeight="44px"
                 minWidth={["auto", "400px"]}
@@ -141,12 +143,16 @@ const ContactCard = () => {
 
 const StyledPamCard = styled(Flex)(
   css({
-    background: "#f5f6f7",
     display: ["none", "flex"],
     borderTopLeftRadius: [0, "md"],
     borderBottomLeftRadius: "md",
     borderBottomRightRadius: ["md", 0],
     justifyContent: "center",
+    backgroundImage: `url(${wavelight})`,
+    backgroundPosition: "30% 150%",
+    backgroundSize: "300%",
+    backgroundRepeat: "no-repeat",
+    backgroundColor: "lightest-gray",
   })
 );
 

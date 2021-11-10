@@ -33,8 +33,7 @@ const ContactCard = () => {
         alignItems="center"
         minHeight="100vh"
         backgroundImage={[`url(${mobBackground})`, `url(${webBackground})`]}
-        pl={[2, 4]}
-        pr={[2, 4]}
+        px={[2, 4]}
       >
         <Box as="header" mt={[5, 9]} mb={[5, 5]} color="white">
           <Logo width={["120px", "180px"]} height={["24px", "38px"]} />

@@ -18,7 +18,7 @@ export const Default = StoryComponent.bind({});
 
 Default.args = {
   title: "Security Team",
-  listHeadnig:
+  listHeading:
     "Teleport maintains a cross functional security team dedicated to:",
   listItems: [
     "Teleport code, dependency, and supply chain vulnerability detection and response",

@@ -10,7 +10,6 @@ const {
   getLatestVersionRewirites,
   generateSitemap,
   generateFullSitemap,
-  writePodcastsData,
 } = require("./.build/server/paths");
 
 const PAGES_DIRECTORY = resolve(__dirname, "pages");

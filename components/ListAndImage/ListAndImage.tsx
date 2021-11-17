@@ -12,6 +12,7 @@ export interface ListAndImageProps {
   outro?: string | React.ReactNode;
   children: React.ReactNode;
   imagePosition?: string;
+  subheader?: string | React.ReactNode;
 }
 
 export const ListAndImage = ({
@@ -20,6 +21,7 @@ export const ListAndImage = ({
   listItems,
   outro,
   children,
+  subheader,
   imagePosition = "right",
 }: ListAndImageProps) => {
   return (
@@ -60,16 +62,14 @@ export const ListAndImage = ({
               >
                 {listHeading}
               </Box>
+              <StyledSubheader>{subheader}</StyledSubheader>
+
               {/* List */}
               <Flex flexDirection="column" mr={3} mb={[3, 0]}>
                 <StyledUL>
-                  {listItems.map((e, i) =>
-                    imagePosition === "right" ? (
-                      <li key={i}>{e}</li>
-                    ) : (
-                      <StyledRightLi key={i}>{e}</StyledRightLi>
-                    )
-                  )}
+                  {listItems.map((e, i) => (
+                    <li key={i}>{e}</li>
+                  ))}
                 </StyledUL>
                 <Flex>{outro}</Flex>
               </Flex>
@@ -83,7 +83,6 @@ export const ListAndImage = ({
             justifyContent="center"
             alignItems="center"
             width={["auto", "40%"]}
-            padding="0"
           >
             {children}
           </Flex>
@@ -93,11 +92,9 @@ export const ListAndImage = ({
   );
 };
 
-const StyledRightLi = styled("li")(
+const StyledSubheader = styled(Flex)(
   css({
-    "&:nth-child(1)": {
-      listStyle: "none",
-    },
+    color: "darkest",
   })
 );
 

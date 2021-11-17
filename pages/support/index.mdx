@@ -13,6 +13,7 @@ import css from "@styled-system/css";
 
 import {
   Box,
+  Icon,
   Image,
   Link,
   ListAndImage,
@@ -36,9 +37,10 @@ import {
   padding="0"
   title="Education & Training"
   listHeading="Documentation and resources that can provide you with an immediate answer"
+  subheader="Teleport Documentation"
+  color="red"
   listItems={[
-    <p>Teleport Documentation</p>,
-    <Link href="/docs/getting-started/">Quickstart Guide</Link>,
+    <Link href="/docs/getting-started/" color="light-purple">Quickstart Guide</Link>,
     <Link href="/docs/server-access/guides/tsh/">User Manual</Link>,
     <Link href="/docs/setup/admin/">Admin Guide</Link>,
     <Link href="/docs/setup/deployments/">Production Guide</Link>,
@@ -52,11 +54,13 @@ import {
   imagePosition="left"
   title="Community Questions & Answers"
   listHeading="Engage with Teleport community on Discourse"
+  subheader="Teleport Discussions"
   listItems={[
-    <p>Teleport Discussions</p>,
-    <Link href="/docs/faq/">View all popular Teleport discussions</Link>,
-  ]}
+    <Link href="/docs/faq/"><Icon name="question" size="sm" />View all popular Teleport discussions</Link>,
+]}
+
 >
+
   <Image src="./assets/question.png" width="265px" height="253px" />
 </ListAndImage>
 
@@ -64,8 +68,8 @@ import {
   imagePosition="left"
   title="Contact Support"
   listHeading="Need help from a Teleport expert?"
+  subheader="Submit an Issue"
   listItems={[
-    <p>Submit an Issue</p>,
       <Link href="https://github.com/gravitational/teleport/issues/new/choose">Create a Teleport Issue</Link>,
       <Link href="https://github.com/gravitational/teleport/discussions">Ask a Question</Link>,
     <p>Other</p>,

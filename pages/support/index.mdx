@@ -1,9 +1,80 @@
 ---
 title: Teleport Support and Education Center
-subtitle: Community Edition
+subtitle: Help & Support
+description: "Educational Material, Community Questions & Answers, and Contact Information."
+border: none
 headerBehaviour: floating
 headerMode: full
-border: none
 hideWave: true
-description: "How to install Teleport Community Edition: Implement industry-best practices for SSH and Kubernetes access, meet compliance requirements"
 ---
+
+import styled from "styled-components";
+import css from "@styled-system/css";
+
+import {
+  Box,
+  Image,
+  Link,
+  ListAndImage,
+  Section,
+  SectionHeader,
+} from "components";
+
+<SectionHeader
+  bg="wave-on-gray"
+  description={meta.description}
+  kind="row"
+  title={meta.title}
+  subtitle={meta.subtitle}
+  verticalResponsive={false}
+/>
+
+<Section bg="flatWhite">
+<ListAndImage
+  imagePosition="left"
+  margin="0"
+  padding="0"
+  title="Education & Training"
+  listHeading="Documentation and resources that can provide you with an immediate answer"
+  listItems={[
+    <p>Teleport Documentation</p>,
+    <Link href="/docs/getting-started/">Quickstart Guide</Link>,
+    <Link href="/docs/server-access/guides/tsh/">User Manual</Link>,
+    <Link href="/docs/setup/admin/">Admin Guide</Link>,
+    <Link href="/docs/setup/deployments/">Production Guide</Link>,
+    <Link href="/docs/faq/">Teleport FAQ</Link>,
+]}
+>
+  <Image src="./assets/docs.png" width="265px" height="253px" />
+</ListAndImage>
+
+<ListAndImage
+  imagePosition="left"
+  title="Community Questions & Answers"
+  listHeading="Engage with Teleport community on Discourse"
+  listItems={[
+    <p>Teleport Discussions</p>,
+    <Link href="/docs/faq/">View all popular Teleport discussions</Link>,
+  ]}
+>
+  <Image src="./assets/question.png" width="265px" height="253px" />
+</ListAndImage>
+
+<ListAndImage
+  imagePosition="left"
+  title="Contact Support"
+  listHeading="Need help from a Teleport expert?"
+  listItems={[
+    <p>Submit an Issue</p>,
+      <Link href="https://github.com/gravitational/teleport/issues/new/choose">Create a Teleport Issue</Link>,
+      <Link href="https://github.com/gravitational/teleport/discussions">Ask a Question</Link>,
+    <p>Other</p>,
+      <Link href="NEED_EMAIL_LINK">support@goteleport.com</Link>,
+      <Link href="NEED_PHONE_NUMBER_LINK">(855)-818-9008)</Link>,
+]}
+
+>
+
+  <Image src="./assets/ticket.png" width="265px" height="253px" />
+</ListAndImage>
+</Section>

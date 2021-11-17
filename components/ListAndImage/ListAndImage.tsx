@@ -11,6 +11,7 @@ export interface ListAndImageProps {
   listItems: string[];
   outro?: string | React.ReactNode;
   children: React.ReactNode;
+  imagePosition?: string;
 }
 
 export const ListAndImage = ({
@@ -19,11 +20,19 @@ export const ListAndImage = ({
   listItems,
   outro,
   children,
+  imagePosition = "right",
 }: ListAndImageProps) => {
   return (
     <Section bg="grayGradient">
       <Centrator flexDirection="column" py={[3, 5, 9]}>
-        <Flex flexDirection={["column", "row"]}>
+        <Flex
+          justifyContent={imagePosition === "left" ? "flex-end" : ""}
+          flexDirection={
+            imagePosition === "right"
+              ? ["column", "row"]
+              : ["column-reverse", "row-reverse"]
+          }
+        >
           {/* Right/Upper Side */}
           <Flex
             flexDirection="column"
@@ -54,9 +63,13 @@ export const ListAndImage = ({
               {/* List */}
               <Flex flexDirection="column" mr={3} mb={[3, 0]}>
                 <StyledUL>
-                  {listItems.map((e, i) => (
-                    <li key={i}>{e}</li>
-                  ))}
+                  {listItems.map((e, i) =>
+                    imagePosition === "right" ? (
+                      <li key={i}>{e}</li>
+                    ) : (
+                      <StyledRightLi key={i}>{e}</StyledRightLi>
+                    )
+                  )}
                 </StyledUL>
                 <Flex>{outro}</Flex>
               </Flex>
@@ -70,6 +83,7 @@ export const ListAndImage = ({
             justifyContent="center"
             alignItems="center"
             width={["auto", "40%"]}
+            padding="0"
           >
             {children}
           </Flex>
@@ -78,6 +92,14 @@ export const ListAndImage = ({
     </Section>
   );
 };
+
+const StyledRightLi = styled("li")(
+  css({
+    "&:nth-child(1)": {
+      listStyle: "none",
+    },
+  })
+);
 
 const StyledUL = styled("ul")(
   css({

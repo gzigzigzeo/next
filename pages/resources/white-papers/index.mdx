@@ -1,0 +1,28 @@
+---
+title: Tech Papers
+description: Detailed tech papers about Teleport products and services and the challenges facing companies trying to secure access to all environments.
+border: none
+hideWave: true
+layout: content
+logo:
+  image: ./assets/resources.svg
+  alt: title image
+subtitle: Teleport Access Plane
+needWrapper: true
+bgWave: wave-on-gray
+tryTeleport: true
+---
+
+import { EpisodesList } from "components";
+import { getResourcesData } from "server/resources-helpers";
+
+<EpisodesList
+  id="tech-paper"
+  episodes={props.episodes}
+  kind="techPaper"
+  needSizeLimit
+/>
+
+export async function getStaticProps(context) {
+  return { props: { episodes: getResourcesData("white-papers") } };
+}

@@ -38,7 +38,7 @@ export { default as JobList } from "components/JobList";
 export { Centrator } from "components/Layout";
 export { default as Link } from "components/Link";
 export { default as List } from "components/List";
-export { default as ListAndImage } from "components/ListAndImage";
+export { default as ImageAndContent } from "components/ImageAndContent";
 export { default as EpisodesList } from "components/EpisodesList";
 export { default as LoginPage } from "components/LoginPage";
 export { default as Manifesto } from "components/Manifesto";

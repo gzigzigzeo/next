@@ -1,17 +1,18 @@
 import { Story } from "@storybook/react";
-import { ListAndImage, ListAndImageProps } from "./ListAndImage";
+import ImageAndContent from "./ImageAndContent";
+import { ImageAndContentProps } from "./ImageAndContent";
 import Flex from "components/Flex";
 import Link from "components/Link";
 import NextImage from "next/image";
 import security from "./assets/security-illustration@2x.png";
 
-const StoryComponent: Story<ListAndImageProps> = (args) => (
-  <ListAndImage {...args} />
+const StoryComponent: Story<ImageAndContentProps> = (args) => (
+  <ImageAndContent {...args} />
 );
 
 export default {
   component: StoryComponent,
-  title: "Site/ListAndImage",
+  title: "Site/ImageAndContent",
 };
 
 export const Default = StoryComponent.bind({});

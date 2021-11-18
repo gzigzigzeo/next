@@ -10,7 +10,7 @@ import {
   Heading,
   PageIntro,
   Section,
-  ListAndImage,
+  ImageAndContent,
   List,
   TryTeleport,
   Flex,
@@ -34,10 +34,10 @@ import NextImage from "next/image";
     width={328}
   />
 </SectionHeader>
-<ListAndImage
+<ImageAndContent
   intro=""
   title="Security Team"
-  listHeading="Teleport maintains a cross functional security team dedicated to:"
+  subtitle="Teleport maintains a cross functional security team dedicated to:"
   listItems={[
     "Teleport code, dependency, and supply chain vulnerability detection and response",
     "Teleport Cloud Security",
@@ -58,23 +58,31 @@ import NextImage from "next/image";
     height={219}
     width={328}
   />
-</ListAndImage>
+</ImageAndContent>
 <Section bg="purpleGradient">
   <Centrator>
-  <Flex py={[5, 9]} flexDirection="column">
-    <Heading
-      dark={true}
-      title="Reporting a Vulnerability"
-      titleFontSize="banner"
-      titleFontWeight="black"
-    />
-    <Box mt={3} as="p" color="white">
-      To make a security vulnerability report, email <Link color="white" scheme="site" href="mailto:security@goteleport.com">security@goteleport.com</Link>
-      with the full details, including steps to reproduce the issue. We are
-      deeply grateful to researchers and our community who report issues so that
-      we can coordinate a fix and responsible disclosure. You may use our <Link color="white" href="#pgp_key">PGP public key</Link> below to encrypt sensitive information.
-    </Box>
-  </Flex>
+    <Flex py={[5, 9]} flexDirection="column">
+      <Heading
+        dark={true}
+        title="Reporting a Vulnerability"
+        titleFontSize="banner"
+        titleFontWeight="black"
+      />
+      <Box mt={3} as="p" color="white">
+        To make a security vulnerability report, email{" "}
+        <Link color="white" scheme="site" href="mailto:security@goteleport.com">
+          security@goteleport.com
+        </Link>
+        with the full details, including steps to reproduce the issue. We are deeply
+        grateful to researchers and our community who report issues so that we can
+        coordinate a fix and responsible disclosure. You may use our <Link
+          color="white"
+          href="#pgp_key"
+        >
+          PGP public key
+        </Link> below to encrypt sensitive information.
+      </Box>
+    </Flex>
   </Centrator>
 </Section>
 <List
@@ -90,14 +98,31 @@ import NextImage from "next/image";
 >
   <List.Item src="./assets/proactive-detection.svg" title="Proactive Detection">
     We contract and publish third party security audits of our products and
-    platform annually. Our previous reports are available in our <Link scheme="site" href="https://goteleport.com/resources/audits/">Audits</Link> page.
-    Furthermore, Teleport conducts regular security vulnerability scanning of
-    our code and infrastructure using tools like <Link scheme="site" href="https://dependabot.com/">Dependabot</Link> and <Link scheme="site" href="https://github.com/quay/clair">Clair</Link> container
-    scanning.
+    platform annually. Our previous reports are available in our{" "}
+    <Link scheme="site" href="https://goteleport.com/resources/audits/">
+      Audits
+    </Link>{" "}
+    page. Furthermore, Teleport conducts regular security vulnerability scanning
+    of our code and infrastructure using tools like{" "}
+    <Link scheme="site" href="https://dependabot.com/">
+      Dependabot
+    </Link>{" "}
+    and{" "}
+    <Link scheme="site" href="https://github.com/quay/clair">
+      Clair
+    </Link>{" "}
+    container scanning.
   </List.Item>
   <List.Item src="./assets/disclosure.svg" title="Disclosure">
     We notify customers of critical vulnerabilities that effect the security of
-    their systems. Prior vulnerability disclosures are found in our <Link scheme="site" href="https://gravitational.zendesk.com/hc/en-us/sections/115004127868-Security-Disclosures">Security Disclosures Zendesk</Link> topic.
+    their systems. Prior vulnerability disclosures are found in our{" "}
+    <Link
+      scheme="site"
+      href="https://gravitational.zendesk.com/hc/en-us/sections/115004127868-Security-Disclosures"
+    >
+      Security Disclosures Zendesk
+    </Link>{" "}
+    topic.
   </List.Item>
   <List.Item src="./assets/response.svg" title="Response">
     All security issues are rapidly triaged by our security team. High severity
@@ -105,7 +130,11 @@ import NextImage from "next/image";
   </List.Item>
   <List.Item src="./assets/privacy.svg" title="Privacy">
     As part of our security stance, we protect our customers’ and partners’
-    privacy. Find our privacy policy at <Link scheme="site" href="https://goteleport.com/privacy">https://goteleport.com/privacy</Link>.
+    privacy. Find our privacy policy at{" "}
+    <Link scheme="site" href="https://goteleport.com/privacy">
+      https://goteleport.com/privacy
+    </Link>
+    .
   </List.Item>
   <List.Item src="./assets/certifications.svg" title="Certifications">
     We maintain a SOC2 type II certification for our cloud and on prem products.

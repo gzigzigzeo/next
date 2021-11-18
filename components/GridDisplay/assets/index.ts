@@ -5,3 +5,6 @@ export { default as whitepaper } from "./whitepaper-bg.svg";
 export { default as webinar } from "./webinar-bg.svg";
 export { default as podcast } from "./podcast-bg.svg";
 export { default as audit } from "./audit-bg.svg";
+export { default as purple } from "./purple-bg.png";
+export { default as orange } from "./orange-bg.png";
+export { default as blue } from "./blue-bg.png";

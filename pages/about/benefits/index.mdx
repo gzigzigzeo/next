@@ -1,0 +1,85 @@
+---
+title: Careers
+h1: Work with Us
+hideWave: true
+description: View our available career opportunities
+---
+import NextImage from "next/image"
+import {
+  SectionBanner,
+  TryTeleport,
+  GridDisplay,
+} from "components";
+
+import { BenefitCard } from "components/GridDisplay";
+
+<SectionBanner 
+bg="purpleStars" 
+style="healthCare"
+textColor="white" 
+title="Healthcare" 
+text={
+  <>We offer <strong>Gold</strong> and <strong>Platinum</strong> level healthcare insurance, including dental and vision.
+   Teleport <strong>covers 90%</strong> of premiums for employees and dependents at the platinum level.</>
+  }
+>
+  <NextImage src="./assets/benefits@2x.png" alt="A loving Pam" height={198} width={154}/>
+</SectionBanner>
+
+<GridDisplay bg="grayWave" cardStyle="benefitCard">
+  <BenefitCard title="Medical Plans" cardBG="gray" src="./assets/one-medical.svg">
+    - One Medical provides membership based primary care for US employees
+    - Same/next-day primary care in 13 cities across the US. 24/7 Virtual care with free Video Chats
+    - An app to message providers, refill prescriptions and get care
+    - Team member and dependents
+  </BenefitCard>
+  <BenefitCard  cardBG="gray" src="./assets/kaiser.svg">
+    - Kaiser Permanente Kaiser HMO 1000 (NCal)
+    - Kaiser Permanente Kaiser HMO 1000 (SCal)
+    - Kaiser Permanente Kaiser HMO 0 (NCal)
+    - Kaiser Permanente Kaiser HMO 0 (SCal)
+  </BenefitCard>
+  <BenefitCard  cardBG="gray" src="./assets/aetna.svg">
+    - Aetna PPO 3500 [HSA]
+    - Aetna PPO 500
+    - Aetna PPO 300
+  </BenefitCard>
+</GridDisplay>
+<GridDisplay bg="flatWhite" cardStyle="benefitCard">
+  <BenefitCard title="Dental, Vision, Life and Disability" cardBG="gray" src="./assets/guardian.svg">
+    - Guardian Dental PPO 1500-1500Vision
+    - Guardian-VSP Vision Plan C (Choice)
+  </BenefitCard>
+  <BenefitCard  title="Life Insurance" cardBG="gray" src="./assets/guardian.svg">
+    - [Guardian Guardian Base Life $50,000]()
+  </BenefitCard>
+  <BenefitCard  title="Long Term Disability" cardBG="gray" src="./assets/guardian.svg">
+    - [Guardian Guardian Long-Term Disability (age 65)]()
+  </BenefitCard>
+</GridDisplay>
+<GridDisplay bg="flatWhite" cardStyle="benefitCard">
+  <BenefitCard title="Enhanced Wellness Benefits" cardBG="orange" >
+    The intention for this program is increasing wellness and productivity. Wellness is unique and individual 
+    and with this flexible program we trust our team members to make professional decisions to be healthy and productive.
+
+    - Initial home office setup: **$2,000** (computer not included).
+    - Ongoing Flexible Spending*: **$7,000**
+    - **$250 payroll** stipend for cell/internet (up to $3000/year)
+  </BenefitCard>
+  <BenefitCard  title="Vacation" cardBG="blue" >
+    We believe all employees should take time off. Our employees do their best work when they are rested and refreshed.
+
+    - **Paid Time Off**: 4 weeks
+    - **Sick Leave**: 10 days
+    - **Family Leave**: 12 weeks
+    - **Military Leave**
+  </BenefitCard>
+  <BenefitCard  title="Additional Optional Benefits" cardBG="purple" >
+    - Voya Critical Illness Plan
+    - Voya Accident Plan
+    - Voya Hospital Plan
+    - FSA and HSA
+    - Cash-in-lieu of benefits: $250/month for employees that waive medical benefits
+  </BenefitCard>
+</GridDisplay>
+<TryTeleport/>

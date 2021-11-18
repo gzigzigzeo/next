@@ -18,6 +18,7 @@ import { GridCard } from "./GridCard";
 
 export interface GridDisplayProps {
   children: React.ReactNode;
+  cardStyle?: "productCard" | "benefitCard" | "default";
   productCard?: boolean;
   bg?: BGColor;
   centralHeading?: boolean;
@@ -32,8 +33,35 @@ export interface GridDisplayProps {
   iconSize?: IconProps["size"];
 }
 
+//grid template columns
+const GTC = {
+  productCard: [
+    "minmax(340px, 560px)",
+    "repeat(2, minmax(140px, 400px))",
+    "repeat(4, minmax(140px, 294px))",
+  ],
+  benefitCard: [
+    "minmax(340px, 560px)",
+    "repeat(2, minmax(140px, 400px))",
+    "repeat(3, minmax(140px, 400px))",
+  ],
+  default: [
+    "minmax(140px, 270px)",
+    "repeat(3, minmax(140px, 270px))",
+    "repeat(4, minmax(140px, 270px))",
+  ],
+};
+
+//grid gaps
+const GG = {
+  productCard: [3, 3],
+  benefitCard: [3, 6],
+  default: [3, 3],
+};
+
 function GridDisplay({
   children,
+  cardStyle = "default",
   productCard = false,
   bg,
   centralHeading = false,
@@ -105,25 +133,14 @@ function GridDisplay({
 
         {/** Card display logic using Grid*/}
         <Grid
+          justifyItems="center"
           mt={centralHeading ? [3, 2] : productCard ? 3 : 7}
           mb={6}
-          //the minimum width of the outer shell
+          //the minimum width of the outer grid container
           minWidth={["340px", "800px", "980px"]}
           //the widths of individual columns
-          gridTemplateColumns={
-            productCard
-              ? [
-                  "minmax(340px, 560px)",
-                  "repeat(2, minmax(140px, 400px))",
-                  "repeat(4, minmax(140px, 294px))",
-                ]
-              : [
-                  "minmax(140px, 270px)",
-                  "repeat(3, minmax(140px, 270px))",
-                  "repeat(4, minmax(140px, 270px))",
-                ]
-          }
-          gridGap={[3, 3]}
+          gridTemplateColumns={GTC[cardStyle]}
+          gridGap={GG[cardStyle]}
         >
           {children}
         </Grid>

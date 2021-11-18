@@ -14,7 +14,11 @@ import Button from "components/Button";
  * GridCards are not clickable or hoverable. The optional href prop
  * will be passed to a "Learn More" button.
  *
- * ProductCards are similar to GridCards but with distinct styling and layouts
+ * ProductCards exist just below the Hero on the homepage. They have no border,
+ * no hover, just an icon, title/text and Learn More button.
+ *
+ * BenefitCards are similar to GridCards but with a different display logic,
+ * contents, and an optional title above the card (outside its borders)
  */
 
 export interface ProductCardProps {

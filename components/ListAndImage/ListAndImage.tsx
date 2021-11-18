@@ -62,8 +62,7 @@ export const ListAndImage = ({
               >
                 {listHeading}
               </Box>
-              <StyledSubheader>{subheader}</StyledSubheader>
-
+              <Flex color="darkest">{subheader}</Flex>
               {/* List */}
               <Flex flexDirection="column" mr={3} mb={[3, 0]}>
                 <StyledUL>
@@ -91,12 +90,6 @@ export const ListAndImage = ({
     </Section>
   );
 };
-
-const StyledSubheader = styled(Flex)(
-  css({
-    color: "darkest",
-  })
-);
 
 const StyledUL = styled("ul")(
   css({

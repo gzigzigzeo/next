@@ -36,14 +36,16 @@ import {
   title="Education & Training"
   listHeading="Documentation and resources that can provide you with an immediate answer"
   subheader="Teleport Documentation"
+  color="red"
   listItems={[
-    <Link href="/docs/getting-started/" color="light-purple">Quickstart Guide</Link>,
-    <Link href="/docs/server-access/guides/tsh/">User Manual</Link>,
-    <Link href="/docs/setup/admin/">Admin Guide</Link>,
-    <Link href="/docs/setup/deployments/">Production Guide</Link>,
-    <Link href="/docs/faq/">Teleport FAQ</Link>,
-]}
+  <Link href="/docs/getting-started/" color="light-purple">Quickstart Guide</Link>,
+  <Link href="/docs/server-access/guides/tsh/" color="light-purple">User Manual</Link>,
+  <Link href="/docs/setup/admin/" color="light-purple">Admin Guide</Link>,
+  <Link href="/docs/setup/deployments/" color="light-purple">Production Guide</Link>,
+  <Link href="/docs/faq/" color="light-purple">Teleport FAQ</Link>,
+  ]}
 >
+
   <Image src="./assets/docs.png" width="265px" height="253px" />
 </ListAndImage>
 
@@ -53,11 +55,12 @@ import {
   listHeading="Engage with Teleport community on Discourse"
   subheader="Teleport Discussions"
   listItems={[
-    <Link href="/docs/faq/"><Icon name="question" size="sm" />View all popular Teleport discussions</Link>,
-]}
-
+    <Link href="/docs/faq/" color="light-purple">
+      <Icon name="question" size="sm" />
+      View all popular Teleport discussions
+    </Link>,
+  ]}
 >
-
   <Image src="./assets/question.png" width="265px" height="253px" />
 </ListAndImage>
 
@@ -67,15 +70,13 @@ import {
   listHeading="Need help from a Teleport expert?"
   subheader="Submit an Issue"
   listItems={[
-      <Link href="https://github.com/gravitational/teleport/issues/new/choose">Create a Teleport Issue</Link>,
-      <Link href="https://github.com/gravitational/teleport/discussions">Ask a Question</Link>,
+      <Link href="https://github.com/gravitational/teleport/issues/new/choose" color="light-purple">Create a Teleport Issue</Link>,
+      <Link href="https://github.com/gravitational/teleport/discussions" color="light-purple">Ask a Question</Link>,
     <p>Other</p>,
-      <Link href="NEED_EMAIL_LINK">support@goteleport.com</Link>,
-      <Link href="NEED_PHONE_NUMBER_LINK">(855)-818-9008)</Link>,
-]}
-
+      <Link href="NEED_EMAIL_LINK" color="light-purple">support@goteleport.com</Link>,
+      <Link href="NEED_PHONE_NUMBER_LINK" color="light-purple">(855)-818-9008)</Link>,
+  ]}
 >
-
   <Image src="./assets/ticket.png" width="265px" height="253px" />
 </ListAndImage>
 </Section>

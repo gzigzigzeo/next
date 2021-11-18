@@ -2,29 +2,51 @@ import styled from "styled-components";
 import css from "@styled-system/css";
 import { Centrator } from "components/Layout";
 import Section from "components/Section";
+import Image from "components/Image";
+
 import Flex from "components/Flex";
 import Box from "components/Box";
 
-export interface ListAndImageProps {
+export interface ImageAndContentProps {
   title: string;
-  listHeading: string;
-  listItems: string[];
+  subtitle: string;
+  subheader?: string | React.ReactNode;
+  imageSource?: string;
+  imagePosition?: string;
   outro?: string | React.ReactNode;
   children: React.ReactNode;
+
+  listItems: string[];
 }
 
-export const ListAndImage = ({
+const ImageAndContentItem = () => {
+  return <h1>testing</h1>;
+};
+
+const ImageAndContent = ({
   title,
-  listHeading,
-  listItems,
+  subtitle,
+  subheader,
+  imageSource,
+  imagePosition = "right",
   outro,
   children,
-}: ListAndImageProps) => {
+
+  listItems,
+}: ImageAndContentProps) => {
   return (
     <Section bg="grayGradient">
       <Centrator flexDirection="column" py={[3, 5, 9]}>
-        <Flex flexDirection={["column", "row"]}>
-          {/* Right/Upper Side */}
+        {/* Outer container */}
+        <Flex
+          justifyContent={imagePosition === "left" ? "flex-end" : ""}
+          flexDirection={
+            imagePosition === "right"
+              ? ["column", "row"]
+              : ["column-reverse", "row-reverse"]
+          }
+        >
+          {/* Upper Content Side */}
           <Flex
             flexDirection="column"
             justifyContent="center"
@@ -49,15 +71,14 @@ export const ListAndImage = ({
                 lineHeight="lg"
                 mb={[0, 3]}
               >
-                {listHeading}
+                {subtitle}
               </Box>
-              {/* List */}
+              <Flex color="darkest">{subheader}</Flex>
+
+              {/* Content */}
               <Flex flexDirection="column" mr={3} mb={[3, 0]}>
-                <StyledUL>
-                  {listItems.map((e, i) => (
-                    <li key={i}>{e}</li>
-                  ))}
-                </StyledUL>
+                {children}
+
                 <Flex>{outro}</Flex>
               </Flex>
             </Flex>
@@ -71,7 +92,7 @@ export const ListAndImage = ({
             alignItems="center"
             width={["auto", "40%"]}
           >
-            {children}
+            <Image src={imageSource} alt="image" width="265px" height="253px" />
           </Flex>
         </Flex>
       </Centrator>
@@ -88,3 +109,5 @@ const StyledUL = styled("ul")(
     },
   })
 );
+
+export default ImageAndContent;

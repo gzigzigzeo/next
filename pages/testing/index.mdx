@@ -1,0 +1,47 @@
+---
+title: Teleport Support and Education Center
+subtitle: Help & Support
+description: "Educational Material, Community Questions & Answers, and Contact Information."
+border: none
+headerBehaviour: floating
+headerMode: full
+hideWave: true
+---
+
+import styled from "styled-components";
+import css from "@styled-system/css";
+
+import {
+  Box,
+  Icon,
+  Image,
+  Link,
+  ListAndImage,
+  Section,
+  SectionHeader,
+} from "components";
+
+<SectionHeader
+  bg="wave-on-gray"
+  description={meta.description}
+  kind="row"
+  title={meta.title}
+  subtitle={meta.subtitle}
+  verticalResponsive={false}
+/>
+
+<Section bg="flatWhite">
+<ListAndImage
+  imagePosition="left"
+  title="Education & Training"
+  listHeading="Documentation and resources that can provide you with an immediate answer"
+  subheader="Teleport Documentation"
+  imageSource="./assets/docs.png"
+>
+  <Link href="/docs/getting-started/" color="light-purple">Quickstart Guide</Link>
+  <Link href="/docs/server-access/guides/tsh/" color="light-purple">User Manual</Link>
+  <Link href="/docs/setup/admin/" color="light-purple">Admin Guide</Link>
+  <Link href="/docs/setup/deployments/" color="light-purple">Production Guide</Link>
+</ListAndImage>
+
+</Section>

@@ -37,6 +37,7 @@ export default function EpisodesList({
       >
         {episodes.map(({ frontmatter, uri }) => (
           <Wrapper
+            width="auto"
             key={uri}
             title={frontmatter.title}
             cardBG={card.cardBG}
@@ -57,7 +58,6 @@ export default function EpisodesList({
 
 const StyledGridTile = styled(GridTile)(
   css({
-    width: "auto",
     maxHeight: "460px",
     overflow: "hidden",
     position: "relative",

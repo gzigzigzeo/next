@@ -2,20 +2,20 @@
 
 ## How to run locally
 
-Prerequestiques:
+Prerequisites:
 
 1. `mkcert`
 2. `nodejs`
 3. `npx`
 
-Run in a temprary folder:
+Run in a temporary folder:
 
 ```
 mkcert -key-file key.pem -cert-file cert.pem example.com "*.example.com" example.test localhost 127.0.0.1 ::1
 NODE_EXTRA_CA_CERTS="$(mkcert -CAROOT)/rootCA.pem" npx local-ssl-proxy --key key.pem --cert cert.pem --source 3001 --target 3000
 ```
 
-Put the following in the `main.tf`:
+Add the Teleport provider to your Terraform `required_providers`. For example, add the following to `main.tf`:
 
 ```
 terraform {
